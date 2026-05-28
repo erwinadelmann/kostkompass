@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KostKompass – Privatklinik St. Radegund</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 242 60'%3E%3Cpath fill='%2300963E' d='M120.4,0.8h0.3c2.1,0,4.2,0.2,6.3,0.7c-5.2,8.6-4.6,16.3-4.6,16.3s2-7.2,11.1-14.1c3.2,1.6,6.1,3.7,8.5,6.3c-16.9,11.6-16,20.1-16,20.1s4.9-10.4,20.6-13.7c2,3.8,3.2,8.1,3.4,12.6c-14.6-0.2-21.4,9-21.4,9s7.5-5.8,21.1-3.7c-0.5,3.3-1.5,6.4-2.9,9.2c-15.7-0.9-19.2,2.3-19.2,2.3s9.7-2.8,15.7,3.1c-2.1,2.5-4.5,4.6-7.3,6.3c-8.4-5.5-12.9,0.7-14.7,4.3h-0.9h-0.9c-1.8-3.6-6.3-9.8-14.7-4.3c-2.8-1.7-5.2-3.8-7.3-6.3c5.9-6,15.7-3.1,15.7-3.1s-3.5-3.1-19.2-2.3c-1.5-2.8-2.5-5.9-2.9-9.2c13.7-2.1,21.1,3.7,21.1,3.7s-6.8-9.2-21.4-9c0.2-4.6,1.4-8.8,3.4-12.6c15.7,3.3,20.6,13.7,20.6,13.7s0.9-8.5-16-20.1c2.4-2.6,5.3-4.7,8.5-6.3c9.2,6.8,11.1,14.1,11.1,14.1s0.7-7.7-4.6-16.3c2-0.4,4.1-0.7,6.3-0.7H120.4z'/%3E%3C/svg%3E">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root {
+    --bg: #f5f3ee;
+    --card: #fff;
+    --border: #ddd;
+    --primary: #6b4c2a;
+    --accent: #a07040;
+    --green: #2e7d32;
+    --green-bg: #e8f5e9;
+    --red: #c62828;
+    --red-bg: #ffebee;
+    --yellow: #f57f17;
+    --yellow-bg: #fff8e1;
+    --blue: #1565c0;
+    --blue-bg: #e3f2fd;
+    --tab-active: #6b4c2a;
+    --tab-text: #fff;
+    --text: #2c2c2c;
+    --muted: #666;
+    --shadow: 0 2px 8px rgba(0,0,0,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #6b4c2a 0%, #a07040 100%);
+    color: #fff;
+    padding: 18px 24px 14px;
+    display: flex; align-items: center; gap: 14px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+    position: sticky; top: 0; z-index: 100;
+  }
+  header .logo { display: flex; align-items: center; }
+  header .logo svg { width: 44px; height: 44px; filter: brightness(0) invert(1); }
+  header h1 { font-size: 1.25rem; font-weight: 700; line-height: 1.2; }
+  header p { font-size: 0.78rem; opacity: 0.85; margin-top: 2px; }
+  .badge {
+    margin-left: auto; background: rgba(255,255,255,0.2);
+    border-radius: 20px; padding: 4px 12px; font-size: 0.75rem; white-space: nowrap;
+  }
+
+  /* NAV TABS */
+  nav {
+    display: flex; gap: 4px; padding: 12px 16px 0;
+    overflow-x: auto; background: var(--primary);
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav button {
+    border: none; cursor: pointer; border-radius: 8px 8px 0 0;
+    padding: 8px 14px; font-size: 0.82rem; font-weight: 600;
+    background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.8);
+    white-space: nowrap; transition: all 0.18s;
+  }
+  nav button:hover { background: rgba(255,255,255,0.25); }
+  nav button.active { background: var(--bg); color: var(--primary); }
+
+  /* MAIN */
+  main { padding: 20px 16px 40px; max-width: 900px; margin: 0 auto; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: var(--card); border-radius: 10px;
+    box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 18px;
+    border-left: 5px solid var(--accent);
+  }
+  .card.green { border-left-color: var(--green); }
+  .card.red { border-left-color: var(--red); }
+  .card.blue { border-left-color: var(--blue); }
+  .card.yellow { border-left-color: var(--yellow); }
+  .card h2 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
+  .card h3 { font-size: 0.9rem; font-weight: 700; margin: 12px 0 6px; }
+
+  /* ERLAUBT / VERBOTEN GRID */
+  .ev-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px; }
+  @media(max-width: 520px) { .ev-grid { grid-template-columns: 1fr; } }
+  .ev-col { border-radius: 8px; padding: 14px 16px; }
+  .ev-col.ja { background: var(--green-bg); border: 1px solid #a5d6a7; }
+  .ev-col.nein { background: var(--red-bg); border: 1px solid #ef9a9a; }
+  .ev-col h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .ev-col.ja h4 { color: var(--green); }
+  .ev-col.nein h4 { color: var(--red); }
+  .ev-col ul { list-style: none; }
+  .ev-col ul li { font-size: 0.83rem; padding: 3px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .ev-col ul li:last-child { border: none; }
+  .ev-col ul li::before { content: '· '; color: var(--muted); }
+
+  /* HINWEIS BOXES */
+  .hinweis {
+    border-radius: 8px; padding: 12px 14px; margin: 12px 0; font-size: 0.84rem;
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .hinweis.warn { background: var(--yellow-bg); border: 1px solid #ffcc02; }
+  .hinweis.info { background: var(--blue-bg); border: 1px solid #90caf9; }
+  .hinweis.danger { background: var(--red-bg); border: 1px solid #ef9a9a; }
+  .hinweis.tip { background: var(--green-bg); border: 1px solid #a5d6a7; }
+  .hinweis .icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+  .hinweis p { line-height: 1.5; }
+  .hinweis strong { display: block; margin-bottom: 2px; }
+
+  /* OPENING HOURS */
+  .hours-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+  .hour-box {
+    flex: 1 1 140px; background: var(--green-bg); border-radius: 8px;
+    padding: 12px 14px; text-align: center; border: 1px solid #a5d6a7;
+  }
+  .hour-box .meal { font-size: 0.8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+  .hour-box .time { font-size: 1.05rem; font-weight: 700; color: var(--green); margin: 4px 0; }
+
+  /* CLEANING TABLE */
+  .clean-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 10px; overflow-x: auto; display: block; }
+  .clean-table th { background: #455a64; color: #fff; padding: 6px 8px; white-space: nowrap; }
+  .clean-table td { padding: 5px 8px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  .clean-table td.x { text-align: center; font-weight: 700; color: var(--green); }
+  .clean-table tr:nth-child(even) td { background: #fafafa; }
+
+  /* DRINKS */
+  .drinks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-top: 10px; }
+  .drink-card { background: var(--card); border-radius: 8px; padding: 14px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+  .drink-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+  .drink-card ul { list-style: none; }
+  .drink-card ul li { font-size: 0.8rem; padding: 2px 0; }
+  .drink-card ul li::before { content: '– '; color: var(--muted); }
+
+  /* ACCORDION */
+  .accordion { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+  .accordion-btn {
+    width: 100%; text-align: left; background: var(--card); border: none;
+    padding: 13px 16px; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; gap: 8px; color: var(--text);
+    transition: background 0.15s;
+  }
+  .accordion-btn:hover { background: #f5f3ee; }
+  .accordion-btn .arrow { margin-left: auto; transition: transform 0.2s; }
+  .accordion-btn.open .arrow { transform: rotate(180deg); }
+  .accordion-content { display: none; padding: 14px 16px; border-top: 1px solid var(--border); background: #fafaf8; }
+  .accordion-content.open { display: block; }
+
+  /* SEARCH BAR */
+  .search-bar {
+    display: flex; gap: 8px; margin-bottom: 16px;
+  }
+  .search-bar input {
+    flex: 1; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border);
+    font-size: 0.9rem; outline: none;
+  }
+  .search-bar input:focus { border-color: var(--accent); }
+  #search-results { margin-top: 4px; }
+  .search-hit { background: var(--card); border-radius: 6px; padding: 10px 14px; margin-bottom: 8px; border: 1px solid var(--border); font-size: 0.85rem; }
+  .search-hit strong { color: var(--primary); }
+
+  /* FOOTER */
+  footer { text-align: center; font-size: 0.75rem; color: var(--muted); padding: 16px; border-top: 1px solid var(--border); background: var(--card); }
+
+  /* EINSTELLPLAN */
+  .setup-banner {
+    background: #fff3cd; border: 1px solid #ffc107; border-radius: 10px;
+    padding: 16px 20px; margin-bottom: 20px; font-size: 0.85rem; line-height: 1.6;
+  }
+  .setup-banner h3 { color: #856404; margin-bottom: 8px; }
+  .setup-banner code { background: #f8f9fa; padding: 2px 6px; border-radius: 4px; font-size: 0.82rem; }
+  .ep-toolbar {
+    display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .ep-toolbar button {
+    background: var(--primary); color: #fff; border: none; border-radius: 8px;
+    padding: 9px 16px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  }
+  .ep-toolbar button:hover { background: var(--accent); }
+  .ep-toolbar button.secondary {
+    background: #fff; color: var(--primary); border: 1px solid var(--border);
+  }
+  .ep-toolbar button.secondary:hover { background: var(--bg); }
+  .patient-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .patient-card {
+    background: var(--card); border-radius: 10px; box-shadow: var(--shadow);
+    padding: 16px 18px; border-left: 5px solid var(--accent);
+    position: relative;
+  }
+  .patient-card .pc-name { font-size: 1rem; font-weight: 700; color: var(--primary); }
+  .patient-card .pc-meta { font-size: 0.78rem; color: var(--muted); margin: 4px 0 10px; }
+  .patient-card .pc-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .diet-tag {
+    border-radius: 20px; padding: 3px 10px; font-size: 0.72rem; font-weight: 700; white-space: nowrap;
+  }
+  .diet-tag.gluten { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+  .diet-tag.laktose { background: #e3f2fd; color: #0d47a1; border: 1px solid #90caf9; }
+  .diet-tag.fruktose { background: #f3e5f5; color: #6a1b9a; border: 1px solid #ce93d8; }
+  .diet-tag.histamin { background: #fce4ec; color: #880e4f; border: 1px solid #f48fb1; }
+  .diet-tag.lvk { background: #e8eaf6; color: #283593; border: 1px solid #9fa8da; }
+  .diet-tag.normal { background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; }
+  .pc-delete {
+    position: absolute; top: 10px; right: 12px;
+    background: none; border: none; cursor: pointer; font-size: 1rem; color: var(--muted); opacity: 0.5;
+  }
+  .pc-delete:hover { opacity: 1; color: var(--red); }
+  .ep-form {
+    background: var(--card); border-radius: 10px; box-shadow: var(--shadow);
+    padding: 20px; margin-bottom: 20px; display: none;
+  }
+  .ep-form.open { display: block; }
+  .ep-form h3 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 14px; }
+  .ep-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media(max-width: 520px) { .ep-fields { grid-template-columns: 1fr; } }
+  .ep-field label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+  .ep-field input {
+    width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 7px;
+    font-size: 0.88rem; outline: none;
+  }
+  .ep-field input:focus { border-color: var(--accent); }
+  .ep-diaeten { grid-column: 1 / -1; }
+  .ep-diaeten label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 8px; }
+  .ep-checkboxes { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ep-checkboxes label {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.82rem; cursor: pointer; font-weight: 400; color: var(--text);
+    background: var(--bg); border: 1px solid var(--border); border-radius: 20px;
+    padding: 4px 12px;
+  }
+  .ep-checkboxes input[type=checkbox] { accent-color: var(--primary); }
+  .ep-actions { margin-top: 16px; display: flex; gap: 10px; }
+  .ep-empty { text-align: center; color: var(--muted); font-size: 0.88rem; padding: 40px 0; }
+  .ep-loading { text-align: center; color: var(--muted); font-size: 0.88rem; padding: 30px 0; }
+  .ep-abreise-soon { border-left-color: var(--yellow) !important; }
+  .ep-abreise-today { border-left-color: var(--red) !important; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 242 60">
+      <path fill="#00963E" d="M120.4,0.8h0.3c2.1,0,4.2,0.2,6.3,0.7c-5.2,8.6-4.6,16.3-4.6,16.3s2-7.2,11.1-14.1c3.2,1.6,6.1,3.7,8.5,6.3c-16.9,11.6-16,20.1-16,20.1s4.9-10.4,20.6-13.7c2,3.8,3.2,8.1,3.4,12.6c-14.6-0.2-21.4,9-21.4,9s7.5-5.8,21.1-3.7c-0.5,3.3-1.5,6.4-2.9,9.2c-15.7-0.9-19.2,2.3-19.2,2.3s9.7-2.8,15.7,3.1c-2.1,2.5-4.5,4.6-7.3,6.3c-8.4-5.5-12.9,0.7-14.7,4.3h-0.9h-0.9c-1.8-3.6-6.3-9.8-14.7-4.3c-2.8-1.7-5.2-3.8-7.3-6.3c5.9-6,15.7-3.1,15.7-3.1s-3.5-3.1-19.2-2.3c-1.5-2.8-2.5-5.9-2.9-9.2c13.7-2.1,21.1,3.7,21.1,3.7s-6.8-9.2-21.4-9c0.2-4.6,1.4-8.8,3.4-12.6c15.7,3.3,20.6,13.7,20.6,13.7s0.9-8.5-16-20.1c2.4-2.6,5.3-4.7,8.5-6.3c9.2,6.8,11.1,14.1,11.1,14.1s0.7-7.7-4.6-16.3c2-0.4,4.1-0.7,6.3-0.7H120.4z"/>
+    </svg>
+  </div>
+  <div>
+    <h1>KostKompass – Klinikgastronomie</h1>
+    <p>Privatklinik St. Radegund · Schnell-Orientierung für Küche & Service</p>
+  </div>
+  <div class="badge" id="header-badge">...</div>
+</header>
+
+<nav id="main-nav">
+  <button class="active" onclick="showSection('start', this)">🏠 Start</button>
+  <button onclick="showSection('einstellplan', this)">📋 Einstellplan</button>
+  <button onclick="showSection('zöliakie', this)">🌾 Zöliakie</button>
+  <button onclick="showSection('laktose', this)">🥛 Laktose</button>
+  <button onclick="showSection('fruktose', this)">🍎 Fruktose</button>
+  <button onclick="showSection('histamin', this)">⚠️ Histamin</button>
+  <button onclick="showSection('lvk', this)">🥗 LVK</button>
+  <button onclick="showSection('cafe', this)">☕ Cafe</button>
+  <button onclick="showSection('reinigung', this)">🧹 Reinigung</button>
+  <button onclick="showSection('suche', this)">🔍 Suche</button>
+</nav>
+
+<main>
+
+<!-- EINSTELLPLAN -->
+<section id="einstellplan" class="section">
+  <div id="ep-setup-banner" class="setup-banner" style="display:none">
+    <h3>⚙️ Supabase noch nicht verbunden</h3>
+    <p>Trage deine Supabase-Zugangsdaten oben im Code ein (<code>SUPABASE_URL</code> und <code>SUPABASE_ANON_KEY</code>), dann funktioniert der Einstellplan live.<br>
+    Anleitung: <a href="https://supabase.com" target="_blank">supabase.com</a> → Neues Projekt → Settings → API.</p>
+  </div>
+
+  <div class="ep-toolbar">
+    <button onclick="epToggleForm()">➕ Patient hinzufügen</button>
+    <button class="secondary" onclick="epLoad()">🔄 Aktualisieren</button>
+    <span id="ep-status" style="font-size:0.78rem;color:var(--muted)"></span>
+  </div>
+
+  <!-- ADD FORM -->
+  <div class="ep-form" id="ep-form">
+    <h3>Neuer Patient</h3>
+    <div class="ep-fields">
+      <div class="ep-field">
+        <label>Name</label>
+        <input type="text" id="ep-name" placeholder="Max Mustermann">
+      </div>
+      <div class="ep-field">
+        <label>Zimmer</label>
+        <input type="text" id="ep-zimmer" placeholder="z.B. 12">
+      </div>
+      <div class="ep-field">
+        <label>Abreise</label>
+        <input type="date" id="ep-abreise">
+      </div>
+      <div class="ep-field" style="display:flex;align-items:flex-end">
+        <!-- spacer -->
+      </div>
+      <div class="ep-diaeten">
+        <label>Diätvorgaben</label>
+        <div class="ep-checkboxes">
+          <label><input type="checkbox" value="Zöliakie"> 🌾 Zöliakie/Gluten</label>
+          <label><input type="checkbox" value="Laktose"> 🥛 Laktose</label>
+          <label><input type="checkbox" value="Fruktose"> 🍎 Fruktose</label>
+          <label><input type="checkbox" value="Histamin"> ⚠️ Histamin</label>
+          <label><input type="checkbox" value="LVK"> 🥗 LVK</label>
+        </div>
+      </div>
+    </div>
+    <div class="ep-actions">
+      <button onclick="epSave()" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:0.88rem;font-weight:600;cursor:pointer">💾 Speichern</button>
+      <button onclick="epToggleForm()" style="background:#fff;color:var(--primary);border:1px solid var(--border);border-radius:8px;padding:9px 16px;font-size:0.88rem;cursor:pointer">Abbrechen</button>
+    </div>
+  </div>
+
+  <div id="ep-list" class="patient-grid">
+    <div class="ep-loading">⏳ Lade Einstellplan…</div>
+  </div>
+</section>
+
+<!-- START -->
+<section id="start" class="section active">
+  <div class="card blue">
+    <h2>⏱ Öffnungszeiten Speisesaal</h2>
+    <div class="hours-grid">
+      <div class="hour-box">
+        <div class="meal">Frühstück</div>
+        <div class="time">07:00 – 08:30</div>
+      </div>
+      <div class="hour-box">
+        <div class="meal">Mittagessen</div>
+        <div class="time">12:00 – 13:30</div>
+      </div>
+      <div class="hour-box">
+        <div class="meal">Abendessen</div>
+        <div class="time">17:00 – 19:00</div>
+      </div>
+    </div>
+    <div class="hinweis warn" style="margin-top:14px">
+      <span class="icon">⏰</span>
+      <p><strong>Pünktliches Schließen!</strong> Speisesaal wird PÜNKTLICH geöffnet und geschlossen. Bitte Patienten informieren: mindestens 30 Minuten vor Schließung kommen.</p>
+    </div>
+  </div>
+
+  <div class="card yellow">
+    <h2>🚨 Goldene Regeln – Allergie im Klinikalltag</h2>
+    <div class="hinweis danger">
+      <span class="icon">🚫</span>
+      <p><strong>Im Zweifel: Nicht servieren – immer zuerst nachfragen!</strong> Bei Unsicherheit Allergenordner konsultieren oder Diätologin kontaktieren.</p>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">🧤</span>
+      <p><strong>Handschuhe & Kreuzverunreinigung</strong> Bei Diätkost Handschuhe wechseln, separate Utensilien verwenden. Dasselbe Messer für glutenfreies und Normalbrot = Kontamination!</p>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">📦</span>
+      <p><strong>Produkte immer prüfen</strong> Auch bekannte Produkte können Rezepturänderungen haben. Zutatenliste lesen, nicht auf Erinnerung verlassen.</p>
+    </div>
+    <div class="hinweis info">
+      <span class="icon">💬</span>
+      <p><strong>Kommunikation mit Patienten</strong> Aktiv auf Patienten zugehen, nicht warten bis sie nachfragen. „Haben Sie Unverträglichkeiten oder Allergien?" als Standardfrage bei Neuanreise.</p>
+    </div>
+    <div class="hinweis danger">
+      <span class="icon">⚡</span>
+      <p><strong>Anaphylaxie-Notfall</strong> Bei Reaktion sofort Notaruf (141 intern) + diensthabende Ärztin/Arzt informieren. Nie allein lassen.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📌 Diätkategorien im Überblick</h2>
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:10px; margin-top:10px;">
+      <div style="background:#fff3e0;border-radius:8px;padding:12px;border:1px solid #ffcc80;cursor:pointer" onclick="showSection('zöliakie', document.querySelectorAll('nav button')[1])">
+        <div style="font-size:1.4rem">🌾</div>
+        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Zöliakie / Glutenfrei</div>
+        <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Weizen, Dinkel, Gerste, Roggen…</div>
+      </div>
+      <div style="background:#e3f2fd;border-radius:8px;padding:12px;border:1px solid #90caf9;cursor:pointer" onclick="showSection('laktose', document.querySelectorAll('nav button')[2])">
+        <div style="font-size:1.4rem">🥛</div>
+        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Laktose</div>
+        <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Milchzucker – laktosefreie Produkte</div>
+      </div>
+      <div style="background:#f3e5f5;border-radius:8px;padding:12px;border:1px solid #ce93d8;cursor:pointer" onclick="showSection('fruktose', document.querySelectorAll('nav button')[3])">
+        <div style="font-size:1.4rem">🍎</div>
+        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Fruktose</div>
+        <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Fruchtzucker, kein Kompott</div>
+      </div>
+      <div style="background:#fce4ec;border-radius:8px;padding:12px;border:1px solid #f48fb1;cursor:pointer" onclick="showSection('histamin', document.querySelectorAll('nav button')[4])">
+        <div style="font-size:1.4rem">⚠️</div>
+        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Histamin</div>
+        <div style="font-size:0.75rem;color:#666;margin-top:2px">Nichts gereift, nichts aus der Dose</div>
+      </div>
+      <div style="background:#e8eaf6;border-radius:8px;padding:12px;border:1px solid #9fa8da;cursor:pointer" onclick="showSection('lvk', document.querySelectorAll('nav button')[5])">
+        <div style="font-size:1.4rem">🥗</div>
+        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">LVK – Leichte Vollkost</div>
+        <div style="font-size:0.75rem;color:#666;margin-top:2px">Leicht verdaulich, kein Fettiges</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔍 Was oft übersehen wird – für Nicht-Allergiker</h2>
+
+    <div class="accordion">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        🌾 Verstecktes Gluten <span class="arrow">▼</span>
+      </button>
+      <div class="accordion-content">
+        <ul style="font-size:0.85rem;line-height:1.9;padding-left:16px">
+          <li>Gewürzmischungen (oft Weizenmehl als Träger)</li>
+          <li>Soßen, Fertigprodukte, Suppenwürzen</li>
+          <li>Croutons im Salat oder Suppe</li>
+          <li>Stärke in Puddings (wenn nicht als Maisstärke deklariert)</li>
+          <li>Paniertes Fleisch oder Fisch</li>
+          <li>Bier (enthält Gerstenmalz!)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        🥛 Versteckte Laktose <span class="arrow">▼</span>
+      </button>
+      <div class="accordion-content">
+        <ul style="font-size:0.85rem;line-height:1.9;padding-left:16px">
+          <li>Butterkekse (enthalten Molkenpulver!)</li>
+          <li>Cremesuppen (enthalten oft Sahne/Milch)</li>
+          <li>Kuchen und Backwaren (auf Etikett achten: Kuhmilch, Milchpulver)</li>
+          <li>Margarine (manchmal Milchfett enthalten)</li>
+          <li>Schinkenwurst und manche Wurstsorten</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        ⚠️ Verstecktes Histamin <span class="arrow">▼</span>
+      </button>
+      <div class="accordion-content">
+        <ul style="font-size:0.85rem;line-height:1.9;padding-left:16px">
+          <li>Tomaten und Tomatensaucen (auch Pizza!)</li>
+          <li>Erdbeeren, Himbeeren, Ananas, Bananen</li>
+          <li>Schokolade, Kakao, Nüsse</li>
+          <li>Essig (außer stark verdünntem)</li>
+          <li>Spinat, Avocado, Pilze</li>
+          <li>Jeder Alkohol (auch Weinbrand in Saucen!)</li>
+          <li>Hefe und hefehaltige Produkte</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        🍎 Versteckte Fruktose <span class="arrow">▼</span>
+      </button>
+      <div class="accordion-content">
+        <ul style="font-size:0.85rem;line-height:1.9;padding-left:16px">
+          <li>Honig (sehr hoher Fruktoseanteil)</li>
+          <li>Fertigprodukte mit Maissirup oder Fruchtzucker</li>
+          <li>Fruchttees und Säfte</li>
+          <li>Diätprodukte mit Sorbit (E420) – wird wie Fruktose verstoffwechselt</li>
+          <li>Kompott aus der Dose oder Glas</li>
+          <li>Trockenfrüchte (sehr konzentriert)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        🔀 Kombinierte Unverträglichkeiten <span class="arrow">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="font-size:0.85rem;line-height:1.6;margin-bottom:8px">Manche Patienten haben <strong>mehrere Unverträglichkeiten gleichzeitig</strong> (z.B. Gluten + Histamin + Fruktose). In solchen Fällen:</p>
+        <ul style="font-size:0.85rem;line-height:1.9;padding-left:16px">
+          <li>Immer alle Einschränkungen gleichzeitig beachten</li>
+          <li>Im Zweifel Diätologin fragen, bevor serviert wird</li>
+          <li>Desserts sind besonders kritisch – Standarddesserts sind selten für alle geeignet</li>
+          <li>Einstellplan täglich vor Dienst durchlesen</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ZÖLIAKIE -->
+<section id="zöliakie" class="section">
+  <div class="card">
+    <h2>🌾 Zöliakie – „Glutenfrei"</h2>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:10px">Zöliakie ist keine Unverträglichkeit, sondern eine <strong>Autoimmunerkrankung</strong>. Bereits Spuren von Gluten (auch aus Kreuzverunreinigung) können Darmschäden verursachen.</p>
+    <div class="hinweis danger">
+      <span class="icon">⚡</span>
+      <p><strong>Nulltoleranz!</strong> Kein „ein bisschen" – bei Zöliakie zählen auch Krümel. Separat zubereiten, separate Utensilien, frische Handschuhe.</p>
+    </div>
+    <div class="ev-grid">
+      <div class="ev-col ja">
+        <h4>✅ Erlaubt</h4>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:8px">Getreide</h3>
+        <ul>
+          <li>Glutenfreies Brot, Semmeln, Toastbrot</li>
+          <li>Reiswaffeln</li>
+          <li>Glutenfreie Nudeln</li>
+          <li>Reis, Hirse</li>
+          <li>Mais, Polenta</li>
+          <li>Kartoffeln</li>
+          <li>Buchweizen, Amaranth, Quinoa</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Suppen</h3>
+        <ul>
+          <li>Klare Suppe (⚠️ Einlage prüfen!)</li>
+          <li>Cremesuppen (im Ernstfall nachschauen)</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Salate</h3>
+        <ul><li>Alle außer Getreidesalate (z.B. kein Nudelsalat)</li></ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Naturjoghurt, Fruchtjoghurt (ohne Getreidezusatz)</li>
+          <li>Laktosefreies Frucht-/Naturjoghurt (ohne Getreidezusatz)</li>
+          <li>Pudding, Topfen-Joghurtcremen</li>
+          <li>Buttermilch, Sojapudding (Schoko, Vanille)</li>
+          <li>Kompott, Obst</li>
+          <li>Glutenfreier Kuchen (= Diätkuchen „hell" und Marmor)</li>
+          <li>Glutenfreie Kekse</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Gewürze</h3>
+        <ul><li>Einzelgewürze (nicht Mischungen) – Zutatenliste prüfen</li></ul>
+      </div>
+      <div class="ev-col nein">
+        <h4>❌ Nicht erlaubt</h4>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:8px">Getreide mit Gluten</h3>
+        <ul>
+          <li>Weizen, Dinkel, Gerste</li>
+          <li>Roggen, Kamut, Einkorn</li>
+          <li>Grünkern, Emmer, Triticale</li>
+          <li>Hafer (auch wenn nicht glutenfrei deklariert)</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Suppen</h3>
+        <ul><li>Suppeneinlagen (Grieß, Frittaten, Nudeln)</li></ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Normaler Kuchen, Kekse</li>
+          <li>Joghurt/Cremen mit Getreidezusatz</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Achtung Gewürze</h3>
+        <ul><li>Gewürzmischungen oft mit Weizenmehl als Träger</li></ul>
+      </div>
+    </div>
+    <div class="hinweis info" style="margin-top:14px">
+      <span class="icon">📁</span>
+      <p><strong>Allergenordner</strong> Bei Unsicherheit: Im Allergenordner nachschlagen – Gluten ist unter „Zusatzstoffe/Allergene" als „Glutenhaltiges Getreide sowie daraus hergestellte Erzeugnisse" gekennzeichnet.</p>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">🍳</span>
+      <p><strong>Küchentipp:</strong> Glutenfreie Speisen immer zuerst zubereiten (bevor glutenhaltiges Mehl in der Küche ist). Friteuse und Grillplatten sind immer kontaminiert – nicht verwenden!</p>
+    </div>
+  </div>
+</section>
+
+<!-- LAKTOSE -->
+<section id="laktose" class="section">
+  <div class="card">
+    <h2>🥛 Laktose – Milchzucker</h2>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:10px">Laktoseintoleranz = Mangel an Laktase (Enzym). Beschwerden: Bauchkrämpfe, Blähungen, Durchfall. Schwere variiert stark – manche vertragen kleine Mengen, andere gar nichts.</p>
+    <div class="hinweis info">
+      <span class="icon">ℹ️</span>
+      <p><strong>Cremesuppen</strong> enthalten oft nur eine geringe Menge Laktose (ein Schuss Milch/Sahne) – viele Patienten vertragen dies. Den Patienten informieren, nicht einfach annehmen.</p>
+    </div>
+    <div class="ev-grid">
+      <div class="ev-col ja">
+        <h4>✅ Erlaubt</h4>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:8px">Suppen</h3>
+        <ul><li>Klare Suppe mit laktosefreier Einlage</li></ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Käse</h3>
+        <ul>
+          <li>Schnittkäse/Hartkäse (wenig bis keine Laktose)</li>
+          <li>Brie Schärdinger (wenig Laktose)</li>
+          <li>Edamer, Gouda, Mossbacher</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Salat</h3>
+        <ul><li>Alle Salate ohne Joghurtdressing</li></ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Laktosefreies Naturjoghurt (mit Marmelade)</li>
+          <li>Laktosefreies Fruchtjoghurt</li>
+          <li>Sojapudding (Schoko, Vanille)</li>
+          <li>Kompott, Obst</li>
+          <li>Laktosefreier Kuchen (Etikett prüfen!)</li>
+        </ul>
+      </div>
+      <div class="ev-col nein">
+        <h4>❌ Nicht erlaubt</h4>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:8px">Suppen</h3>
+        <ul>
+          <li>Cremesuppen (enthält Milch/Sahne)</li>
+          <li>Einlagen mit Milchprodukten</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Käse</h3>
+        <ul>
+          <li>Frischkäse, Topfen, Weichkäse</li>
+          <li>Schafmilchjoghurt</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Topfencremen, normales Joghurt</li>
+          <li>Himbeer-/Mangodrink</li>
+          <li>Kuchen mit Kuhmilch/Milchpulver/Molkenpulver</li>
+          <li>Butterkekse (enthalten Molkenpulver!)</li>
+          <li>Molke, Latella</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">🏷️</span>
+      <p><strong>Etikettenpflicht:</strong> Kuchen und Backwaren immer auf Zutatenliste prüfen: „Kuhmilch", „Milchpulver", „Molkenpulver" = Laktose enthalten → Kuchen nicht möglich!</p>
+    </div>
+    <div class="hinweis info">
+      <span class="icon">📁</span>
+      <p><strong>Allergenordner:</strong> Laktose ist unter „Milch und Milcherzeugnisse (einschließlich Laktose)" gekennzeichnet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FRUKTOSE -->
+<section id="fruktose" class="section">
+  <div class="card">
+    <h2>🍎 Fruktose – Fruchtzucker</h2>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:10px">Fruktosemalabsorption: Der Dünndarm kann Fruchtzucker nicht ausreichend aufnehmen. Beschwerden: Blähungen, Bauchschmerzen, Durchfall. Verträglichkeit ist individuell sehr unterschiedlich!</p>
+    <div class="hinweis danger">
+      <span class="icon">📁</span>
+      <p><strong>Achtung:</strong> Fruktose ist NICHT im Allergenordner angeführt! Muss über den Einstellplan / Patientenunterlagen bekannt sein.</p>
+    </div>
+    <div class="ev-grid">
+      <div class="ev-col ja">
+        <h4>✅ Erlaubt</h4>
+        <ul>
+          <li>Alle Suppen (ohne Fruchtzubereitung)</li>
+          <li>Alle Hauptspeisen ohne Fruchtzubereitung oder Fruchtmus</li>
+          <li>Alle Salate</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Naturjoghurt (mit normaler Marmelade)</li>
+          <li>Laktosefreies Naturjoghurt (mit normaler Marmelade)</li>
+          <li>Buttermilch (ohne Früchte)</li>
+          <li>Sojapudding (Schoko, Vanille)</li>
+          <li>Butterkekse</li>
+          <li>Diätkuchen „hell" und Marmor</li>
+          <li>Kuchen ohne Frucht (außer verträglichem Obst)</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Verträgliches Obst</h3>
+        <ul>
+          <li>Bananen, 1 Orange, 1 Kiwi</li>
+          <li>Beerenfrüchte, 1 Mandarine</li>
+          <li>Zuckermelone, Zitronen, Kirschen</li>
+          <li>⚠️ Menge ist individuell sehr unterschiedlich</li>
+        </ul>
+      </div>
+      <div class="ev-col nein">
+        <h4>❌ Nicht erlaubt</h4>
+        <ul>
+          <li>Hauptspeisen mit Fruchtzubereitung / Fruchtmus / Kompott</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Diätjoghurt, Diätmarmelade</li>
+          <li>Fruchtjoghurt, Fruchtcremen</li>
+          <li>Obst (außer den verträglichen Sorten)</li>
+          <li>Kuchen mit Früchten</li>
+          <li>Fruchtmus, Kompott</li>
+          <li>MilkiMum (Fruktosesirup!)</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Bei „Fruktose streng"</h3>
+        <ul>
+          <li>Vollkornprodukte</li>
+          <li>Blähende Gemüsesorten: Kraut, Kohl, Bohnen, Gurke, Kohlrabi, Fisolen, Karfiol</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">🍯</span>
+      <p><strong>Honig meiden!</strong> Honig enthält sehr viel Fruktose – auch als Zutat in Saucen, Dressings oder Gebäck prüfen.</p>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">🏷️</span>
+      <p><strong>Sorbit (E420) beachten:</strong> In Diätprodukten häufig als Süßungsmittel enthalten. Wird wie Fruktose verstoffwechselt und kann Beschwerden auslösen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HISTAMIN -->
+<section id="histamin" class="section">
+  <div class="card">
+    <h2>⚠️ Histamin-Intoleranz</h2>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:10px">Histaminintoleranz: Das Enzym Diaminoxidase (DAO) baut Histamin nicht ausreichend ab. Symptome: Hautrötung, Kopfschmerzen, Herzrasen, Verdauungsbeschwerden – können auch stark verzögert auftreten.</p>
+
+    <div class="hinweis danger">
+      <span class="icon">🥫</span>
+      <p><strong>Grundregel 1: Nichts aus der Dose!</strong> Konserven enthalten immer erhöhte Histaminmengen.</p>
+    </div>
+    <div class="hinweis danger">
+      <span class="icon">🧀</span>
+      <p><strong>Grundregel 2: Nichts Gereiftes/Gegorenes!</strong> Hartwürste, gereifter Käse, Sauerkraut, Alkohol → kein Histamin.</p>
+    </div>
+    <div class="hinweis danger">
+      <span class="icon">📁</span>
+      <p><strong>Achtung:</strong> Histamin ist NICHT im Allergenordner angeführt! Nur über Einstellplan/Patientenunterlagen bekannt.</p>
+    </div>
+
+    <div class="ev-grid">
+      <div class="ev-col ja">
+        <h4>✅ Erlaubt</h4>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:8px">Käse</h3>
+        <ul>
+          <li>Frischkäse, Topfen, Hüttenkäse</li>
+          <li>Schafskäse, Sauermilchprodukte</li>
+          <li>Edamer, Butterkäse, junger Gouda</li>
+          <li>Geheimratskäse, Käse nach Holländer Art</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Fleisch & Wurst</h3>
+        <ul>
+          <li>Frisches oder tiefgekühltes Fleisch</li>
+          <li>Gekochter Schinken</li>
+          <li>Extrawurst, Pikante, Frankfurter, Bratwürstel</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Fisch</h3>
+        <ul>
+          <li>Frischer Fisch und Tiefkühlfisch (außer Thunfisch)</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Gemüse</h3>
+        <ul><li>Alle übrigen frischen oder tiefgekühlten Gemüsesorten</li></ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Obst</h3>
+        <ul><li>Alle übrigen frischen oder tiefgekühlten Obstsorten</li></ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Essig / Sonstiges</h3>
+        <ul><li>Ganz stark verdünnter Essig</li></ul>
+      </div>
+      <div class="ev-col nein">
+        <h4>❌ Nicht erlaubt</h4>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:8px">Käse</h3>
+        <ul>
+          <li>Weichkäse (Brie) und sonstiger Schnitt-/Hartkäse</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Fleisch & Wurst</h3>
+        <ul>
+          <li>Dauerwürste, Räucherware</li>
+          <li>Geselchtes, Salami, Rohschinken, Speck</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Fisch</h3>
+        <ul>
+          <li>Geräucherter und marinierter Fisch</li>
+          <li>Meeresfrüchte, Fischkonserven</li>
+          <li>Dosenthunfisch, Heringssalat, Rollmops</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Gemüse</h3>
+        <ul>
+          <li>Tomaten, Tomatenerzeugnisse</li>
+          <li>Spinat, Melanzani, Avocado, Pilze</li>
+          <li>Hülsenfrüchte, Soja, Linsen</li>
+          <li>Sauerkraut, Essigsaures Gemüse, Dosengemüse</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Obst</h3>
+        <ul>
+          <li>Zitrusfrüchte (Orange, Grapefruit, Zitrone, Mandarinen)</li>
+          <li>Bananen, Erdbeeren, Himbeeren, Ananas, Birnen, Kiwi</li>
+          <li>Obst aus der Dose</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Sonstiges</h3>
+        <ul>
+          <li>Nüsse, Mohn, Schokolade, Kakao, Lakritze</li>
+          <li>Rotweinessig, Balsamicoessig</li>
+          <li>Alle alkoholischen Getränke</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">🍅</span>
+      <p><strong>Tomatensauce ist ein Klassiker-Fehler!</strong> Pasta mit Tomatensauce scheint harmlos, ist aber für Histamin-Patienten problematisch. Immer Alternativen anbieten.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LVK -->
+<section id="lvk" class="section">
+  <div class="card">
+    <h2>🥗 LVK – Leichte Vollkost</h2>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:10px">Leichte Vollkost = vollwertige Ernährung, aber leicht verdaulich. Kein Fettiges, Frittiertes, Blähende oder schwer Verdauliches. Für Patienten mit empfindlichem Magen-Darm-Trakt.</p>
+    <div class="ev-grid">
+      <div class="ev-col ja">
+        <h4>✅ Erlaubt</h4>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:8px">Suppen</h3>
+        <ul><li>Alle Suppen, wenn Gemüse LVK-tauglich ist</li></ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Getreide</h3>
+        <ul>
+          <li>Semmel, Milchbrot</li>
+          <li>Schwarzbrot „ohne Körner"</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Beilagen</h3>
+        <ul><li>Reis, Polenta, Nudeln, Kartoffeln</li></ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Salat / Gemüse</h3>
+        <ul>
+          <li>Karotte, Sellerie, Kürbis, Spargel</li>
+          <li>Melanzani, Zucchini, Fenchel, Tomaten</li>
+          <li>Spinat, Schwarzwurzel, Brokkoli</li>
+          <li>Kopfsalat, Rote Rüben, Vogerlsalat</li>
+          <li>Eisbergsalat, Kartoffeln</li>
+          <li>Essiggurken in kleinen Mengen</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Obst</h3>
+        <ul>
+          <li>Bananen, Himbeeren, Erdbeeren</li>
+          <li>Heidelbeeren, Äpfel, Melonen</li>
+          <li>Weiche Kiwi, Orangen, Mandarinen, Mango</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Milch/Milchprodukte</h3>
+        <ul>
+          <li>Milch, Joghurt, Molke, Buttermilch</li>
+          <li>Topfen, milde Käsesorten (Edamer, Gouda, Mossbacher)</li>
+          <li>Hüttenkäse</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Fleisch / Fisch</h3>
+        <ul><li>Magere Sorten, fettarm zubereitet (⚠️ Achtung bei Saucen!)</li></ul>
+        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Biskuit (Diätkuchen)</li>
+          <li>Obstkuchen ohne üppige Creme</li>
+          <li>Topfencremen, Naturjoghurt, Fruchtjoghurt</li>
+          <li>Butterkekse, Buttermilch, Sojapudding</li>
+          <li>Kompotte außer Zwetschke</li>
+        </ul>
+      </div>
+      <div class="ev-col nein">
+        <h4>❌ Nicht erlaubt</h4>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:8px">Suppen</h3>
+        <ul>
+          <li>Kohlsprossensuppe, Karfiolsuppe</li>
+          <li>Schwammerl-/Pilzsuppe</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Getreide</h3>
+        <ul>
+          <li>Vollkorngebäck</li>
+          <li>Weckerl „mit Körner"</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Beilagen</h3>
+        <ul>
+          <li>Keine Vollkornbeilage</li>
+          <li>Nichts Frittiertes (Pommes etc.)</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Salat / Gemüse</h3>
+        <ul>
+          <li>Kraut, Kohl, Gurken, Rettich</li>
+          <li>Radieschen, Paprika, Zwiebel</li>
+          <li>Knoblauch, Lauch, Bohnen, Pilze</li>
+          <li>Hülsenfrüchte, Kohlrabi, Karfiol</li>
+          <li>Chips, Pommes und fettreiche Zubereitungen</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Obst</h3>
+        <ul>
+          <li>Birnen, Weintrauben</li>
+          <li>Roher Steinobst: Zwetschken, Pfirsich, Marillen, Kirschen</li>
+          <li>Kompotte außer Zwetschke</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Milch/Milchprodukte</h3>
+        <ul>
+          <li>Überreife, frittierte Produkte</li>
+          <li>Brie, länger gereifte Käsesorten (Jerome, Emmentaler)</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Fleisch / Fisch</h3>
+        <ul>
+          <li>Fettes, Frittiertes</li>
+          <li>Sehr scharf angebratenes Fleisch</li>
+          <li>Räucherware</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Gewürze</h3>
+        <ul>
+          <li>Zwiebel, Knoblauch</li>
+          <li>Sehr scharfe Gerichte, viel Pfeffer, Paprika, Kren, Curry, Chili</li>
+        </ul>
+        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Zwetschkenröster/Kompott</li>
+          <li>Üppige Kuchen (Bienenstich)</li>
+          <li>Obst: siehe oben</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">🍲</span>
+      <p><strong>Achtung bei Saucen!</strong> Auch wenn das Fleisch mager ist – schwere Rahmsaucen oder gebundene Saucen sind für LVK nicht geeignet. Immer leichte Saucen verwenden.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CAFE -->
+<section id="cafe" class="section">
+  <div class="card yellow">
+    <h2>☕ Cafe – wird aufgebaut</h2>
+    <p style="font-size:0.88rem;color:var(--muted);margin-bottom:6px">Diese Rubrik wird laufend ergänzt. Geplante Unterkategorien: Heißgetränke, Kaltgetränke, Alkoholische Getränke, Snacks & Mehlspeisen, Saisonales Angebot.</p>
+    <div class="hinweis info">
+      <span class="icon">🚧</span>
+      <p><strong>Im Aufbau.</strong> Die aktuellen Getränkerezepte sind bereits hinterlegt. Weitere Inhalte folgen.</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:18px">
+    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.82rem">
+      ☕<br><strong>Heißgetränke</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
+    </div>
+    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.82rem">
+      🥤<br><strong>Kaltgetränke</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
+    </div>
+    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.82rem">
+      🥐<br><strong>Snacks & Mehlspeisen</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
+    </div>
+    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.82rem">
+      🌿<br><strong>Saisonales</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🥂 Alkoholische Getränke – Rezepte & Allergiehinweise</h2>
+    <div class="hinweis warn">
+      <span class="icon">⚠️</span>
+      <p><strong>Alkohol ist für Histamin-Patienten tabu!</strong> Hugo, Aperol, Limoncello und Sekt-Rosé sind für Histamin-Intoleranz NICHT geeignet. Für diese Patienten Alternativen anbieten.</p>
+    </div>
+    <div class="drinks-grid">
+      <div class="drink-card">
+        <h4>🌿 Hugo</h4>
+        <ul>
+          <li>Holundersirup</li>
+          <li>1/8 Soda</li>
+          <li>1/8 Prosecco</li>
+          <li>Minze, Limette, Eiswürfel, Strohhalm</li>
+        </ul>
+        <div style="font-size:0.72rem;margin-top:8px;color:var(--red)">⚠️ Kein Histamin, kein Fruktose-streng</div>
+      </div>
+      <div class="drink-card">
+        <h4>🍊 Aperol-Spritz</h4>
+        <ul>
+          <li>1/8 Soda</li>
+          <li>1/8 Wein</li>
+          <li>‚Aperol' Sirup</li>
+          <li>Orangescheibe, Eiswürfel, Strohhalm</li>
+        </ul>
+        <div style="font-size:0.72rem;margin-top:8px;color:var(--red)">⚠️ Kein Histamin (Alkohol + Orange)</div>
+      </div>
+      <div class="drink-card">
+        <h4>🍋 Limoncello</h4>
+        <ul>
+          <li>1/8 Soda</li>
+          <li>1/8 Prosecco</li>
+          <li>Limoncello (Schuss)</li>
+          <li>Minze, Zitrone, Eiswürfel, Strohhalm</li>
+        </ul>
+        <div style="font-size:0.72rem;margin-top:8px;color:var(--red)">⚠️ Kein Histamin (Alkohol + Zitrone)</div>
+      </div>
+      <div class="drink-card">
+        <h4>🌸 Sekt-Rosé</h4>
+        <ul>
+          <li>1/8 Soda</li>
+          <li>1/8 Rosé Sekt</li>
+          <li>Himbeere (TK)</li>
+          <li>Minze, Limette, Eiswürfel, Strohhalm</li>
+        </ul>
+        <div style="font-size:0.72rem;margin-top:8px;color:var(--red)">⚠️ Kein Histamin (Alkohol + Himbeere)</div>
+      </div>
+      <div class="drink-card">
+        <h4>☕ Winterkaffee</h4>
+        <ul>
+          <li>Espresso</li>
+          <li>Milch</li>
+          <li>Kakao</li>
+          <li>Ahornsirup</li>
+          <li>Sahne</li>
+        </ul>
+        <div style="font-size:0.72rem;margin-top:8px;color:var(--yellow)">⚠️ Kakao = Histamin, Milch = Laktose</div>
+      </div>
+    </div>
+    <h3 style="margin-top:18px;margin-bottom:10px">🥤 Limonaden</h3>
+    <div class="drinks-grid">
+      <div class="drink-card"><h4>Apfel-Holunder</h4><div style="font-size:0.72rem;color:var(--yellow)">⚠️ Fruktose beachten</div></div>
+      <div class="drink-card"><h4>Himbeer-Zitrone</h4><div style="font-size:0.72rem;color:var(--red)">⚠️ Kein Histamin (Himbeere + Zitrone)</div></div>
+      <div class="drink-card"><h4>Limette</h4><div style="font-size:0.72rem;color:var(--yellow)">⚠️ Histamin: Zitrusfrüchte prüfen</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REINIGUNG -->
+
+<section id="reinigung" class="section">
+  <div class="card">
+    <h2>🧹 Reinigungs- & Arbeitsplan Cafeteria</h2>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:12px">Hygieneplan für tägliche und wöchentliche Aufgaben. Besonders wichtig bei Allergieküche: Kreuzverunreinigung durch unzureichende Reinigung vermeiden!</p>
+
+    <div class="hinweis danger">
+      <span class="icon">🧽</span>
+      <p><strong>Allergiehygiene:</strong> Arbeitsflächen, Schneidebretter und Utensilien nach Kontakt mit Allergenen (Gluten, Nüsse etc.) sofort reinigen und desinfizieren – nicht nur abwischen!</p>
+    </div>
+
+    <div style="overflow-x:auto">
+    <table class="clean-table">
+      <thead>
+        <tr>
+          <th>Tätigkeit</th>
+          <th>MO</th><th>Di</th><th>MI</th><th>DO</th><th>FR</th><th>SA</th><th>SO</th><th>1×/Monat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Buffetrahmen abstauben & wischen</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Buffetaufsteller abwischen & desinfizieren</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Sideboard putzen & desinfizieren</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Salatvitrine putzen & desinfizieren & Wand</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Servietten/Tee nachfüllen</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Bänke/Sessel abkehren</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Sozialraum Tische wischen/Menagen (14:15)</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Getränkelager reinigen/ordnen</td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Getränke/Gläser Sozialraum auffüllen/kontrollieren</td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Wäschekammer wischen & Wäsche wegräumen</td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td></tr>
+        <tr><td>Heißwasserautomat 2 St. & Speisesaal entkalken (ungerade Woche)</td><td></td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td></tr>
+        <tr><td>Heißwasserautomat & Geschirrspüler Teebar 3 St. entkalken (gerade Woche)</td><td></td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td></tr>
+        <tr><td>Menagen auffüllen/wischen & Kärchenhalter wischen</td><td></td><td></td><td class="x">✓</td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
+        <tr><td>Sessel und Tischbeine nass wischen</td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Menükarten Neuanreise schreiben</td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
+        <tr><td>Besteckladen reinigen/desinfizieren</td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
+        <tr><td>Türen reinigen</td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
+        <tr><td>Buffetkästen reinigen & desinfizieren</td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
+        <tr><td>Absperrständer putzen</td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td></tr>
+        <tr><td>Aushelfen in der Cafeteria</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td></tr>
+        <tr><td>Motor Salatbuffet absaugen</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- SUCHE -->
+<section id="suche" class="section">
+  <div class="card">
+    <h2>🔍 Schnellsuche – Lebensmittel & Unverträglichkeit</h2>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px">Gib ein Lebensmittel ein, um zu sehen, bei welchen Diäten es erlaubt oder verboten ist.</p>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="z.B. Tomaten, Joghurt, Kuchen, Butter…" oninput="doSearch(this.value)">
+    </div>
+    <div id="search-results"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Privatklinik St. Radegund · Sanlas Holding · KostKompass v2.0 · Bei Unsicherheit immer Allergenordner oder Diätologin konsultieren.
+</footer>
+
+<script>
+// ─── SUPABASE CONFIG ──────────────────────────────────────────────────────────
+// Trage hier deine Werte ein (Supabase → Settings → API)
+const SUPABASE_URL  = 'DEINE_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'DEIN_ANON_KEY';
+// ─────────────────────────────────────────────────────────────────────────────
+
+let sb = null;
+function initSupabase() {
+  if (SUPABASE_URL.startsWith('DEINE') || SUPABASE_ANON_KEY.startsWith('DEIN')) return null;
+  if (!sb) sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  return sb;
+}
+
+// Header-Badge mit KW + Datum
+(function() {
+  const now = new Date();
+  const startOfYear = new Date(now.getFullYear(), 0, 1);
+  const kw = Math.ceil(((now - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
+  document.getElementById('header-badge').textContent = `KW ${kw} / ${now.getFullYear()}`;
+})();
+
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (id === 'einstellplan') epLoad();
+}
+
+function toggleAcc(btn) {
+  const content = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  content.classList.toggle('open', !isOpen);
+}
+
+// ─── EINSTELLPLAN ─────────────────────────────────────────────────────────────
+const DIET_CLASS = { 'Zöliakie': 'gluten', 'Laktose': 'laktose', 'Fruktose': 'fruktose', 'Histamin': 'histamin', 'LVK': 'lvk' };
+const DIET_ICON  = { 'Zöliakie': '🌾', 'Laktose': '🥛', 'Fruktose': '🍎', 'Histamin': '⚠️', 'LVK': '🥗' };
+
+function epToggleForm() {
+  const f = document.getElementById('ep-form');
+  f.classList.toggle('open');
+  if (!f.classList.contains('open')) epResetForm();
+}
+
+function epResetForm() {
+  document.getElementById('ep-name').value = '';
+  document.getElementById('ep-zimmer').value = '';
+  document.getElementById('ep-abreise').value = '';
+  document.querySelectorAll('.ep-checkboxes input').forEach(c => c.checked = false);
+}
+
+async function epLoad() {
+  const list = document.getElementById('ep-list');
+  const status = document.getElementById('ep-status');
+  const client = initSupabase();
+
+  if (!client) {
+    document.getElementById('ep-setup-banner').style.display = 'block';
+    list.innerHTML = '<div class="ep-empty">Supabase nicht verbunden – siehe Hinweis oben.</div>';
+    return;
+  }
+
+  list.innerHTML = '<div class="ep-loading">⏳ Lade…</div>';
+  status.textContent = '';
+
+  const { data, error } = await client
+    .from('patients')
+    .select('*')
+    .order('abreise', { ascending: true });
+
+  if (error) {
+    list.innerHTML = `<div class="ep-empty" style="color:var(--red)">Fehler: ${error.message}</div>`;
+    return;
+  }
+
+  const today = new Date().toISOString().slice(0, 10);
+  const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
+
+  if (!data.length) {
+    list.innerHTML = '<div class="ep-empty">Keine Patienten eingetragen.</div>';
+    status.textContent = '0 Patienten';
+    return;
+  }
+
+  status.textContent = `${data.length} Patient${data.length !== 1 ? 'en' : ''}`;
+
+  list.innerHTML = data.map(p => {
+    const diets = p.diaeten || [];
+    const tags = diets.length
+      ? diets.map(d => `<span class="diet-tag ${DIET_CLASS[d] || ''}">${DIET_ICON[d] || ''} ${d}</span>`).join('')
+      : `<span class="diet-tag normal">Normale Kost</span>`;
+
+    const abreiseLabel = p.abreise
+      ? new Date(p.abreise).toLocaleDateString('de-AT', { day:'2-digit', month:'2-digit', year:'numeric' })
+      : '–';
+
+    let cardClass = 'patient-card';
+    if (p.abreise === today) cardClass += ' ep-abreise-today';
+    else if (p.abreise === tomorrow) cardClass += ' ep-abreise-soon';
+
+    return `
+      <div class="${cardClass}">
+        <button class="pc-delete" onclick="epDelete('${p.id}')" title="Entlassen / löschen">✕</button>
+        <div class="pc-name">${p.name}</div>
+        <div class="pc-meta">Zimmer ${p.zimmer || '–'} · Abreise: ${abreiseLabel}</div>
+        <div class="pc-tags">${tags}</div>
+      </div>`;
+  }).join('');
+}
+
+async function epSave() {
+  const client = initSupabase();
+  if (!client) return;
+
+  const name = document.getElementById('ep-name').value.trim();
+  if (!name) { alert('Bitte Namen eingeben.'); return; }
+
+  const diaeten = [...document.querySelectorAll('.ep-checkboxes input:checked')].map(c => c.value);
+  const abreise = document.getElementById('ep-abreise').value || null;
+  const zimmer  = document.getElementById('ep-zimmer').value.trim() || null;
+
+  const { error } = await client.from('patients').insert([{ name, zimmer, abreise, diaeten }]);
+  if (error) { alert('Fehler beim Speichern: ' + error.message); return; }
+
+  epResetForm();
+  document.getElementById('ep-form').classList.remove('open');
+  await epLoad();
+}
+
+async function epDelete(id) {
+  if (!confirm('Patient entlassen / löschen?')) return;
+  const client = initSupabase();
+  const { error } = await client.from('patients').delete().eq('id', id);
+  if (error) { alert('Fehler: ' + error.message); return; }
+  await epLoad();
+}
+
+// Search database
+const searchDB = [
+  { term: 'tomaten', text: 'Tomaten', gluten: '✅', laktose: '✅', fruktose: '✅', histamin: '❌ VERBOTEN – enthält viel Histamin', lvk: '✅' },
+  { term: 'joghurt', text: 'Joghurt (normal)', gluten: '✅ (ohne Getreidezusatz)', laktose: '❌ enthält Laktose', fruktose: '✅ (Naturjoghurt)', histamin: '✅ (Naturjoghurt, Fruchtjoghurt prüfen)', lvk: '✅' },
+  { term: 'naturjoghurt', text: 'Naturjoghurt', gluten: '✅', laktose: '❌ (laktosefreie Variante nehmen)', fruktose: '✅ (mit normaler Marmelade)', histamin: '✅', lvk: '✅' },
+  { term: 'buttermilch', text: 'Buttermilch', gluten: '✅', laktose: '❌ (enthält Laktose)', fruktose: '✅ (ohne Früchte)', histamin: '✅', lvk: '✅' },
+  { term: 'butter', text: 'Butter', gluten: '✅', laktose: '⚠️ Spuren möglich', fruktose: '✅', histamin: '✅', lvk: '✅' },
+  { term: 'kuchen', text: 'Normaler Kuchen', gluten: '❌ VERBOTEN', laktose: '⚠️ auf Etikett prüfen (Milchpulver)', fruktose: '⚠️ wenn mit Früchten: VERBOTEN', histamin: '⚠️ je nach Zutaten', lvk: '⚠️ nur leichter Obstkuchen ohne Creme' },
+  { term: 'diätkuchen', text: 'Diätkuchen „hell" / Marmor', gluten: '✅ (= glutenfreier Kuchen)', laktose: '✅', fruktose: '✅', histamin: '✅ (kein Schoko/Nüsse)', lvk: '✅ (Biskuit)' },
+  { term: 'sojapudding', text: 'Sojapudding (Schoko, Vanille)', gluten: '✅', laktose: '✅', fruktose: '✅', histamin: '⚠️ Schoko = Histamin! Nur Vanille', lvk: '✅' },
+  { term: 'kompott', text: 'Kompott', gluten: '✅', laktose: '✅', fruktose: '❌ VERBOTEN (enthält Fruchtzucker)', histamin: '✅ (frisch, nicht aus Dose)', lvk: '✅ (außer Zwetschke)' },
+  { term: 'schokolade', text: 'Schokolade / Kakao', gluten: '⚠️ prüfen', laktose: '⚠️ prüfen', fruktose: '⚠️ prüfen', histamin: '❌ VERBOTEN', lvk: '❌ zu schwer' },
+  { term: 'nüsse', text: 'Nüsse', gluten: '✅', laktose: '✅', fruktose: '⚠️ bei fruktose-streng vermeiden', histamin: '❌ VERBOTEN', lvk: '⚠️ schwer verdaulich' },
+  { term: 'spinat', text: 'Spinat', gluten: '✅', laktose: '✅', fruktose: '✅', histamin: '❌ VERBOTEN', lvk: '✅' },
+  { term: 'avocado', text: 'Avocado', gluten: '✅', laktose: '✅', fruktose: '✅', histamin: '❌ VERBOTEN', lvk: '❌ zu fettreich' },
+  { term: 'bananen', text: 'Bananen', gluten: '✅', laktose: '✅', fruktose: '✅ (in kleiner Menge)', histamin: '❌ VERBOTEN', lvk: '✅' },
+  { term: 'erdbeeren', text: 'Erdbeeren', gluten: '✅', laktose: '✅', fruktose: '❌ (hoher Fruktosegehalt)', histamin: '❌ VERBOTEN', lvk: '✅' },
+  { term: 'orangensaft', text: 'Orangensaft / Orangen', gluten: '✅', laktose: '✅', fruktose: '⚠️ 1 Orange OK', histamin: '❌ VERBOTEN (Zitrusfrüchte)', lvk: '✅' },
+  { term: 'orange', text: 'Orange', gluten: '✅', laktose: '✅', fruktose: '⚠️ 1 Orange OK', histamin: '❌ VERBOTEN (Zitrusfrüchte)', lvk: '✅' },
+  { term: 'roggenbrot', text: 'Roggenbrot / Schwarzbrot', gluten: '❌ VERBOTEN (Roggen = Gluten)', laktose: '✅', fruktose: '✅', histamin: '✅', lvk: '✅ (ohne Körner)' },
+  { term: 'semmel', text: 'Semmel (normal)', gluten: '❌ VERBOTEN (Weizen)', laktose: '✅', fruktose: '✅', histamin: '✅', lvk: '✅' },
+  { term: 'käse', text: 'Käse (allgemein)', gluten: '✅', laktose: '⚠️ Hartkäse OK, Frischkäse NEIN', fruktose: '✅', histamin: '⚠️ Nur junger/milder Käse', lvk: '✅ (milde Sorten)' },
+  { term: 'frischkäse', text: 'Frischkäse / Topfen', gluten: '✅', laktose: '❌ enthält Laktose', fruktose: '✅', histamin: '✅', lvk: '✅' },
+  { term: 'wurst', text: 'Wurst / Aufschnitt (allgemein)', gluten: '⚠️ prüfen', laktose: '⚠️ prüfen', fruktose: '✅', histamin: '⚠️ nur Extrawurst/Frankfurter/gekochter Schinken', lvk: '✅ (mager)' },
+  { term: 'salami', text: 'Salami / Rohschinken / Speck', gluten: '✅', laktose: '✅', fruktose: '✅', histamin: '❌ VERBOTEN (gereift)', lvk: '❌' },
+  { term: 'pilze', text: 'Pilze / Schwammerl', gluten: '✅', laktose: '✅', fruktose: '✅', histamin: '❌ VERBOTEN', lvk: '❌ (Schwammerlsuppe verboten)' },
+  { term: 'essig', text: 'Essig', gluten: '✅', laktose: '✅', fruktose: '✅', histamin: '⚠️ Nur stark verdünnt; Balsamico & Rotweinessig VERBOTEN', lvk: '⚠️ wenig' },
+  { term: 'alkohol', text: 'Alkohol (Wein, Bier, Schnaps)', gluten: '⚠️ Bier = Gluten!', laktose: '✅', fruktose: '⚠️', histamin: '❌ VERBOTEN', lvk: '❌' },
+];
+
+function doSearch(val) {
+  const out = document.getElementById('search-results');
+  if (!val || val.trim().length < 2) { out.innerHTML = ''; return; }
+  const q = val.toLowerCase().trim();
+  const hits = searchDB.filter(d => d.term.includes(q) || d.text.toLowerCase().includes(q));
+  if (!hits.length) {
+    out.innerHTML = '<p style="color:var(--muted);font-size:0.85rem">Kein Eintrag gefunden. Bitte Allergenordner konsultieren.</p>';
+    return;
+  }
+  out.innerHTML = hits.map(h => `
+    <div class="search-hit">
+      <strong>${h.text}</strong>
+      <div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;font-size:0.8rem">
+        <div>🌾 Zöliakie/Gluten: ${h.gluten}</div>
+        <div>🥛 Laktose: ${h.laktose}</div>
+        <div>🍎 Fruktose: ${h.fruktose}</div>
+        <div>⚠️ Histamin: ${h.histamin}</div>
+        <div>🥗 LVK: ${h.lvk}</div>
+      </div>
+    </div>
+  `).join('');
+}
+</script>
+</body>
+</html>
