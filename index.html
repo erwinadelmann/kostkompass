@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KostKompass – Privatklinik St. Radegund</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 242 60'%3E%3Cpath fill='%2300963E' d='M120.4,0.8h0.3c2.1,0,4.2,0.2,6.3,0.7c-5.2,8.6-4.6,16.3-4.6,16.3s2-7.2,11.1-14.1c3.2,1.6,6.1,3.7,8.5,6.3c-16.9,11.6-16,20.1-16,20.1s4.9-10.4,20.6-13.7c2,3.8,3.2,8.1,3.4,12.6c-14.6-0.2-21.4,9-21.4,9s7.5-5.8,21.1-3.7c-0.5,3.3-1.5,6.4-2.9,9.2c-15.7-0.9-19.2,2.3-19.2,2.3s9.7-2.8,15.7,3.1c-2.1,2.5-4.5,4.6-7.3,6.3c-8.4-5.5-12.9,0.7-14.7,4.3h-0.9h-0.9c-1.8-3.6-6.3-9.8-14.7-4.3c-2.8-1.7-5.2-3.8-7.3-6.3c5.9-6,15.7-3.1,15.7-3.1s-3.5-3.1-19.2-2.3c-1.5-2.8-2.5-5.9-2.9-9.2c13.7-2.1,21.1,3.7,21.1,3.7s-6.8-9.2-21.4-9c0.2-4.6,1.4-8.8,3.4-12.6c15.7,3.3,20.6,13.7,20.6,13.7s0.9-8.5-16-20.1c2.4-2.6,5.3-4.7,8.5-6.3c9.2,6.8,11.1,14.1,11.1,14.1s0.7-7.7-4.6-16.3c2-0.4,4.1-0.7,6.3-0.7H120.4z'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%230e7490'/%3E%3Cellipse cx='20' cy='22' rx='16' ry='10' fill='%23f97316' opacity='0.95' transform='rotate(-25 20 22)'/%3E%3Cellipse cx='44' cy='22' rx='16' ry='10' fill='%23f97316' opacity='0.95' transform='rotate(25 44 22)'/%3E%3Cellipse cx='18' cy='36' rx='12' ry='7' fill='%23ea580c' opacity='0.9' transform='rotate(20 18 36)'/%3E%3Cellipse cx='46' cy='36' rx='12' ry='7' fill='%23ea580c' opacity='0.9' transform='rotate(-20 46 36)'/%3E%3Cellipse cx='32' cy='30' rx='3' ry='14' fill='%231e293b'/%3E%3Ccircle cx='32' cy='14' r='3' fill='%231e293b'/%3E%3Cline x1='30' y1='14' x2='24' y2='8' stroke='%231e293b' stroke-width='1.5'/%3E%3Cline x1='34' y1='14' x2='40' y2='8' stroke='%231e293b' stroke-width='1.5'/%3E%3C/svg%3E">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
@@ -415,11 +415,7 @@
 <nav id="main-nav">
   <button class="active" onclick="showSection('start', this)">🏠 Start</button>
   <button onclick="showSection('einstellplan', this)">📋 Einstellplan</button>
-  <button onclick="showSection('zöliakie', this)">🌾 Zöliakie</button>
-  <button onclick="showSection('laktose', this)">🥛 Laktose</button>
-  <button onclick="showSection('fruktose', this)">🍎 Fruktose</button>
-  <button onclick="showSection('histamin', this)">⚠️ Histamin</button>
-  <button onclick="showSection('lvk', this)">🥗 LVK</button>
+  <button onclick="showSection('allergien', this)">🍽️ Allergien</button>
   <button onclick="showSection('cafe', this)">☕ Cafe</button>
   <button onclick="showSection('reinigung', this)">🧹 Reinigung</button>
   <button onclick="showSection('suche', this)">🔍 Suche</button>
@@ -537,27 +533,27 @@
   <div class="card">
     <h2>📌 Diätkategorien im Überblick</h2>
     <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:10px; margin-top:10px;">
-      <div style="background:#fff3e0;border-radius:8px;padding:12px;border:1px solid #ffcc80;cursor:pointer" onclick="showSection('zöliakie', document.querySelectorAll('nav button')[1])">
+      <div style="background:#fff3e0;border-radius:8px;padding:12px;border:1px solid #ffcc80;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
         <div style="font-size:1.4rem">🌾</div>
         <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Zöliakie / Glutenfrei</div>
         <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Weizen, Dinkel, Gerste, Roggen…</div>
       </div>
-      <div style="background:#e3f2fd;border-radius:8px;padding:12px;border:1px solid #90caf9;cursor:pointer" onclick="showSection('laktose', document.querySelectorAll('nav button')[2])">
+      <div style="background:#e3f2fd;border-radius:8px;padding:12px;border:1px solid #90caf9;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[2])">
         <div style="font-size:1.4rem">🥛</div>
         <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Laktose</div>
         <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Milchzucker – laktosefreie Produkte</div>
       </div>
-      <div style="background:#f3e5f5;border-radius:8px;padding:12px;border:1px solid #ce93d8;cursor:pointer" onclick="showSection('fruktose', document.querySelectorAll('nav button')[3])">
+      <div style="background:#f3e5f5;border-radius:8px;padding:12px;border:1px solid #ce93d8;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[3])">
         <div style="font-size:1.4rem">🍎</div>
         <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Fruktose</div>
         <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Fruchtzucker, kein Kompott</div>
       </div>
-      <div style="background:#fce4ec;border-radius:8px;padding:12px;border:1px solid #f48fb1;cursor:pointer" onclick="showSection('histamin', document.querySelectorAll('nav button')[4])">
+      <div style="background:#fce4ec;border-radius:8px;padding:12px;border:1px solid #f48fb1;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[4])">
         <div style="font-size:1.4rem">⚠️</div>
         <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Histamin</div>
         <div style="font-size:0.75rem;color:#666;margin-top:2px">Nichts gereift, nichts aus der Dose</div>
       </div>
-      <div style="background:#e8eaf6;border-radius:8px;padding:12px;border:1px solid #9fa8da;cursor:pointer" onclick="showSection('lvk', document.querySelectorAll('nav button')[5])">
+      <div style="background:#e8eaf6;border-radius:8px;padding:12px;border:1px solid #9fa8da;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[5])">
         <div style="font-size:1.4rem">🥗</div>
         <div style="font-weight:700;font-size:0.9rem;margin-top:4px">LVK – Leichte Vollkost</div>
         <div style="font-size:0.75rem;color:#666;margin-top:2px">Leicht verdaulich, kein Fettiges</div>
@@ -649,8 +645,16 @@
   </div>
 </section>
 
-<!-- ZÖLIAKIE -->
-<section id="zöliakie" class="section">
+<!-- ALLERGIEN -->
+<section id="allergien" class="section">
+  <div class="ab-tabs" style="margin-bottom:14px">
+    <button class="ab-tab-btn active" id="abtab-gl" onclick="allerTab('gl',this)">🌾 Zöliakie</button>
+    <button class="ab-tab-btn" id="abtab-lak" onclick="allerTab('lak',this)">🥛 Laktose</button>
+    <button class="ab-tab-btn" id="abtab-fruk" onclick="allerTab('fruk',this)">🍎 Fruktose</button>
+    <button class="ab-tab-btn" id="abtab-hist" onclick="allerTab('hist',this)">⚠️ Histamin</button>
+    <button class="ab-tab-btn" id="abtab-lvk2" onclick="allerTab('lvk2',this)">🥗 LVK</button>
+  </div>
+  <div id="ab-gl" class="ab-pane active">
   <div class="card">
     <h2>🌾 Zöliakie – „Glutenfrei"</h2>
     <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Zöliakie ist keine Unverträglichkeit, sondern eine <strong>Autoimmunerkrankung</strong>. Bereits Spuren von Gluten (auch aus Kreuzverunreinigung) können Darmschäden verursachen.</p>
@@ -720,10 +724,10 @@
       <p><strong>Küchentipp:</strong> Glutenfreie Speisen immer zuerst zubereiten (bevor glutenhaltiges Mehl in der Küche ist). Friteuse und Grillplatten sind immer kontaminiert – nicht verwenden!</p>
     </div>
   </div>
-</section>
+  </div>
 
-<!-- LAKTOSE -->
-<section id="laktose" class="section">
+
+  <div id="ab-lak" class="ab-pane">
   <div class="card">
     <h2>🥛 Laktose – Milchzucker</h2>
     <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Laktoseintoleranz = Mangel an Laktase (Enzym). Beschwerden: Bauchkrämpfe, Blähungen, Durchfall. Schwere variiert stark – manche vertragen kleine Mengen, andere gar nichts.</p>
@@ -784,10 +788,10 @@
       <p><strong>Allergenordner:</strong> Laktose ist unter „Milch und Milcherzeugnisse (einschließlich Laktose)" gekennzeichnet.</p>
     </div>
   </div>
-</section>
+  </div>
 
-<!-- FRUKTOSE -->
-<section id="fruktose" class="section">
+
+  <div id="ab-fruk" class="ab-pane">
   <div class="card">
     <h2>🍎 Fruktose – Fruchtzucker</h2>
     <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Fruktosemalabsorption: Der Dünndarm kann Fruchtzucker nicht ausreichend aufnehmen. Beschwerden: Blähungen, Bauchschmerzen, Durchfall. Verträglichkeit ist individuell sehr unterschiedlich!</p>
@@ -851,10 +855,10 @@
       <p><strong>Sorbit (E420) beachten:</strong> In Diätprodukten häufig als Süßungsmittel enthalten. Wird wie Fruktose verstoffwechselt und kann Beschwerden auslösen.</p>
     </div>
   </div>
-</section>
+  </div>
 
-<!-- HISTAMIN -->
-<section id="histamin" class="section">
+
+  <div id="ab-hist" class="ab-pane">
   <div class="card">
     <h2>⚠️ Histamin-Intoleranz</h2>
     <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Histaminintoleranz: Das Enzym Diaminoxidase (DAO) baut Histamin nicht ausreichend ab. Symptome: Hautrötung, Kopfschmerzen, Herzrasen, Verdauungsbeschwerden – können auch stark verzögert auftreten.</p>
@@ -942,10 +946,10 @@
       <p><strong>Tomatensauce ist ein Klassiker-Fehler!</strong> Pasta mit Tomatensauce scheint harmlos, ist aber für Histamin-Patienten problematisch. Immer Alternativen anbieten.</p>
     </div>
   </div>
-</section>
+  </div>
 
-<!-- LVK -->
-<section id="lvk" class="section">
+
+  <div id="ab-lvk2" class="ab-pane">
   <div class="card">
     <h2>🥗 LVK – Leichte Vollkost</h2>
     <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Leichte Vollkost = vollwertige Ernährung, aber leicht verdaulich. Kein Fettiges, Frittiertes, Blähende oder schwer Verdauliches. Für Patienten mit empfindlichem Magen-Darm-Trakt.</p>
@@ -1052,6 +1056,7 @@
       <span class="icon">🍲</span>
       <p><strong>Achtung bei Saucen!</strong> Auch wenn das Fleisch mager ist – schwere Rahmsaucen oder gebundene Saucen sind für LVK nicht geeignet. Immer leichte Saucen verwenden.</p>
     </div>
+  </div>
   </div>
 </section>
 
@@ -1840,6 +1845,15 @@ function dpRender() {
 }
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ─── ALLERGIEN SUB-TABS ───────────────────────────────────────────────────────
+function allerTab(id, btn) {
+  document.querySelectorAll('#allergien .ab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('#allergien .ab-tab-btn').forEach(b => b.classList.remove('active'));
+  const pane = document.getElementById('ab-' + id);
+  if (pane) pane.classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
 // ─── ARBEITSABLÄUFE ──────────────────────────────────────────────────────────
 function abSetTab(id, btn) {
   document.querySelectorAll('.ab-pane').forEach(p => p.classList.remove('active'));
@@ -1886,13 +1900,26 @@ function numToggleForm() {
 function numRender() {
   const list = document.getElementById('num-list');
   if (!list) return;
-  list.innerHTML = numEntries.map(e => `
-    <div class="num-card ${e.type || ''}">
+  list.innerHTML = numEntries.map(e => {
+    const val = e.val;
+    const isPhone = /^[\d\s\/\+\-\(\)]{6,}$/.test(val.trim());
+    const isEmail = val.includes('@');
+    let valHtml;
+    if (isEmail) {
+      valHtml = `<a href="mailto:${val}" class="num-val" style="text-decoration:none;color:var(--blue)">${val}</a>`;
+    } else if (isPhone) {
+      const clean = val.replace(/[\s\-\/\(\)]/g,'');
+      valHtml = `<a href="tel:${clean}" class="num-val" style="text-decoration:none;color:var(--primary)">${val}</a>`;
+    } else {
+      valHtml = `<div class="num-val">${val}</div>`;
+    }
+    return `<div class="num-card ${e.type || ''}">
       <button class="num-del" onclick="numDelete('${e.id}')">✕</button>
       <h3>${e.title}</h3>
-      <div class="num-val">${e.val}</div>
+      ${valHtml}
       ${e.sub ? `<div class="num-sub">${e.sub}</div>` : ''}
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 // ─── FREIZEIT KALENDER ───────────────────────────────────────────────────────
