@@ -79,8 +79,8 @@
   .card.red { border-left-color: var(--red); }
   .card.blue { border-left-color: var(--blue); }
   .card.yellow { border-left-color: var(--yellow); }
-  .card h2 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
-  .card h3 { font-size: 0.9rem; font-weight: 700; margin: 12px 0 6px; }
+  .card h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
+  .card h3 { font-size: 1rem; font-weight: 700; margin: 12px 0 6px; }
 
   /* ERLAUBT / VERBOTEN GRID */
   .ev-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px; }
@@ -88,11 +88,11 @@
   .ev-col { border-radius: 8px; padding: 14px 16px; }
   .ev-col.ja { background: var(--green-bg); border: 1px solid #a5d6a7; }
   .ev-col.nein { background: var(--red-bg); border: 1px solid #ef9a9a; }
-  .ev-col h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .ev-col h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
   .ev-col.ja h4 { color: var(--green); }
   .ev-col.nein h4 { color: var(--red); }
   .ev-col ul { list-style: none; }
-  .ev-col ul li { font-size: 0.83rem; padding: 3px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .ev-col ul li { font-size: 0.93rem; padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
   .ev-col ul li:last-child { border: none; }
   .ev-col ul li::before { content: '· '; color: var(--muted); }
 
@@ -106,7 +106,7 @@
   .hinweis.danger { background: var(--red-bg); border: 1px solid #ef9a9a; }
   .hinweis.tip { background: var(--green-bg); border: 1px solid #a5d6a7; }
   .hinweis .icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
-  .hinweis p { line-height: 1.5; }
+  .hinweis p { line-height: 1.6; font-size: 0.92rem; }
   .hinweis strong { display: block; margin-bottom: 2px; }
 
   /* OPENING HOURS */
@@ -137,7 +137,7 @@
   .accordion { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
   .accordion-btn {
     width: 100%; text-align: left; background: var(--card); border: none;
-    padding: 13px 16px; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+    padding: 13px 16px; font-size: 1rem; font-weight: 600; cursor: pointer;
     display: flex; align-items: center; gap: 8px; color: var(--text);
     transition: background 0.15s;
   }
@@ -311,8 +311,8 @@
       </div>
     </div>
     <div class="ep-actions">
-      <button onclick="epSave()" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:0.88rem;font-weight:600;cursor:pointer">💾 Speichern</button>
-      <button onclick="epToggleForm()" style="background:#fff;color:var(--primary);border:1px solid var(--border);border-radius:8px;padding:9px 16px;font-size:0.88rem;cursor:pointer">Abbrechen</button>
+      <button onclick="epSave()" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:0.95rem;font-weight:600;cursor:pointer">💾 Speichern</button>
+      <button onclick="epToggleForm()" style="background:#fff;color:var(--primary);border:1px solid var(--border);border-radius:8px;padding:9px 16px;font-size:0.95rem;cursor:pointer">Abbrechen</button>
     </div>
   </div>
 
@@ -408,7 +408,7 @@
         🌾 Verstecktes Gluten <span class="arrow">▼</span>
       </button>
       <div class="accordion-content">
-        <ul style="font-size:0.85rem;line-height:1.9;padding-left:16px">
+        <ul style="font-size:0.93rem;line-height:1.9;padding-left:16px">
           <li>Gewürzmischungen (oft Weizenmehl als Träger)</li>
           <li>Soßen, Fertigprodukte, Suppenwürzen</li>
           <li>Croutons im Salat oder Suppe</li>
@@ -424,7 +424,7 @@
         🥛 Versteckte Laktose <span class="arrow">▼</span>
       </button>
       <div class="accordion-content">
-        <ul style="font-size:0.85rem;line-height:1.9;padding-left:16px">
+        <ul style="font-size:0.93rem;line-height:1.9;padding-left:16px">
           <li>Butterkekse (enthalten Molkenpulver!)</li>
           <li>Cremesuppen (enthalten oft Sahne/Milch)</li>
           <li>Kuchen und Backwaren (auf Etikett achten: Kuhmilch, Milchpulver)</li>
@@ -439,7 +439,7 @@
         ⚠️ Verstecktes Histamin <span class="arrow">▼</span>
       </button>
       <div class="accordion-content">
-        <ul style="font-size:0.85rem;line-height:1.9;padding-left:16px">
+        <ul style="font-size:0.93rem;line-height:1.9;padding-left:16px">
           <li>Tomaten und Tomatensaucen (auch Pizza!)</li>
           <li>Erdbeeren, Himbeeren, Ananas, Bananen</li>
           <li>Schokolade, Kakao, Nüsse</li>
@@ -456,7 +456,7 @@
         🍎 Versteckte Fruktose <span class="arrow">▼</span>
       </button>
       <div class="accordion-content">
-        <ul style="font-size:0.85rem;line-height:1.9;padding-left:16px">
+        <ul style="font-size:0.93rem;line-height:1.9;padding-left:16px">
           <li>Honig (sehr hoher Fruktoseanteil)</li>
           <li>Fertigprodukte mit Maissirup oder Fruchtzucker</li>
           <li>Fruchttees und Säfte</li>
@@ -472,8 +472,8 @@
         🔀 Kombinierte Unverträglichkeiten <span class="arrow">▼</span>
       </button>
       <div class="accordion-content">
-        <p style="font-size:0.85rem;line-height:1.6;margin-bottom:8px">Manche Patienten haben <strong>mehrere Unverträglichkeiten gleichzeitig</strong> (z.B. Gluten + Histamin + Fruktose). In solchen Fällen:</p>
-        <ul style="font-size:0.85rem;line-height:1.9;padding-left:16px">
+        <p style="font-size:0.93rem;line-height:1.6;margin-bottom:8px">Manche Patienten haben <strong>mehrere Unverträglichkeiten gleichzeitig</strong> (z.B. Gluten + Histamin + Fruktose). In solchen Fällen:</p>
+        <ul style="font-size:0.93rem;line-height:1.9;padding-left:16px">
           <li>Immer alle Einschränkungen gleichzeitig beachten</li>
           <li>Im Zweifel Diätologin fragen, bevor serviert wird</li>
           <li>Desserts sind besonders kritisch – Standarddesserts sind selten für alle geeignet</li>
@@ -488,7 +488,7 @@
 <section id="zöliakie" class="section">
   <div class="card">
     <h2>🌾 Zöliakie – „Glutenfrei"</h2>
-    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:10px">Zöliakie ist keine Unverträglichkeit, sondern eine <strong>Autoimmunerkrankung</strong>. Bereits Spuren von Gluten (auch aus Kreuzverunreinigung) können Darmschäden verursachen.</p>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Zöliakie ist keine Unverträglichkeit, sondern eine <strong>Autoimmunerkrankung</strong>. Bereits Spuren von Gluten (auch aus Kreuzverunreinigung) können Darmschäden verursachen.</p>
     <div class="hinweis danger">
       <span class="icon">⚡</span>
       <p><strong>Nulltoleranz!</strong> Kein „ein bisschen" – bei Zöliakie zählen auch Krümel. Separat zubereiten, separate Utensilien, frische Handschuhe.</p>
@@ -496,7 +496,7 @@
     <div class="ev-grid">
       <div class="ev-col ja">
         <h4>✅ Erlaubt</h4>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:8px">Getreide</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:8px">Getreide</h3>
         <ul>
           <li>Glutenfreies Brot, Semmeln, Toastbrot</li>
           <li>Reiswaffeln</li>
@@ -506,14 +506,14 @@
           <li>Kartoffeln</li>
           <li>Buchweizen, Amaranth, Quinoa</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Suppen</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Suppen</h3>
         <ul>
           <li>Klare Suppe (⚠️ Einlage prüfen!)</li>
           <li>Cremesuppen (im Ernstfall nachschauen)</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Salate</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Salate</h3>
         <ul><li>Alle außer Getreidesalate (z.B. kein Nudelsalat)</li></ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Dessert</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Dessert</h3>
         <ul>
           <li>Naturjoghurt, Fruchtjoghurt (ohne Getreidezusatz)</li>
           <li>Laktosefreies Frucht-/Naturjoghurt (ohne Getreidezusatz)</li>
@@ -523,26 +523,26 @@
           <li>Glutenfreier Kuchen (= Diätkuchen „hell" und Marmor)</li>
           <li>Glutenfreie Kekse</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Gewürze</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Gewürze</h3>
         <ul><li>Einzelgewürze (nicht Mischungen) – Zutatenliste prüfen</li></ul>
       </div>
       <div class="ev-col nein">
         <h4>❌ Nicht erlaubt</h4>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:8px">Getreide mit Gluten</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:8px">Getreide mit Gluten</h3>
         <ul>
           <li>Weizen, Dinkel, Gerste</li>
           <li>Roggen, Kamut, Einkorn</li>
           <li>Grünkern, Emmer, Triticale</li>
           <li>Hafer (auch wenn nicht glutenfrei deklariert)</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Suppen</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Suppen</h3>
         <ul><li>Suppeneinlagen (Grieß, Frittaten, Nudeln)</li></ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Dessert</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Dessert</h3>
         <ul>
           <li>Normaler Kuchen, Kekse</li>
           <li>Joghurt/Cremen mit Getreidezusatz</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Achtung Gewürze</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Achtung Gewürze</h3>
         <ul><li>Gewürzmischungen oft mit Weizenmehl als Träger</li></ul>
       </div>
     </div>
@@ -561,7 +561,7 @@
 <section id="laktose" class="section">
   <div class="card">
     <h2>🥛 Laktose – Milchzucker</h2>
-    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:10px">Laktoseintoleranz = Mangel an Laktase (Enzym). Beschwerden: Bauchkrämpfe, Blähungen, Durchfall. Schwere variiert stark – manche vertragen kleine Mengen, andere gar nichts.</p>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Laktoseintoleranz = Mangel an Laktase (Enzym). Beschwerden: Bauchkrämpfe, Blähungen, Durchfall. Schwere variiert stark – manche vertragen kleine Mengen, andere gar nichts.</p>
     <div class="hinweis info">
       <span class="icon">ℹ️</span>
       <p><strong>Cremesuppen</strong> enthalten oft nur eine geringe Menge Laktose (ein Schuss Milch/Sahne) – viele Patienten vertragen dies. Den Patienten informieren, nicht einfach annehmen.</p>
@@ -569,17 +569,17 @@
     <div class="ev-grid">
       <div class="ev-col ja">
         <h4>✅ Erlaubt</h4>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:8px">Suppen</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:8px">Suppen</h3>
         <ul><li>Klare Suppe mit laktosefreier Einlage</li></ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Käse</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Käse</h3>
         <ul>
           <li>Schnittkäse/Hartkäse (wenig bis keine Laktose)</li>
           <li>Brie Schärdinger (wenig Laktose)</li>
           <li>Edamer, Gouda, Mossbacher</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Salat</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Salat</h3>
         <ul><li>Alle Salate ohne Joghurtdressing</li></ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Dessert</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Dessert</h3>
         <ul>
           <li>Laktosefreies Naturjoghurt (mit Marmelade)</li>
           <li>Laktosefreies Fruchtjoghurt</li>
@@ -590,17 +590,17 @@
       </div>
       <div class="ev-col nein">
         <h4>❌ Nicht erlaubt</h4>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:8px">Suppen</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:8px">Suppen</h3>
         <ul>
           <li>Cremesuppen (enthält Milch/Sahne)</li>
           <li>Einlagen mit Milchprodukten</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Käse</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Käse</h3>
         <ul>
           <li>Frischkäse, Topfen, Weichkäse</li>
           <li>Schafmilchjoghurt</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Dessert</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Dessert</h3>
         <ul>
           <li>Topfencremen, normales Joghurt</li>
           <li>Himbeer-/Mangodrink</li>
@@ -625,7 +625,7 @@
 <section id="fruktose" class="section">
   <div class="card">
     <h2>🍎 Fruktose – Fruchtzucker</h2>
-    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:10px">Fruktosemalabsorption: Der Dünndarm kann Fruchtzucker nicht ausreichend aufnehmen. Beschwerden: Blähungen, Bauchschmerzen, Durchfall. Verträglichkeit ist individuell sehr unterschiedlich!</p>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Fruktosemalabsorption: Der Dünndarm kann Fruchtzucker nicht ausreichend aufnehmen. Beschwerden: Blähungen, Bauchschmerzen, Durchfall. Verträglichkeit ist individuell sehr unterschiedlich!</p>
     <div class="hinweis danger">
       <span class="icon">📁</span>
       <p><strong>Achtung:</strong> Fruktose ist NICHT im Allergenordner angeführt! Muss über den Einstellplan / Patientenunterlagen bekannt sein.</p>
@@ -638,7 +638,7 @@
           <li>Alle Hauptspeisen ohne Fruchtzubereitung oder Fruchtmus</li>
           <li>Alle Salate</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Dessert</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Dessert</h3>
         <ul>
           <li>Naturjoghurt (mit normaler Marmelade)</li>
           <li>Laktosefreies Naturjoghurt (mit normaler Marmelade)</li>
@@ -648,7 +648,7 @@
           <li>Diätkuchen „hell" und Marmor</li>
           <li>Kuchen ohne Frucht (außer verträglichem Obst)</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Verträgliches Obst</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Verträgliches Obst</h3>
         <ul>
           <li>Bananen, 1 Orange, 1 Kiwi</li>
           <li>Beerenfrüchte, 1 Mandarine</li>
@@ -661,7 +661,7 @@
         <ul>
           <li>Hauptspeisen mit Fruchtzubereitung / Fruchtmus / Kompott</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Dessert</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Dessert</h3>
         <ul>
           <li>Diätjoghurt, Diätmarmelade</li>
           <li>Fruchtjoghurt, Fruchtcremen</li>
@@ -670,7 +670,7 @@
           <li>Fruchtmus, Kompott</li>
           <li>MilkiMum (Fruktosesirup!)</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Bei „Fruktose streng"</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Bei „Fruktose streng"</h3>
         <ul>
           <li>Vollkornprodukte</li>
           <li>Blähende Gemüsesorten: Kraut, Kohl, Bohnen, Gurke, Kohlrabi, Fisolen, Karfiol</li>
@@ -692,7 +692,7 @@
 <section id="histamin" class="section">
   <div class="card">
     <h2>⚠️ Histamin-Intoleranz</h2>
-    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:10px">Histaminintoleranz: Das Enzym Diaminoxidase (DAO) baut Histamin nicht ausreichend ab. Symptome: Hautrötung, Kopfschmerzen, Herzrasen, Verdauungsbeschwerden – können auch stark verzögert auftreten.</p>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Histaminintoleranz: Das Enzym Diaminoxidase (DAO) baut Histamin nicht ausreichend ab. Symptome: Hautrötung, Kopfschmerzen, Herzrasen, Verdauungsbeschwerden – können auch stark verzögert auftreten.</p>
 
     <div class="hinweis danger">
       <span class="icon">🥫</span>
@@ -710,61 +710,61 @@
     <div class="ev-grid">
       <div class="ev-col ja">
         <h4>✅ Erlaubt</h4>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:8px">Käse</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:8px">Käse</h3>
         <ul>
           <li>Frischkäse, Topfen, Hüttenkäse</li>
           <li>Schafskäse, Sauermilchprodukte</li>
           <li>Edamer, Butterkäse, junger Gouda</li>
           <li>Geheimratskäse, Käse nach Holländer Art</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Fleisch & Wurst</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Fleisch & Wurst</h3>
         <ul>
           <li>Frisches oder tiefgekühltes Fleisch</li>
           <li>Gekochter Schinken</li>
           <li>Extrawurst, Pikante, Frankfurter, Bratwürstel</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Fisch</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Fisch</h3>
         <ul>
           <li>Frischer Fisch und Tiefkühlfisch (außer Thunfisch)</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Gemüse</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Gemüse</h3>
         <ul><li>Alle übrigen frischen oder tiefgekühlten Gemüsesorten</li></ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Obst</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Obst</h3>
         <ul><li>Alle übrigen frischen oder tiefgekühlten Obstsorten</li></ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Essig / Sonstiges</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Essig / Sonstiges</h3>
         <ul><li>Ganz stark verdünnter Essig</li></ul>
       </div>
       <div class="ev-col nein">
         <h4>❌ Nicht erlaubt</h4>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:8px">Käse</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:8px">Käse</h3>
         <ul>
           <li>Weichkäse (Brie) und sonstiger Schnitt-/Hartkäse</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Fleisch & Wurst</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Fleisch & Wurst</h3>
         <ul>
           <li>Dauerwürste, Räucherware</li>
           <li>Geselchtes, Salami, Rohschinken, Speck</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Fisch</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Fisch</h3>
         <ul>
           <li>Geräucherter und marinierter Fisch</li>
           <li>Meeresfrüchte, Fischkonserven</li>
           <li>Dosenthunfisch, Heringssalat, Rollmops</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Gemüse</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Gemüse</h3>
         <ul>
           <li>Tomaten, Tomatenerzeugnisse</li>
           <li>Spinat, Melanzani, Avocado, Pilze</li>
           <li>Hülsenfrüchte, Soja, Linsen</li>
           <li>Sauerkraut, Essigsaures Gemüse, Dosengemüse</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Obst</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Obst</h3>
         <ul>
           <li>Zitrusfrüchte (Orange, Grapefruit, Zitrone, Mandarinen)</li>
           <li>Bananen, Erdbeeren, Himbeeren, Ananas, Birnen, Kiwi</li>
           <li>Obst aus der Dose</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Sonstiges</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Sonstiges</h3>
         <ul>
           <li>Nüsse, Mohn, Schokolade, Kakao, Lakritze</li>
           <li>Rotweinessig, Balsamicoessig</li>
@@ -783,20 +783,20 @@
 <section id="lvk" class="section">
   <div class="card">
     <h2>🥗 LVK – Leichte Vollkost</h2>
-    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:10px">Leichte Vollkost = vollwertige Ernährung, aber leicht verdaulich. Kein Fettiges, Frittiertes, Blähende oder schwer Verdauliches. Für Patienten mit empfindlichem Magen-Darm-Trakt.</p>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Leichte Vollkost = vollwertige Ernährung, aber leicht verdaulich. Kein Fettiges, Frittiertes, Blähende oder schwer Verdauliches. Für Patienten mit empfindlichem Magen-Darm-Trakt.</p>
     <div class="ev-grid">
       <div class="ev-col ja">
         <h4>✅ Erlaubt</h4>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:8px">Suppen</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:8px">Suppen</h3>
         <ul><li>Alle Suppen, wenn Gemüse LVK-tauglich ist</li></ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Getreide</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Getreide</h3>
         <ul>
           <li>Semmel, Milchbrot</li>
           <li>Schwarzbrot „ohne Körner"</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Beilagen</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Beilagen</h3>
         <ul><li>Reis, Polenta, Nudeln, Kartoffeln</li></ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Salat / Gemüse</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Salat / Gemüse</h3>
         <ul>
           <li>Karotte, Sellerie, Kürbis, Spargel</li>
           <li>Melanzani, Zucchini, Fenchel, Tomaten</li>
@@ -805,21 +805,21 @@
           <li>Eisbergsalat, Kartoffeln</li>
           <li>Essiggurken in kleinen Mengen</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Obst</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Obst</h3>
         <ul>
           <li>Bananen, Himbeeren, Erdbeeren</li>
           <li>Heidelbeeren, Äpfel, Melonen</li>
           <li>Weiche Kiwi, Orangen, Mandarinen, Mango</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Milch/Milchprodukte</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Milch/Milchprodukte</h3>
         <ul>
           <li>Milch, Joghurt, Molke, Buttermilch</li>
           <li>Topfen, milde Käsesorten (Edamer, Gouda, Mossbacher)</li>
           <li>Hüttenkäse</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Fleisch / Fisch</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Fleisch / Fisch</h3>
         <ul><li>Magere Sorten, fettarm zubereitet (⚠️ Achtung bei Saucen!)</li></ul>
-        <h3 style="font-size:0.82rem;color:var(--green);margin-top:10px">Dessert</h3>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Dessert</h3>
         <ul>
           <li>Biskuit (Diätkuchen)</li>
           <li>Obstkuchen ohne üppige Creme</li>
@@ -830,22 +830,22 @@
       </div>
       <div class="ev-col nein">
         <h4>❌ Nicht erlaubt</h4>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:8px">Suppen</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:8px">Suppen</h3>
         <ul>
           <li>Kohlsprossensuppe, Karfiolsuppe</li>
           <li>Schwammerl-/Pilzsuppe</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Getreide</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Getreide</h3>
         <ul>
           <li>Vollkorngebäck</li>
           <li>Weckerl „mit Körner"</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Beilagen</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Beilagen</h3>
         <ul>
           <li>Keine Vollkornbeilage</li>
           <li>Nichts Frittiertes (Pommes etc.)</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Salat / Gemüse</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Salat / Gemüse</h3>
         <ul>
           <li>Kraut, Kohl, Gurken, Rettich</li>
           <li>Radieschen, Paprika, Zwiebel</li>
@@ -853,29 +853,29 @@
           <li>Hülsenfrüchte, Kohlrabi, Karfiol</li>
           <li>Chips, Pommes und fettreiche Zubereitungen</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Obst</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Obst</h3>
         <ul>
           <li>Birnen, Weintrauben</li>
           <li>Roher Steinobst: Zwetschken, Pfirsich, Marillen, Kirschen</li>
           <li>Kompotte außer Zwetschke</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Milch/Milchprodukte</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Milch/Milchprodukte</h3>
         <ul>
           <li>Überreife, frittierte Produkte</li>
           <li>Brie, länger gereifte Käsesorten (Jerome, Emmentaler)</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Fleisch / Fisch</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Fleisch / Fisch</h3>
         <ul>
           <li>Fettes, Frittiertes</li>
           <li>Sehr scharf angebratenes Fleisch</li>
           <li>Räucherware</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Gewürze</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Gewürze</h3>
         <ul>
           <li>Zwiebel, Knoblauch</li>
           <li>Sehr scharfe Gerichte, viel Pfeffer, Paprika, Kren, Curry, Chili</li>
         </ul>
-        <h3 style="font-size:0.82rem;color:var(--red);margin-top:10px">Dessert</h3>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Dessert</h3>
         <ul>
           <li>Zwetschkenröster/Kompott</li>
           <li>Üppige Kuchen (Bienenstich)</li>
@@ -894,7 +894,7 @@
 <section id="cafe" class="section">
   <div class="card yellow">
     <h2>☕ Cafe – wird aufgebaut</h2>
-    <p style="font-size:0.88rem;color:var(--muted);margin-bottom:6px">Diese Rubrik wird laufend ergänzt. Geplante Unterkategorien: Heißgetränke, Kaltgetränke, Alkoholische Getränke, Snacks & Mehlspeisen, Saisonales Angebot.</p>
+    <p style="font-size:0.95rem;color:var(--muted);margin-bottom:6px">Diese Rubrik wird laufend ergänzt. Geplante Unterkategorien: Heißgetränke, Kaltgetränke, Alkoholische Getränke, Snacks & Mehlspeisen, Saisonales Angebot.</p>
     <div class="hinweis info">
       <span class="icon">🚧</span>
       <p><strong>Im Aufbau.</strong> Die aktuellen Getränkerezepte sind bereits hinterlegt. Weitere Inhalte folgen.</p>
@@ -902,16 +902,16 @@
   </div>
 
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:18px">
-    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.82rem">
+    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.9rem">
       ☕<br><strong>Heißgetränke</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
     </div>
-    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.82rem">
+    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.9rem">
       🥤<br><strong>Kaltgetränke</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
     </div>
-    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.82rem">
+    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.9rem">
       🥐<br><strong>Snacks & Mehlspeisen</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
     </div>
-    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.82rem">
+    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.9rem">
       🌿<br><strong>Saisonales</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
     </div>
   </div>
@@ -989,7 +989,7 @@
 <section id="reinigung" class="section">
   <div class="card">
     <h2>🧹 Reinigungs- & Arbeitsplan Cafeteria</h2>
-    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:12px">Hygieneplan für tägliche und wöchentliche Aufgaben. Besonders wichtig bei Allergieküche: Kreuzverunreinigung durch unzureichende Reinigung vermeiden!</p>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:12px">Hygieneplan für tägliche und wöchentliche Aufgaben. Besonders wichtig bei Allergieküche: Kreuzverunreinigung durch unzureichende Reinigung vermeiden!</p>
 
     <div class="hinweis danger">
       <span class="icon">🧽</span>
@@ -1036,7 +1036,7 @@
 <section id="suche" class="section">
   <div class="card">
     <h2>🔍 Schnellsuche – Lebensmittel & Unverträglichkeit</h2>
-    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px">Gib ein Lebensmittel ein, um zu sehen, bei welchen Diäten es erlaubt oder verboten ist.</p>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:14px">Gib ein Lebensmittel ein, um zu sehen, bei welchen Diäten es erlaubt oder verboten ist.</p>
     <div class="search-bar">
       <input type="text" id="search-input" placeholder="z.B. Tomaten, Joghurt, Kuchen, Butter…" oninput="doSearch(this.value)">
     </div>
@@ -1053,8 +1053,8 @@
 <script>
 // ─── SUPABASE CONFIG ──────────────────────────────────────────────────────────
 // Trage hier deine Werte ein (Supabase → Settings → API)
-const SUPABASE_URL  = 'DEINE_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'DEIN_ANON_KEY';
+const SUPABASE_URL  = 'https://oauinbjtszjjxclqgcnw.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hdWluYmp0c3pqanhjbHFnY253Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NDc2MDIsImV4cCI6MjA5MjUyMzYwMn0.9pAJQXikSlBvtEzdv6LZO2O8eWExTFyAE84AR4Ywx8c';
 // ─────────────────────────────────────────────────────────────────────────────
 
 let sb = null;
@@ -1226,13 +1226,13 @@ function doSearch(val) {
   const q = val.toLowerCase().trim();
   const hits = searchDB.filter(d => d.term.includes(q) || d.text.toLowerCase().includes(q));
   if (!hits.length) {
-    out.innerHTML = '<p style="color:var(--muted);font-size:0.85rem">Kein Eintrag gefunden. Bitte Allergenordner konsultieren.</p>';
+    out.innerHTML = '<p style="color:var(--muted);font-size:0.93rem">Kein Eintrag gefunden. Bitte Allergenordner konsultieren.</p>';
     return;
   }
   out.innerHTML = hits.map(h => `
     <div class="search-hit">
       <strong>${h.text}</strong>
-      <div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;font-size:0.8rem">
+      <div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;font-size:0.9rem">
         <div>🌾 Zöliakie/Gluten: ${h.gluten}</div>
         <div>🥛 Laktose: ${h.laktose}</div>
         <div>🍎 Fruktose: ${h.fruktose}</div>
