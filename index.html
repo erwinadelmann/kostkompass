@@ -29,6 +29,8 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* HEADER */
   header {
     background: linear-gradient(135deg, #6b4c2a 0%, #a07040 100%);
     color: #fff;
@@ -49,6 +51,8 @@
     margin-left: auto; background: rgba(255,255,255,0.2);
     border-radius: 20px; padding: 4px 12px; font-size: 0.75rem; white-space: nowrap;
   }
+
+  /* NAV TABS */
   nav {
     display: flex; gap: 4px; padding: 12px 16px 0;
     overflow-x: auto; background: var(--primary);
@@ -63,9 +67,13 @@
   }
   nav button:hover { background: rgba(255,255,255,0.25); }
   nav button.active { background: var(--bg); color: var(--primary); }
+
+  /* MAIN */
   main { padding: 20px 16px 40px; max-width: 900px; margin: 0 auto; }
   .section { display: none; }
   .section.active { display: block; }
+
+  /* CARDS */
   .card {
     background: var(--card); border-radius: 10px;
     box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 18px;
@@ -77,6 +85,8 @@
   .card.yellow { border-left-color: var(--yellow); }
   .card h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
   .card h3 { font-size: 1rem; font-weight: 700; margin: 12px 0 6px; }
+
+  /* ERLAUBT / VERBOTEN GRID */
   .ev-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px; }
   @media(max-width: 520px) { .ev-grid { grid-template-columns: 1fr; } }
   .ev-col { border-radius: 8px; padding: 14px 16px; }
@@ -89,6 +99,8 @@
   .ev-col ul li { font-size: 0.93rem; padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
   .ev-col ul li:last-child { border: none; }
   .ev-col ul li::before { content: '· '; color: var(--muted); }
+
+  /* HINWEIS BOXES */
   .hinweis {
     border-radius: 8px; padding: 12px 14px; margin: 12px 0; font-size: 0.84rem;
     display: flex; gap: 10px; align-items: flex-start;
@@ -100,6 +112,8 @@
   .hinweis .icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
   .hinweis p { line-height: 1.6; font-size: 0.92rem; }
   .hinweis strong { display: block; margin-bottom: 2px; }
+
+  /* OPENING HOURS */
   .hours-grid { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
   .hour-box {
     flex: 1 1 140px; background: var(--green-bg); border-radius: 8px;
@@ -107,17 +121,23 @@
   }
   .hour-box .meal { font-size: 0.8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; }
   .hour-box .time { font-size: 1.05rem; font-weight: 700; color: var(--green); margin: 4px 0; }
+
+  /* CLEANING TABLE */
   .clean-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 10px; overflow-x: auto; display: block; }
   .clean-table th { background: #455a64; color: #fff; padding: 6px 8px; white-space: nowrap; }
   .clean-table td { padding: 5px 8px; border-bottom: 1px solid var(--border); white-space: nowrap; }
   .clean-table td.x { text-align: center; font-weight: 700; color: var(--green); }
   .clean-table tr:nth-child(even) td { background: #fafafa; }
+
+  /* DRINKS */
   .drinks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin-top: 10px; }
   .drink-card { background: var(--card); border-radius: 8px; padding: 14px; border: 1px solid var(--border); box-shadow: var(--shadow); }
   .drink-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
   .drink-card ul { list-style: none; }
   .drink-card ul li { font-size: 0.8rem; padding: 2px 0; }
   .drink-card ul li::before { content: '– '; color: var(--muted); }
+
+  /* ACCORDION */
   .accordion { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
   .accordion-btn {
     width: 100%; text-align: left; background: var(--card); border: none;
@@ -130,7 +150,11 @@
   .accordion-btn.open .arrow { transform: rotate(180deg); }
   .accordion-content { display: none; padding: 14px 16px; border-top: 1px solid var(--border); background: #fafaf8; }
   .accordion-content.open { display: block; }
-  .search-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+
+  /* SEARCH BAR */
+  .search-bar {
+    display: flex; gap: 8px; margin-bottom: 16px;
+  }
   .search-bar input {
     flex: 1; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border);
     font-size: 0.9rem; outline: none;
@@ -139,16 +163,109 @@
   #search-results { margin-top: 4px; }
   .search-hit { background: var(--card); border-radius: 6px; padding: 10px 14px; margin-bottom: 8px; border: 1px solid var(--border); font-size: 0.85rem; }
   .search-hit strong { color: var(--primary); }
+
+  /* FOOTER */
   footer { text-align: center; font-size: 0.75rem; color: var(--muted); padding: 16px; border-top: 1px solid var(--border); background: var(--card); }
-  .dp-toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+
+  /* ARBEITSABLÄUFE */
+  .ab-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .ab-tab-btn { border: 2px solid var(--accent); background: #fff; color: var(--accent); border-radius: 8px 8px 0 0; padding: 8px 16px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .ab-tab-btn.active { background: var(--accent); color: #fff; }
+  .ab-pane { display: none; }
+  .ab-pane.active { display: block; }
+  .ab-step { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .ab-step:last-child { border: none; }
+  .ab-num { background: var(--primary); color: #fff; border-radius: 50%; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .ab-text { font-size: 0.9rem; line-height: 1.5; }
+  .ab-text strong { display: block; color: var(--primary); }
+  .tischkarte { display: inline-flex; align-items: center; gap: 8px; border-radius: 8px; padding: 6px 14px; font-size: 0.82rem; font-weight: 700; margin: 4px; border: 2px solid transparent; }
+  .tk-grid { overflow-x: auto; margin-top: 10px; }
+  .tk-table { border-collapse: collapse; font-size: 0.75rem; min-width: 420px; }
+  .tk-table th { background: var(--primary); color: #fff; padding: 5px 8px; text-align: center; }
+  .tk-table td { padding: 4px 8px; border: 1px solid var(--border); text-align: center; }
+  .tk-table tr:nth-child(even) td { background: #fafafa; }
+  .tk-section-label { background: #f0ebe4; font-weight: 700; color: var(--primary); }
+
+  /* FREIZEIT KALENDER */
+  .fz-toolbar { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .fz-toolbar h2 { font-size: 1.1rem; color: var(--primary); margin-right: auto; }
+  .fz-view-btn { border: 2px solid var(--accent); background: #fff; color: var(--accent); border-radius: 6px; padding: 5px 12px; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .fz-view-btn.active { background: var(--accent); color: #fff; }
+  .fz-nav-btn { border: none; background: var(--accent); color: #fff; border-radius: 6px; padding: 5px 11px; font-size: 1rem; cursor: pointer; }
+  .fz-nav-btn:hover { background: var(--primary); }
+  .fz-period { font-size: 0.95rem; font-weight: 700; color: var(--primary); min-width: 160px; text-align: center; }
+  .fz-legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+  .fz-dot { display: inline-flex; align-items: center; gap: 5px; font-size: 0.8rem; }
+  .fz-dot::before { content: ''; display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+  .fz-dot.wunsch::before { background: #f57f17; }
+  .fz-dot.genehmigt::before { background: #2e7d32; }
+  .fz-dot.privat::before { background: #1565c0; }
+  .fz-month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .fz-month-grid .dh { text-align: center; font-size: 0.75rem; font-weight: 700; color: var(--muted); padding: 3px 0; border-bottom: 2px solid var(--border); }
+  .fz-dc { min-height: 60px; background: #fff; border-radius: 5px; padding: 3px 4px; font-size: 0.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07); border: 1px solid transparent; position: relative; cursor: pointer; }
+  .fz-dc:hover { border-color: var(--accent); }
+  .fz-dc.other-month { background: #f5f3ee; color: var(--muted); }
+  .fz-dc.today { border: 2px solid var(--accent); }
+  .fz-dc .fz-dn { font-weight: 700; font-size: 0.8rem; }
+  .fz-ev { font-size: 0.65rem; border-radius: 3px; padding: 1px 4px; margin-top: 2px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
+  .fz-ev.wunsch { background: #f57f17; }
+  .fz-ev.genehmigt { background: #2e7d32; }
+  .fz-ev.privat { background: #1565c0; }
+  .fz-add-form { background: #fff; border-radius: 10px; box-shadow: var(--shadow); padding: 16px 18px; margin-bottom: 16px; }
+  .fz-add-form h3 { font-size: 0.95rem; color: var(--primary); margin-bottom: 10px; }
+  .fz-add-form .fz-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+  .fz-add-form label { font-size: 0.78rem; color: var(--muted); display: block; margin-bottom: 3px; }
+  .fz-add-form input, .fz-add-form select { border: 1px solid var(--border); border-radius: 6px; padding: 6px 9px; font-size: 0.85rem; background: var(--bg); }
+  .fz-add-form button { background: var(--primary); color: #fff; border: none; border-radius: 6px; padding: 7px 16px; font-size: 0.85rem; cursor: pointer; font-weight: 600; }
+  .fz-alarm-badge { background: #fff3e0; border: 1px solid #ffcc02; border-radius: 6px; padding: 6px 12px; font-size: 0.8rem; color: #e65100; }
+  .fz-gcal-note { background: var(--blue-bg); border: 1px solid #90caf9; border-radius: 8px; padding: 10px 14px; font-size: 0.82rem; color: var(--blue); margin-top: 10px; }
+  .fz-week-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .fz-week-col { background: #fff; border-radius: 6px; padding: 8px 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); min-height: 100px; }
+  .fz-week-col .fz-wh { font-size: 0.75rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; text-align: center; }
+  .fz-day-view { background: #fff; border-radius: 10px; padding: 16px; box-shadow: var(--shadow); }
+
+  /* INTERNE NUMMERN */
+  .num-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 20px; }
+  .num-card { background: var(--card); border-radius: 10px; box-shadow: var(--shadow); padding: 16px 18px; border-left: 5px solid var(--accent); position: relative; }
+  .num-card.urgent { border-left-color: var(--red); }
+  .num-card.info { border-left-color: var(--blue); }
+  .num-card h3 { font-size: 0.9rem; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
+  .num-card .num-val { font-size: 1.15rem; font-weight: 700; color: var(--primary); }
+  .num-card .num-sub { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+  .num-card .num-del { position: absolute; top: 10px; right: 12px; background: none; border: none; cursor: pointer; font-size: 1rem; color: var(--muted); opacity: 0.4; }
+  .num-card .num-del:hover { opacity: 1; color: var(--red); }
+  .num-add-form { background: var(--card); border-radius: 10px; box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 18px; display: none; }
+  .num-add-form.open { display: block; }
+
+  /* DIENSTPLAN */
+  .dp-toolbar {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
+  }
   .dp-toolbar h2 { font-size: 1.1rem; color: var(--primary); margin-right: auto; }
-  .dp-view-btn { border: 2px solid var(--accent); background: #fff; color: var(--accent); border-radius: 6px; padding: 5px 13px; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .dp-view-btn {
+    border: 2px solid var(--accent); background: #fff; color: var(--accent);
+    border-radius: 6px; padding: 5px 13px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    transition: all 0.15s;
+  }
   .dp-view-btn.active { background: var(--accent); color: #fff; }
-  .dp-nav-btn { border: none; background: var(--accent); color: #fff; border-radius: 6px; padding: 5px 11px; font-size: 1rem; cursor: pointer; transition: background 0.15s; }
+  .dp-nav-btn {
+    border: none; background: var(--accent); color: #fff;
+    border-radius: 6px; padding: 5px 11px; font-size: 1rem; cursor: pointer;
+    transition: background 0.15s;
+  }
   .dp-nav-btn:hover { background: var(--primary); }
-  .dp-period-label { font-size: 0.95rem; font-weight: 700; color: var(--primary); min-width: 160px; text-align: center; }
-  .dp-gcal-btn { display: inline-flex; align-items: center; gap: 6px; background: #4285F4; color: #fff; border: none; border-radius: 6px; padding: 6px 14px; font-size: 0.82rem; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.15s; }
+  .dp-period-label {
+    font-size: 0.95rem; font-weight: 700; color: var(--primary); min-width: 160px; text-align: center;
+  }
+  .dp-gcal-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #4285F4; color: #fff; border: none; border-radius: 6px;
+    padding: 6px 14px; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    text-decoration: none; transition: background 0.15s;
+  }
   .dp-gcal-btn:hover { background: #3367d6; }
+
+  /* Year view */
   .dp-year-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
   .dp-mini-month { background: #fff; border-radius: 8px; box-shadow: var(--shadow); padding: 10px; }
   .dp-mini-month h4 { font-size: 0.82rem; text-align: center; color: var(--primary); margin-bottom: 6px; }
@@ -157,53 +274,121 @@
   .dp-mini-grid .dd { text-align: center; padding: 2px 0; border-radius: 3px; }
   .dp-mini-grid .dd.work { background: #c8e6c9; color: #1b5e20; font-weight: 700; }
   .dp-mini-grid .dd.today { background: var(--accent); color: #fff; border-radius: 50%; }
+
+  /* Month view */
   .dp-month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-  .dp-month-grid .dh { text-align: center; font-size: 0.78rem; font-weight: 700; color: var(--muted); padding: 4px 0; border-bottom: 2px solid var(--border); margin-bottom: 2px; }
-  .dp-month-grid .dc { min-height: 64px; background: #fff; border-radius: 6px; padding: 4px 5px; font-size: 0.78rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07); border: 1px solid transparent; position: relative; }
+  .dp-month-grid .dh {
+    text-align: center; font-size: 0.78rem; font-weight: 700; color: var(--muted);
+    padding: 4px 0; border-bottom: 2px solid var(--border); margin-bottom: 2px;
+  }
+  .dp-month-grid .dc {
+    min-height: 64px; background: #fff; border-radius: 6px; padding: 4px 5px;
+    font-size: 0.78rem; box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+    border: 1px solid transparent; position: relative;
+  }
   .dp-month-grid .dc.other-month { background: #f5f3ee; color: var(--muted); }
   .dp-month-grid .dc.today { border: 2px solid var(--accent); }
   .dp-month-grid .dc .dn { font-weight: 700; font-size: 0.82rem; }
   .dp-month-grid .dc .ds { font-size: 0.69rem; color: var(--green); font-weight: 600; margin-top: 3px; line-height: 1.3; }
+
+  /* Week view */
+  .dp-week-grid { display: grid; grid-template-columns: 70px repeat(7, 1fr); gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .dp-week-grid .wh {
+    background: var(--primary); color: #fff; text-align: center; padding: 8px 4px;
+    font-size: 0.78rem; font-weight: 700; border-right: 1px solid rgba(255,255,255,0.2);
+  }
+  .dp-week-grid .wh.today-col { background: var(--accent); }
+  .dp-week-grid .wh:first-child { background: var(--primary); }
+  .dp-week-grid .wtime {
+    background: #f8f6f2; text-align: right; padding: 4px 6px;
+    font-size: 0.7rem; color: var(--muted); border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .dp-week-grid .wcell {
+    padding: 3px; font-size: 0.71rem; border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border); min-height: 30px; background: #fff;
+  }
+  .dp-week-grid .wcell.work-cell {
+    background: #e8f5e9;
+  }
+  .dp-week-shift { background: var(--green); color: #fff; border-radius: 4px; padding: 2px 4px; font-size: 0.68rem; font-weight: 600; }
+
+  /* Add shift form */
   .dp-add-form { background: #fff; border-radius: 10px; box-shadow: var(--shadow); padding: 16px 18px; margin-bottom: 16px; }
   .dp-add-form h3 { font-size: 0.95rem; color: var(--primary); margin-bottom: 10px; }
   .dp-add-form .dp-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
   .dp-add-form label { font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 3px; }
-  .dp-add-form input { border: 1px solid var(--border); border-radius: 6px; padding: 6px 9px; font-size: 0.85rem; background: var(--bg); }
+  .dp-add-form input, .dp-add-form select {
+    border: 1px solid var(--border); border-radius: 6px; padding: 6px 9px;
+    font-size: 0.85rem; background: var(--bg);
+  }
   .dp-add-form button { background: var(--primary); color: #fff; border: none; border-radius: 6px; padding: 7px 16px; font-size: 0.85rem; cursor: pointer; font-weight: 600; }
-  .setup-banner { background: #fff3cd; border: 1px solid #ffc107; border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; font-size: 0.85rem; line-height: 1.6; }
+
+  /* EINSTELLPLAN */
+  .setup-banner {
+    background: #fff3cd; border: 1px solid #ffc107; border-radius: 10px;
+    padding: 16px 20px; margin-bottom: 20px; font-size: 0.85rem; line-height: 1.6;
+  }
   .setup-banner h3 { color: #856404; margin-bottom: 8px; }
   .setup-banner code { background: #f8f9fa; padding: 2px 6px; border-radius: 4px; font-size: 0.82rem; }
-  .ep-toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
-  .ep-toolbar button { background: var(--primary); color: #fff; border: none; border-radius: 8px; padding: 9px 16px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+  .ep-toolbar {
+    display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .ep-toolbar button {
+    background: var(--primary); color: #fff; border: none; border-radius: 8px;
+    padding: 9px 16px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  }
   .ep-toolbar button:hover { background: var(--accent); }
-  .ep-toolbar button.secondary { background: #fff; color: var(--primary); border: 1px solid var(--border); }
+  .ep-toolbar button.secondary {
+    background: #fff; color: var(--primary); border: 1px solid var(--border);
+  }
   .ep-toolbar button.secondary:hover { background: var(--bg); }
   .patient-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
-  .patient-card { background: var(--card); border-radius: 10px; box-shadow: var(--shadow); padding: 16px 18px; border-left: 5px solid var(--accent); position: relative; }
+  .patient-card {
+    background: var(--card); border-radius: 10px; box-shadow: var(--shadow);
+    padding: 16px 18px; border-left: 5px solid var(--accent);
+    position: relative;
+  }
   .patient-card .pc-name { font-size: 1rem; font-weight: 700; color: var(--primary); }
   .patient-card .pc-meta { font-size: 0.78rem; color: var(--muted); margin: 4px 0 10px; }
   .patient-card .pc-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-  .diet-tag { border-radius: 20px; padding: 3px 10px; font-size: 0.72rem; font-weight: 700; white-space: nowrap; }
+  .diet-tag {
+    border-radius: 20px; padding: 3px 10px; font-size: 0.72rem; font-weight: 700; white-space: nowrap;
+  }
   .diet-tag.gluten { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
   .diet-tag.laktose { background: #e3f2fd; color: #0d47a1; border: 1px solid #90caf9; }
   .diet-tag.fruktose { background: #f3e5f5; color: #6a1b9a; border: 1px solid #ce93d8; }
   .diet-tag.histamin { background: #fce4ec; color: #880e4f; border: 1px solid #f48fb1; }
   .diet-tag.lvk { background: #e8eaf6; color: #283593; border: 1px solid #9fa8da; }
   .diet-tag.normal { background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; }
-  .pc-delete { position: absolute; top: 10px; right: 12px; background: none; border: none; cursor: pointer; font-size: 1rem; color: var(--muted); opacity: 0.5; }
+  .pc-delete {
+    position: absolute; top: 10px; right: 12px;
+    background: none; border: none; cursor: pointer; font-size: 1rem; color: var(--muted); opacity: 0.5;
+  }
   .pc-delete:hover { opacity: 1; color: var(--red); }
-  .ep-form { background: var(--card); border-radius: 10px; box-shadow: var(--shadow); padding: 20px; margin-bottom: 20px; display: none; }
+  .ep-form {
+    background: var(--card); border-radius: 10px; box-shadow: var(--shadow);
+    padding: 20px; margin-bottom: 20px; display: none;
+  }
   .ep-form.open { display: block; }
   .ep-form h3 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 14px; }
   .ep-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   @media(max-width: 520px) { .ep-fields { grid-template-columns: 1fr; } }
   .ep-field label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
-  .ep-field input { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 7px; font-size: 0.88rem; outline: none; }
+  .ep-field input {
+    width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 7px;
+    font-size: 0.88rem; outline: none;
+  }
   .ep-field input:focus { border-color: var(--accent); }
   .ep-diaeten { grid-column: 1 / -1; }
   .ep-diaeten label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-bottom: 8px; }
   .ep-checkboxes { display: flex; flex-wrap: wrap; gap: 8px; }
-  .ep-checkboxes label { display: flex; align-items: center; gap: 5px; font-size: 0.82rem; cursor: pointer; font-weight: 400; color: var(--text); background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px; }
+  .ep-checkboxes label {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 0.82rem; cursor: pointer; font-weight: 400; color: var(--text);
+    background: var(--bg); border: 1px solid var(--border); border-radius: 20px;
+    padding: 4px 12px;
+  }
   .ep-checkboxes input[type=checkbox] { accent-color: var(--primary); }
   .ep-actions { margin-top: 16px; display: flex; gap: 10px; }
   .ep-empty { text-align: center; color: var(--muted); font-size: 0.88rem; padding: 40px 0; }
@@ -213,11 +398,20 @@
 </style>
 </head>
 <body>
+
 <header onclick="showSection('start', document.querySelector('nav button'))" style="cursor:pointer">
-  <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 242 60"><path fill="#00963E" d="M120.4,0.8h0.3c2.1,0,4.2,0.2,6.3,0.7c-5.2,8.6-4.6,16.3-4.6,16.3s2-7.2,11.1-14.1c3.2,1.6,6.1,3.7,8.5,6.3c-16.9,11.6-16,20.1-16,20.1s4.9-10.4,20.6-13.7c2,3.8,3.2,8.1,3.4,12.6c-14.6-0.2-21.4,9-21.4,9s7.5-5.8,21.1-3.7c-0.5,3.3-1.5,6.4-2.9,9.2c-15.7-0.9-19.2,2.3-19.2,2.3s9.7-2.8,15.7,3.1c-2.1,2.5-4.5,4.6-7.3,6.3c-8.4-5.5-12.9,0.7-14.7,4.3h-0.9h-0.9c-1.8-3.6-6.3-9.8-14.7-4.3c-2.8-1.7-5.2-3.8-7.3-6.3c5.9-6,15.7-3.1,15.7-3.1s-3.5-3.1-19.2-2.3c-1.5-2.8-2.5-5.9-2.9-9.2c13.7-2.1,21.1,3.7,21.1,3.7s-6.8-9.2-21.4-9c0.2-4.6,1.4-8.8,3.4-12.6c15.7,3.3,20.6,13.7,20.6,13.7s0.9-8.5-16-20.1c2.4-2.6,5.3-4.7,8.5-6.3c9.2,6.8,11.1,14.1,11.1,14.1s0.7-7.7-4.6-16.3c2-0.4,4.1-0.7,6.3-0.7H120.4z"/></svg></div>
-  <div><h1>KostKompass – Klinikgastronomie</h1><p>Privatklinik St. Radegund · Schnell-Orientierung für Küche & Service</p></div>
+  <div class="logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 242 60">
+      <path fill="#00963E" d="M120.4,0.8h0.3c2.1,0,4.2,0.2,6.3,0.7c-5.2,8.6-4.6,16.3-4.6,16.3s2-7.2,11.1-14.1c3.2,1.6,6.1,3.7,8.5,6.3c-16.9,11.6-16,20.1-16,20.1s4.9-10.4,20.6-13.7c2,3.8,3.2,8.1,3.4,12.6c-14.6-0.2-21.4,9-21.4,9s7.5-5.8,21.1-3.7c-0.5,3.3-1.5,6.4-2.9,9.2c-15.7-0.9-19.2,2.3-19.2,2.3s9.7-2.8,15.7,3.1c-2.1,2.5-4.5,4.6-7.3,6.3c-8.4-5.5-12.9,0.7-14.7,4.3h-0.9h-0.9c-1.8-3.6-6.3-9.8-14.7-4.3c-2.8-1.7-5.2-3.8-7.3-6.3c5.9-6,15.7-3.1,15.7-3.1s-3.5-3.1-19.2-2.3c-1.5-2.8-2.5-5.9-2.9-9.2c13.7-2.1,21.1,3.7,21.1,3.7s-6.8-9.2-21.4-9c0.2-4.6,1.4-8.8,3.4-12.6c15.7,3.3,20.6,13.7,20.6,13.7s0.9-8.5-16-20.1c2.4-2.6,5.3-4.7,8.5-6.3c9.2,6.8,11.1,14.1,11.1,14.1s0.7-7.7-4.6-16.3c2-0.4,4.1-0.7,6.3-0.7H120.4z"/>
+    </svg>
+  </div>
+  <div>
+    <h1>KostKompass – Klinikgastronomie</h1>
+    <p>Privatklinik St. Radegund · Schnell-Orientierung für Küche & Service</p>
+  </div>
   <div class="badge" id="header-badge">...</div>
 </header>
+
 <nav id="main-nav">
   <button class="active" onclick="showSection('start', this)">🏠 Start</button>
   <button onclick="showSection('einstellplan', this)">📋 Einstellplan</button>
@@ -229,27 +423,47 @@
   <button onclick="showSection('cafe', this)">☕ Cafe</button>
   <button onclick="showSection('reinigung', this)">🧹 Reinigung</button>
   <button onclick="showSection('suche', this)">🔍 Suche</button>
+  <button onclick="showSection('arbeitsablaeufe', this)">📋 Abläufe</button>
+  <button onclick="showSection('freizeit', this)">🏖️ Freizeit</button>
+  <button onclick="showSection('nummern', this)">📞 Nummern</button>
   <button onclick="showSection('dienstplan', this)" style="margin-left:auto">📅 Dienstplan</button>
 </nav>
+
 <main>
+
 <!-- EINSTELLPLAN -->
 <section id="einstellplan" class="section">
   <div id="ep-setup-banner" class="setup-banner" style="display:none">
     <h3>⚙️ Supabase noch nicht verbunden</h3>
-    <p>Trage deine Supabase-Zugangsdaten oben im Code ein (<code>SUPABASE_URL</code> und <code>SUPABASE_ANON_KEY</code>), dann funktioniert der Einstellplan live.<br>Anleitung: <a href="https://supabase.com" target="_blank">supabase.com</a> → Neues Projekt → Settings → API.</p>
+    <p>Trage deine Supabase-Zugangsdaten oben im Code ein (<code>SUPABASE_URL</code> und <code>SUPABASE_ANON_KEY</code>), dann funktioniert der Einstellplan live.<br>
+    Anleitung: <a href="https://supabase.com" target="_blank">supabase.com</a> → Neues Projekt → Settings → API.</p>
   </div>
+
   <div class="ep-toolbar">
     <button onclick="epToggleForm()">➕ Patient hinzufügen</button>
     <button class="secondary" onclick="epLoad()">🔄 Aktualisieren</button>
     <span id="ep-status" style="font-size:0.78rem;color:var(--muted)"></span>
   </div>
+
+  <!-- ADD FORM -->
   <div class="ep-form" id="ep-form">
     <h3>Neuer Patient</h3>
     <div class="ep-fields">
-      <div class="ep-field"><label>Name</label><input type="text" id="ep-name" placeholder="Max Mustermann"></div>
-      <div class="ep-field"><label>Zimmer</label><input type="text" id="ep-zimmer" placeholder="z.B. 12"></div>
-      <div class="ep-field"><label>Abreise</label><input type="date" id="ep-abreise"></div>
-      <div class="ep-field" style="display:flex;align-items:flex-end"></div>
+      <div class="ep-field">
+        <label>Name</label>
+        <input type="text" id="ep-name" placeholder="Max Mustermann">
+      </div>
+      <div class="ep-field">
+        <label>Zimmer</label>
+        <input type="text" id="ep-zimmer" placeholder="z.B. 12">
+      </div>
+      <div class="ep-field">
+        <label>Abreise</label>
+        <input type="date" id="ep-abreise">
+      </div>
+      <div class="ep-field" style="display:flex;align-items:flex-end">
+        <!-- spacer -->
+      </div>
       <div class="ep-diaeten">
         <label>Diätvorgaben</label>
         <div class="ep-checkboxes">
@@ -266,7 +480,10 @@
       <button onclick="epToggleForm()" style="background:#fff;color:var(--primary);border:1px solid var(--border);border-radius:8px;padding:9px 16px;font-size:0.95rem;cursor:pointer">Abbrechen</button>
     </div>
   </div>
-  <div id="ep-list" class="patient-grid"><div class="ep-loading">⏳ Lade Einstellplan…</div></div>
+
+  <div id="ep-list" class="patient-grid">
+    <div class="ep-loading">⏳ Lade Einstellplan…</div>
+  </div>
 </section>
 
 <!-- START -->
@@ -274,37 +491,161 @@
   <div class="card blue">
     <h2>⏱ Öffnungszeiten Speisesaal</h2>
     <div class="hours-grid">
-      <div class="hour-box"><div class="meal">Frühstück</div><div class="time">07:00 – 08:30</div></div>
-      <div class="hour-box"><div class="meal">Mittagessen</div><div class="time">12:00 – 13:30</div></div>
-      <div class="hour-box"><div class="meal">Abendessen</div><div class="time">17:00 – 19:00</div></div>
+      <div class="hour-box">
+        <div class="meal">Frühstück</div>
+        <div class="time">07:00 – 08:30</div>
+      </div>
+      <div class="hour-box">
+        <div class="meal">Mittagessen</div>
+        <div class="time">12:00 – 13:30</div>
+      </div>
+      <div class="hour-box">
+        <div class="meal">Abendessen</div>
+        <div class="time">17:00 – 19:00</div>
+      </div>
     </div>
-    <div class="hinweis warn" style="margin-top:14px"><span class="icon">⏰</span><p><strong>Pünktliches Schließen!</strong> Speisesaal wird PÜNKTLICH geöffnet und geschlossen. Bitte Patienten informieren: mindestens 30 Minuten vor Schließung kommen.</p></div>
+    <div class="hinweis warn" style="margin-top:14px">
+      <span class="icon">⏰</span>
+      <p><strong>Pünktliches Schließen!</strong> Speisesaal wird PÜNKTLICH geöffnet und geschlossen. Bitte Patienten informieren: mindestens 30 Minuten vor Schließung kommen.</p>
+    </div>
   </div>
+
   <div class="card yellow">
     <h2>🚨 Goldene Regeln – Allergie im Klinikalltag</h2>
-    <div class="hinweis danger"><span class="icon">🚫</span><p><strong>Im Zweifel: Nicht servieren – immer zuerst nachfragen!</strong> Bei Unsicherheit Allergenordner konsultieren oder Diätologin kontaktieren.</p></div>
-    <div class="hinweis warn"><span class="icon">🧤</span><p><strong>Handschuhe & Kreuzverunreinigung</strong> Bei Diätkost Handschuhe wechseln, separate Utensilien verwenden. Dasselbe Messer für glutenfreies und Normalbrot = Kontamination!</p></div>
-    <div class="hinweis warn"><span class="icon">📦</span><p><strong>Produkte immer prüfen</strong> Auch bekannte Produkte können Rezepturänderungen haben. Zutatenliste lesen, nicht auf Erinnerung verlassen.</p></div>
-    <div class="hinweis info"><span class="icon">💬</span><p><strong>Kommunikation mit Patienten</strong> Aktiv auf Patienten zugehen, nicht warten bis sie nachfragen. „Haben Sie Unverträglichkeiten oder Allergien?" als Standardfrage bei Neuanreise.</p></div>
-    <div class="hinweis danger"><span class="icon">⚡</span><p><strong>Anaphylaxie-Notfall</strong> Bei Reaktion sofort Notaruf (141 intern) + diensthabende Ärztin/Arzt informieren. Nie allein lassen.</p></div>
-  </div>
-  <div class="card">
-    <h2>📌 Diätkategorien im Überblick</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:10px">
-      <div style="background:#fff3e0;border-radius:8px;padding:12px;border:1px solid #ffcc80;cursor:pointer" onclick="showSection('zöliakie',document.querySelectorAll('nav button')[2])"><div style="font-size:1.4rem">🌾</div><div style="font-weight:700;font-size:0.9rem;margin-top:4px">Zöliakie / Glutenfrei</div><div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Weizen, Dinkel, Gerste, Roggen…</div></div>
-      <div style="background:#e3f2fd;border-radius:8px;padding:12px;border:1px solid #90caf9;cursor:pointer" onclick="showSection('laktose',document.querySelectorAll('nav button')[3])"><div style="font-size:1.4rem">🥛</div><div style="font-weight:700;font-size:0.9rem;margin-top:4px">Laktose</div><div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Milchzucker – laktosefreie Produkte</div></div>
-      <div style="background:#f3e5f5;border-radius:8px;padding:12px;border:1px solid #ce93d8;cursor:pointer" onclick="showSection('fruktose',document.querySelectorAll('nav button')[4])"><div style="font-size:1.4rem">🍎</div><div style="font-weight:700;font-size:0.9rem;margin-top:4px">Fruktose</div><div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Fruchtzucker, kein Kompott</div></div>
-      <div style="background:#fce4ec;border-radius:8px;padding:12px;border:1px solid #f48fb1;cursor:pointer" onclick="showSection('histamin',document.querySelectorAll('nav button')[5])"><div style="font-size:1.4rem">⚠️</div><div style="font-weight:700;font-size:0.9rem;margin-top:4px">Histamin</div><div style="font-size:0.75rem;color:#666;margin-top:2px">Nichts gereift, nichts aus der Dose</div></div>
-      <div style="background:#e8eaf6;border-radius:8px;padding:12px;border:1px solid #9fa8da;cursor:pointer" onclick="showSection('lvk',document.querySelectorAll('nav button')[6])"><div style="font-size:1.4rem">🥗</div><div style="font-weight:700;font-size:0.9rem;margin-top:4px">LVK – Leichte Vollkost</div><div style="font-size:0.75rem;color:#666;margin-top:2px">Leicht verdaulich, kein Fettiges</div></div>
+    <div class="hinweis danger">
+      <span class="icon">🚫</span>
+      <p><strong>Im Zweifel: Nicht servieren – immer zuerst nachfragen!</strong> Bei Unsicherheit Allergenordner konsultieren oder Diätologin kontaktieren.</p>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">🧤</span>
+      <p><strong>Handschuhe & Kreuzverunreinigung</strong> Bei Diätkost Handschuhe wechseln, separate Utensilien verwenden. Dasselbe Messer für glutenfreies und Normalbrot = Kontamination!</p>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">📦</span>
+      <p><strong>Produkte immer prüfen</strong> Auch bekannte Produkte können Rezepturänderungen haben. Zutatenliste lesen, nicht auf Erinnerung verlassen.</p>
+    </div>
+    <div class="hinweis info">
+      <span class="icon">💬</span>
+      <p><strong>Kommunikation mit Patienten</strong> Aktiv auf Patienten zugehen, nicht warten bis sie nachfragen. „Haben Sie Unverträglichkeiten oder Allergien?" als Standardfrage bei Neuanreise.</p>
+    </div>
+    <div class="hinweis danger">
+      <span class="icon">⚡</span>
+      <p><strong>Anaphylaxie-Notfall</strong> Bei Reaktion sofort Notaruf (141 intern) + diensthabende Ärztin/Arzt informieren. Nie allein lassen.</p>
     </div>
   </div>
+
   <div class="card">
-    <h2>🔍 Was oft übersehen wird</h2>
-    <div class="accordion"><button class="accordion-btn" onclick="toggleAcc(this)">🌾 Verstecktes Gluten <span class="arrow">▼</span></button><div class="accordion-content"><ul style="font-size:0.93rem;line-height:1.9;padding-left:16px"><li>Gewürzmischungen (oft Weizenmehl als Träger)</li><li>Soßen, Fertigprodukte, Suppenwürzen</li><li>Croutons im Salat oder Suppe</li><li>Stärke in Puddings (wenn nicht als Maisstärke deklariert)</li><li>Paniertes Fleisch oder Fisch</li><li>Bier (enthält Gerstenmalz!)</li></ul></div></div>
-    <div class="accordion"><button class="accordion-btn" onclick="toggleAcc(this)">🥛 Versteckte Laktose <span class="arrow">▼</span></button><div class="accordion-content"><ul style="font-size:0.93rem;line-height:1.9;padding-left:16px"><li>Butterkekse (enthalten Molkenpulver!)</li><li>Cremesuppen (enthalten oft Sahne/Milch)</li><li>Kuchen und Backwaren (auf Etikett achten)</li><li>Margarine (manchmal Milchfett enthalten)</li><li>Schinkenwurst und manche Wurstsorten</li></ul></div></div>
-    <div class="accordion"><button class="accordion-btn" onclick="toggleAcc(this)">⚠️ Verstecktes Histamin <span class="arrow">▼</span></button><div class="accordion-content"><ul style="font-size:0.93rem;line-height:1.9;padding-left:16px"><li>Tomaten und Tomatensaucen (auch Pizza!)</li><li>Erdbeeren, Himbeeren, Ananas, Bananen</li><li>Schokolade, Kakao, Nüsse</li><li>Essig (außer stark verdünntem)</li><li>Spinat, Avocado, Pilze</li><li>Jeder Alkohol (auch Weinbrand in Saucen!)</li><li>Hefe und hefehaltige Produkte</li></ul></div></div>
-    <div class="accordion"><button class="accordion-btn" onclick="toggleAcc(this)">🍎 Versteckte Fruktose <span class="arrow">▼</span></button><div class="accordion-content"><ul style="font-size:0.93rem;line-height:1.9;padding-left:16px"><li>Honig (sehr hoher Fruktoseanteil)</li><li>Fertigprodukte mit Maissirup oder Fruchtzucker</li><li>Fruchttees und Säfte</li><li>Diätprodukte mit Sorbit (E420)</li><li>Kompott aus der Dose oder Glas</li><li>Trockenfrüchte (sehr konzentriert)</li></ul></div></div>
-    <div class="accordion"><button class="accordion-btn" onclick="toggleAcc(this)">🔀 Kombinierte Unverträglichkeiten <span class="arrow">▼</span></button><div class="accordion-content"><p style="font-size:0.93rem;line-height:1.6;margin-bottom:8px">Manche Patienten haben <strong>mehrere Unverträglichkeiten gleichzeitig</strong>. In solchen Fällen:</p><ul style="font-size:0.93rem;line-height:1.9;padding-left:16px"><li>Immer alle Einschränkungen gleichzeitig beachten</li><li>Im Zweifel Diätologin fragen, bevor serviert wird</li><li>Desserts sind besonders kritisch</li><li>Einstellplan täglich vor Dienst durchlesen</li></ul></div></div>
+    <h2>📌 Diätkategorien im Überblick</h2>
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:10px; margin-top:10px;">
+      <div style="background:#fff3e0;border-radius:8px;padding:12px;border:1px solid #ffcc80;cursor:pointer" onclick="showSection('zöliakie', document.querySelectorAll('nav button')[1])">
+        <div style="font-size:1.4rem">🌾</div>
+        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Zöliakie / Glutenfrei</div>
+        <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Weizen, Dinkel, Gerste, Roggen…</div>
+      </div>
+      <div style="background:#e3f2fd;border-radius:8px;padding:12px;border:1px solid #90caf9;cursor:pointer" onclick="showSection('laktose', document.querySelectorAll('nav button')[2])">
+        <div style="font-size:1.4rem">🥛</div>
+        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Laktose</div>
+        <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Milchzucker – laktosefreie Produkte</div>
+      </div>
+      <div style="background:#f3e5f5;border-radius:8px;padding:12px;border:1px solid #ce93d8;cursor:pointer" onclick="showSection('fruktose', document.querySelectorAll('nav button')[3])">
+        <div style="font-size:1.4rem">🍎</div>
+        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Fruktose</div>
+        <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Fruchtzucker, kein Kompott</div>
+      </div>
+      <div style="background:#fce4ec;border-radius:8px;padding:12px;border:1px solid #f48fb1;cursor:pointer" onclick="showSection('histamin', document.querySelectorAll('nav button')[4])">
+        <div style="font-size:1.4rem">⚠️</div>
+        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Histamin</div>
+        <div style="font-size:0.75rem;color:#666;margin-top:2px">Nichts gereift, nichts aus der Dose</div>
+      </div>
+      <div style="background:#e8eaf6;border-radius:8px;padding:12px;border:1px solid #9fa8da;cursor:pointer" onclick="showSection('lvk', document.querySelectorAll('nav button')[5])">
+        <div style="font-size:1.4rem">🥗</div>
+        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">LVK – Leichte Vollkost</div>
+        <div style="font-size:0.75rem;color:#666;margin-top:2px">Leicht verdaulich, kein Fettiges</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🔍 Was oft übersehen wird – für Nicht-Allergiker</h2>
+
+    <div class="accordion">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        🌾 Verstecktes Gluten <span class="arrow">▼</span>
+      </button>
+      <div class="accordion-content">
+        <ul style="font-size:0.93rem;line-height:1.9;padding-left:16px">
+          <li>Gewürzmischungen (oft Weizenmehl als Träger)</li>
+          <li>Soßen, Fertigprodukte, Suppenwürzen</li>
+          <li>Croutons im Salat oder Suppe</li>
+          <li>Stärke in Puddings (wenn nicht als Maisstärke deklariert)</li>
+          <li>Paniertes Fleisch oder Fisch</li>
+          <li>Bier (enthält Gerstenmalz!)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        🥛 Versteckte Laktose <span class="arrow">▼</span>
+      </button>
+      <div class="accordion-content">
+        <ul style="font-size:0.93rem;line-height:1.9;padding-left:16px">
+          <li>Butterkekse (enthalten Molkenpulver!)</li>
+          <li>Cremesuppen (enthalten oft Sahne/Milch)</li>
+          <li>Kuchen und Backwaren (auf Etikett achten: Kuhmilch, Milchpulver)</li>
+          <li>Margarine (manchmal Milchfett enthalten)</li>
+          <li>Schinkenwurst und manche Wurstsorten</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        ⚠️ Verstecktes Histamin <span class="arrow">▼</span>
+      </button>
+      <div class="accordion-content">
+        <ul style="font-size:0.93rem;line-height:1.9;padding-left:16px">
+          <li>Tomaten und Tomatensaucen (auch Pizza!)</li>
+          <li>Erdbeeren, Himbeeren, Ananas, Bananen</li>
+          <li>Schokolade, Kakao, Nüsse</li>
+          <li>Essig (außer stark verdünntem)</li>
+          <li>Spinat, Avocado, Pilze</li>
+          <li>Jeder Alkohol (auch Weinbrand in Saucen!)</li>
+          <li>Hefe und hefehaltige Produkte</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        🍎 Versteckte Fruktose <span class="arrow">▼</span>
+      </button>
+      <div class="accordion-content">
+        <ul style="font-size:0.93rem;line-height:1.9;padding-left:16px">
+          <li>Honig (sehr hoher Fruktoseanteil)</li>
+          <li>Fertigprodukte mit Maissirup oder Fruchtzucker</li>
+          <li>Fruchttees und Säfte</li>
+          <li>Diätprodukte mit Sorbit (E420) – wird wie Fruktose verstoffwechselt</li>
+          <li>Kompott aus der Dose oder Glas</li>
+          <li>Trockenfrüchte (sehr konzentriert)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="accordion-btn" onclick="toggleAcc(this)">
+        🔀 Kombinierte Unverträglichkeiten <span class="arrow">▼</span>
+      </button>
+      <div class="accordion-content">
+        <p style="font-size:0.93rem;line-height:1.6;margin-bottom:8px">Manche Patienten haben <strong>mehrere Unverträglichkeiten gleichzeitig</strong> (z.B. Gluten + Histamin + Fruktose). In solchen Fällen:</p>
+        <ul style="font-size:0.93rem;line-height:1.9;padding-left:16px">
+          <li>Immer alle Einschränkungen gleichzeitig beachten</li>
+          <li>Im Zweifel Diätologin fragen, bevor serviert wird</li>
+          <li>Desserts sind besonders kritisch – Standarddesserts sind selten für alle geeignet</li>
+          <li>Einstellplan täglich vor Dienst durchlesen</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -312,13 +653,72 @@
 <section id="zöliakie" class="section">
   <div class="card">
     <h2>🌾 Zöliakie – „Glutenfrei"</h2>
-    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Zöliakie ist keine Unverträglichkeit, sondern eine <strong>Autoimmunerkrankung</strong>. Bereits Spuren von Gluten können Darmschäden verursachen.</p>
-    <div class="hinweis danger"><span class="icon">⚡</span><p><strong>Nulltoleranz!</strong> Kein „ein bisschen" – bei Zöliakie zählen auch Krümel. Separat zubereiten, separate Utensilien, frische Handschuhe.</p></div>
-    <div class="ev-grid">
-      <div class="ev-col ja"><h4>✅ Erlaubt</h4><ul><li>Glutenfreies Brot, Semmeln, Toastbrot</li><li>Reiswaffeln, Glutenfreie Nudeln</li><li>Reis, Hirse, Mais, Polenta, Kartoffeln</li><li>Buchweizen, Amaranth, Quinoa</li><li>Klare Suppe (⚠️ Einlage prüfen!)</li><li>Alle Salate außer Getreidesalate</li><li>Naturjoghurt, Fruchtjoghurt (ohne Getreidezusatz)</li><li>Pudding, Topfen-Joghurtcremen</li><li>Buttermilch, Sojapudding (Schoko, Vanille)</li><li>Kompott, Obst</li><li>Glutenfreier Kuchen (= Diätkuchen „hell" und Marmor)</li><li>Glutenfreie Kekse</li></ul></div>
-      <div class="ev-col nein"><h4>❌ Nicht erlaubt</h4><ul><li>Weizen, Dinkel, Gerste</li><li>Roggen, Kamut, Einkorn</li><li>Grünkern, Emmer, Triticale</li><li>Hafer (auch wenn nicht glutenfrei deklariert)</li><li>Suppeneinlagen (Grieß, Frittaten, Nudeln)</li><li>Normaler Kuchen, Kekse</li><li>Joghurt/Cremen mit Getreidezusatz</li><li>Gewürzmischungen oft mit Weizenmehl als Träger</li></ul></div>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Zöliakie ist keine Unverträglichkeit, sondern eine <strong>Autoimmunerkrankung</strong>. Bereits Spuren von Gluten (auch aus Kreuzverunreinigung) können Darmschäden verursachen.</p>
+    <div class="hinweis danger">
+      <span class="icon">⚡</span>
+      <p><strong>Nulltoleranz!</strong> Kein „ein bisschen" – bei Zöliakie zählen auch Krümel. Separat zubereiten, separate Utensilien, frische Handschuhe.</p>
     </div>
-    <div class="hinweis warn"><span class="icon">🍳</span><p><strong>Küchentipp:</strong> Glutenfreie Speisen immer zuerst zubereiten. Friteuse und Grillplatten sind immer kontaminiert – nicht verwenden!</p></div>
+    <div class="ev-grid">
+      <div class="ev-col ja">
+        <h4>✅ Erlaubt</h4>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:8px">Getreide</h3>
+        <ul>
+          <li>Glutenfreies Brot, Semmeln, Toastbrot</li>
+          <li>Reiswaffeln</li>
+          <li>Glutenfreie Nudeln</li>
+          <li>Reis, Hirse</li>
+          <li>Mais, Polenta</li>
+          <li>Kartoffeln</li>
+          <li>Buchweizen, Amaranth, Quinoa</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Suppen</h3>
+        <ul>
+          <li>Klare Suppe (⚠️ Einlage prüfen!)</li>
+          <li>Cremesuppen (im Ernstfall nachschauen)</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Salate</h3>
+        <ul><li>Alle außer Getreidesalate (z.B. kein Nudelsalat)</li></ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Naturjoghurt, Fruchtjoghurt (ohne Getreidezusatz)</li>
+          <li>Laktosefreies Frucht-/Naturjoghurt (ohne Getreidezusatz)</li>
+          <li>Pudding, Topfen-Joghurtcremen</li>
+          <li>Buttermilch, Sojapudding (Schoko, Vanille)</li>
+          <li>Kompott, Obst</li>
+          <li>Glutenfreier Kuchen (= Diätkuchen „hell" und Marmor)</li>
+          <li>Glutenfreie Kekse</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Gewürze</h3>
+        <ul><li>Einzelgewürze (nicht Mischungen) – Zutatenliste prüfen</li></ul>
+      </div>
+      <div class="ev-col nein">
+        <h4>❌ Nicht erlaubt</h4>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:8px">Getreide mit Gluten</h3>
+        <ul>
+          <li>Weizen, Dinkel, Gerste</li>
+          <li>Roggen, Kamut, Einkorn</li>
+          <li>Grünkern, Emmer, Triticale</li>
+          <li>Hafer (auch wenn nicht glutenfrei deklariert)</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Suppen</h3>
+        <ul><li>Suppeneinlagen (Grieß, Frittaten, Nudeln)</li></ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Normaler Kuchen, Kekse</li>
+          <li>Joghurt/Cremen mit Getreidezusatz</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Achtung Gewürze</h3>
+        <ul><li>Gewürzmischungen oft mit Weizenmehl als Träger</li></ul>
+      </div>
+    </div>
+    <div class="hinweis info" style="margin-top:14px">
+      <span class="icon">📁</span>
+      <p><strong>Allergenordner</strong> Bei Unsicherheit: Im Allergenordner nachschlagen – Gluten ist unter „Zusatzstoffe/Allergene" als „Glutenhaltiges Getreide sowie daraus hergestellte Erzeugnisse" gekennzeichnet.</p>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">🍳</span>
+      <p><strong>Küchentipp:</strong> Glutenfreie Speisen immer zuerst zubereiten (bevor glutenhaltiges Mehl in der Küche ist). Friteuse und Grillplatten sind immer kontaminiert – nicht verwenden!</p>
+    </div>
   </div>
 </section>
 
@@ -326,13 +726,63 @@
 <section id="laktose" class="section">
   <div class="card">
     <h2>🥛 Laktose – Milchzucker</h2>
-    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Laktoseintoleranz = Mangel an Laktase (Enzym). Beschwerden: Bauchkrämpfe, Blähungen, Durchfall. Schwere variiert stark.</p>
-    <div class="hinweis info"><span class="icon">ℹ️</span><p><strong>Cremesuppen</strong> enthalten oft nur eine geringe Menge Laktose – viele Patienten vertragen dies. Den Patienten informieren, nicht einfach annehmen.</p></div>
-    <div class="ev-grid">
-      <div class="ev-col ja"><h4>✅ Erlaubt</h4><ul><li>Klare Suppe mit laktosefreier Einlage</li><li>Schnittkäse/Hartkäse (wenig bis keine Laktose)</li><li>Brie Schärdinger (wenig Laktose)</li><li>Edamer, Gouda, Mossbacher</li><li>Alle Salate ohne Joghurtdressing</li><li>Laktosefreies Naturjoghurt (mit Marmelade)</li><li>Laktosefreies Fruchtjoghurt</li><li>Sojapudding (Schoko, Vanille)</li><li>Kompott, Obst</li><li>Laktosefreier Kuchen (Etikett prüfen!)</li></ul></div>
-      <div class="ev-col nein"><h4>❌ Nicht erlaubt</h4><ul><li>Cremesuppen (enthält Milch/Sahne)</li><li>Einlagen mit Milchprodukten</li><li>Frischkäse, Topfen, Weichkäse</li><li>Schafmilchjoghurt</li><li>Topfencremen, normales Joghurt</li><li>Himbeer-/Mangodrink</li><li>Kuchen mit Kuhmilch/Milchpulver/Molkenpulver</li><li>Butterkekse (enthalten Molkenpulver!)</li><li>Molke, Latella</li></ul></div>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Laktoseintoleranz = Mangel an Laktase (Enzym). Beschwerden: Bauchkrämpfe, Blähungen, Durchfall. Schwere variiert stark – manche vertragen kleine Mengen, andere gar nichts.</p>
+    <div class="hinweis info">
+      <span class="icon">ℹ️</span>
+      <p><strong>Cremesuppen</strong> enthalten oft nur eine geringe Menge Laktose (ein Schuss Milch/Sahne) – viele Patienten vertragen dies. Den Patienten informieren, nicht einfach annehmen.</p>
     </div>
-    <div class="hinweis warn"><span class="icon">🏷️</span><p><strong>Etikettenpflicht:</strong> Kuchen und Backwaren immer auf Zutatenliste prüfen: „Kuhmilch", „Milchpulver", „Molkenpulver" = Laktose enthalten.</p></div>
+    <div class="ev-grid">
+      <div class="ev-col ja">
+        <h4>✅ Erlaubt</h4>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:8px">Suppen</h3>
+        <ul><li>Klare Suppe mit laktosefreier Einlage</li></ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Käse</h3>
+        <ul>
+          <li>Schnittkäse/Hartkäse (wenig bis keine Laktose)</li>
+          <li>Brie Schärdinger (wenig Laktose)</li>
+          <li>Edamer, Gouda, Mossbacher</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Salat</h3>
+        <ul><li>Alle Salate ohne Joghurtdressing</li></ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Laktosefreies Naturjoghurt (mit Marmelade)</li>
+          <li>Laktosefreies Fruchtjoghurt</li>
+          <li>Sojapudding (Schoko, Vanille)</li>
+          <li>Kompott, Obst</li>
+          <li>Laktosefreier Kuchen (Etikett prüfen!)</li>
+        </ul>
+      </div>
+      <div class="ev-col nein">
+        <h4>❌ Nicht erlaubt</h4>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:8px">Suppen</h3>
+        <ul>
+          <li>Cremesuppen (enthält Milch/Sahne)</li>
+          <li>Einlagen mit Milchprodukten</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Käse</h3>
+        <ul>
+          <li>Frischkäse, Topfen, Weichkäse</li>
+          <li>Schafmilchjoghurt</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Topfencremen, normales Joghurt</li>
+          <li>Himbeer-/Mangodrink</li>
+          <li>Kuchen mit Kuhmilch/Milchpulver/Molkenpulver</li>
+          <li>Butterkekse (enthalten Molkenpulver!)</li>
+          <li>Molke, Latella</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">🏷️</span>
+      <p><strong>Etikettenpflicht:</strong> Kuchen und Backwaren immer auf Zutatenliste prüfen: „Kuhmilch", „Milchpulver", „Molkenpulver" = Laktose enthalten → Kuchen nicht möglich!</p>
+    </div>
+    <div class="hinweis info">
+      <span class="icon">📁</span>
+      <p><strong>Allergenordner:</strong> Laktose ist unter „Milch und Milcherzeugnisse (einschließlich Laktose)" gekennzeichnet.</p>
+    </div>
   </div>
 </section>
 
@@ -340,11 +790,65 @@
 <section id="fruktose" class="section">
   <div class="card">
     <h2>🍎 Fruktose – Fruchtzucker</h2>
-    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Fruktosemalabsorption: Der Dünndarm kann Fruchtzucker nicht ausreichend aufnehmen. Verträglichkeit ist individuell sehr unterschiedlich!</p>
-    <div class="hinweis danger"><span class="icon">📁</span><p><strong>Achtung:</strong> Fruktose ist NICHT im Allergenordner angeführt! Muss über den Einstellplan / Patientenunterlagen bekannt sein.</p></div>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Fruktosemalabsorption: Der Dünndarm kann Fruchtzucker nicht ausreichend aufnehmen. Beschwerden: Blähungen, Bauchschmerzen, Durchfall. Verträglichkeit ist individuell sehr unterschiedlich!</p>
+    <div class="hinweis danger">
+      <span class="icon">📁</span>
+      <p><strong>Achtung:</strong> Fruktose ist NICHT im Allergenordner angeführt! Muss über den Einstellplan / Patientenunterlagen bekannt sein.</p>
+    </div>
     <div class="ev-grid">
-      <div class="ev-col ja"><h4>✅ Erlaubt</h4><ul><li>Alle Suppen (ohne Fruchtzubereitung)</li><li>Alle Hauptspeisen ohne Fruchtmus/Kompott</li><li>Alle Salate</li><li>Naturjoghurt (mit normaler Marmelade)</li><li>Laktosefreies Naturjoghurt (mit normaler Marmelade)</li><li>Buttermilch (ohne Früchte)</li><li>Sojapudding (Schoko, Vanille)</li><li>Butterkekse</li><li>Diätkuchen „hell" und Marmor</li><li>Bananen, 1 Orange, 1 Kiwi</li><li>Beerenfrüchte, 1 Mandarine</li><li>Zuckermelone, Zitronen, Kirschen</li></ul></div>
-      <div class="ev-col nein"><h4>❌ Nicht erlaubt</h4><ul><li>Hauptspeisen mit Fruchtzubereitung/Fruchtmus/Kompott</li><li>Diätjoghurt, Diätmarmelade</li><li>Fruchtjoghurt, Fruchtcremen</li><li>Obst (außer den verträglichen Sorten)</li><li>Kuchen mit Früchten</li><li>Fruchtmus, Kompott</li><li>MilkiMum (Fruktosesirup!)</li><li>Honig meiden!</li><li>Sorbit (E420) beachten</li></ul></div>
+      <div class="ev-col ja">
+        <h4>✅ Erlaubt</h4>
+        <ul>
+          <li>Alle Suppen (ohne Fruchtzubereitung)</li>
+          <li>Alle Hauptspeisen ohne Fruchtzubereitung oder Fruchtmus</li>
+          <li>Alle Salate</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Naturjoghurt (mit normaler Marmelade)</li>
+          <li>Laktosefreies Naturjoghurt (mit normaler Marmelade)</li>
+          <li>Buttermilch (ohne Früchte)</li>
+          <li>Sojapudding (Schoko, Vanille)</li>
+          <li>Butterkekse</li>
+          <li>Diätkuchen „hell" und Marmor</li>
+          <li>Kuchen ohne Frucht (außer verträglichem Obst)</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Verträgliches Obst</h3>
+        <ul>
+          <li>Bananen, 1 Orange, 1 Kiwi</li>
+          <li>Beerenfrüchte, 1 Mandarine</li>
+          <li>Zuckermelone, Zitronen, Kirschen</li>
+          <li>⚠️ Menge ist individuell sehr unterschiedlich</li>
+        </ul>
+      </div>
+      <div class="ev-col nein">
+        <h4>❌ Nicht erlaubt</h4>
+        <ul>
+          <li>Hauptspeisen mit Fruchtzubereitung / Fruchtmus / Kompott</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Diätjoghurt, Diätmarmelade</li>
+          <li>Fruchtjoghurt, Fruchtcremen</li>
+          <li>Obst (außer den verträglichen Sorten)</li>
+          <li>Kuchen mit Früchten</li>
+          <li>Fruchtmus, Kompott</li>
+          <li>MilkiMum (Fruktosesirup!)</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Bei „Fruktose streng"</h3>
+        <ul>
+          <li>Vollkornprodukte</li>
+          <li>Blähende Gemüsesorten: Kraut, Kohl, Bohnen, Gurke, Kohlrabi, Fisolen, Karfiol</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">🍯</span>
+      <p><strong>Honig meiden!</strong> Honig enthält sehr viel Fruktose – auch als Zutat in Saucen, Dressings oder Gebäck prüfen.</p>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">🏷️</span>
+      <p><strong>Sorbit (E420) beachten:</strong> In Diätprodukten häufig als Süßungsmittel enthalten. Wird wie Fruktose verstoffwechselt und kann Beschwerden auslösen.</p>
     </div>
   </div>
 </section>
@@ -353,15 +857,90 @@
 <section id="histamin" class="section">
   <div class="card">
     <h2>⚠️ Histamin-Intoleranz</h2>
-    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Histaminintoleranz: Das Enzym Diaminoxidase (DAO) baut Histamin nicht ausreichend ab. Symptome: Hautrötung, Kopfschmerzen, Herzrasen, Verdauungsbeschwerden.</p>
-    <div class="hinweis danger"><span class="icon">🥫</span><p><strong>Grundregel 1: Nichts aus der Dose!</strong> Konserven enthalten immer erhöhte Histaminmengen.</p></div>
-    <div class="hinweis danger"><span class="icon">🧀</span><p><strong>Grundregel 2: Nichts Gereiftes/Gegorenes!</strong> Hartwürste, gereifter Käse, Sauerkraut, Alkohol → kein Histamin.</p></div>
-    <div class="hinweis danger"><span class="icon">📁</span><p><strong>Achtung:</strong> Histamin ist NICHT im Allergenordner angeführt! Nur über Einstellplan/Patientenunterlagen bekannt.</p></div>
-    <div class="ev-grid">
-      <div class="ev-col ja"><h4>✅ Erlaubt</h4><ul><li>Frischkäse, Topfen, Hüttenkäse</li><li>Schafskäse, Sauermilchprodukte</li><li>Edamer, Butterkäse, junger Gouda</li><li>Frisches oder tiefgekühltes Fleisch</li><li>Gekochter Schinken</li><li>Extrawurst, Pikante, Frankfurter, Bratwürstel</li><li>Frischer Fisch und Tiefkühlfisch (außer Thunfisch)</li><li>Alle übrigen frischen Gemüsesorten</li><li>Alle übrigen frischen Obstsorten</li><li>Ganz stark verdünnter Essig</li></ul></div>
-      <div class="ev-col nein"><h4>❌ Nicht erlaubt</h4><ul><li>Weichkäse (Brie) und sonstiger Schnitt-/Hartkäse</li><li>Dauerwürste, Räucherware</li><li>Geselchtes, Salami, Rohschinken, Speck</li><li>Geräucherter und marinierter Fisch</li><li>Meeresfrüchte, Fischkonserven</li><li>Tomaten, Tomatenerzeugnisse</li><li>Spinat, Melanzani, Avocado, Pilze</li><li>Hülsenfrüchte, Soja, Linsen, Sauerkraut</li><li>Zitrusfrüchte, Bananen, Erdbeeren, Himbeeren</li><li>Nüsse, Mohn, Schokolade, Kakao</li><li>Rotweinessig, Balsamicoessig</li><li>Alle alkoholischen Getränke</li></ul></div>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Histaminintoleranz: Das Enzym Diaminoxidase (DAO) baut Histamin nicht ausreichend ab. Symptome: Hautrötung, Kopfschmerzen, Herzrasen, Verdauungsbeschwerden – können auch stark verzögert auftreten.</p>
+
+    <div class="hinweis danger">
+      <span class="icon">🥫</span>
+      <p><strong>Grundregel 1: Nichts aus der Dose!</strong> Konserven enthalten immer erhöhte Histaminmengen.</p>
     </div>
-    <div class="hinweis warn"><span class="icon">🍅</span><p><strong>Tomatensauce ist ein Klassiker-Fehler!</strong> Pasta mit Tomatensauce scheint harmlos, ist aber für Histamin-Patienten problematisch. Immer Alternativen anbieten.</p></div>
+    <div class="hinweis danger">
+      <span class="icon">🧀</span>
+      <p><strong>Grundregel 2: Nichts Gereiftes/Gegorenes!</strong> Hartwürste, gereifter Käse, Sauerkraut, Alkohol → kein Histamin.</p>
+    </div>
+    <div class="hinweis danger">
+      <span class="icon">📁</span>
+      <p><strong>Achtung:</strong> Histamin ist NICHT im Allergenordner angeführt! Nur über Einstellplan/Patientenunterlagen bekannt.</p>
+    </div>
+
+    <div class="ev-grid">
+      <div class="ev-col ja">
+        <h4>✅ Erlaubt</h4>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:8px">Käse</h3>
+        <ul>
+          <li>Frischkäse, Topfen, Hüttenkäse</li>
+          <li>Schafskäse, Sauermilchprodukte</li>
+          <li>Edamer, Butterkäse, junger Gouda</li>
+          <li>Geheimratskäse, Käse nach Holländer Art</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Fleisch & Wurst</h3>
+        <ul>
+          <li>Frisches oder tiefgekühltes Fleisch</li>
+          <li>Gekochter Schinken</li>
+          <li>Extrawurst, Pikante, Frankfurter, Bratwürstel</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Fisch</h3>
+        <ul>
+          <li>Frischer Fisch und Tiefkühlfisch (außer Thunfisch)</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Gemüse</h3>
+        <ul><li>Alle übrigen frischen oder tiefgekühlten Gemüsesorten</li></ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Obst</h3>
+        <ul><li>Alle übrigen frischen oder tiefgekühlten Obstsorten</li></ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Essig / Sonstiges</h3>
+        <ul><li>Ganz stark verdünnter Essig</li></ul>
+      </div>
+      <div class="ev-col nein">
+        <h4>❌ Nicht erlaubt</h4>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:8px">Käse</h3>
+        <ul>
+          <li>Weichkäse (Brie) und sonstiger Schnitt-/Hartkäse</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Fleisch & Wurst</h3>
+        <ul>
+          <li>Dauerwürste, Räucherware</li>
+          <li>Geselchtes, Salami, Rohschinken, Speck</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Fisch</h3>
+        <ul>
+          <li>Geräucherter und marinierter Fisch</li>
+          <li>Meeresfrüchte, Fischkonserven</li>
+          <li>Dosenthunfisch, Heringssalat, Rollmops</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Gemüse</h3>
+        <ul>
+          <li>Tomaten, Tomatenerzeugnisse</li>
+          <li>Spinat, Melanzani, Avocado, Pilze</li>
+          <li>Hülsenfrüchte, Soja, Linsen</li>
+          <li>Sauerkraut, Essigsaures Gemüse, Dosengemüse</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Obst</h3>
+        <ul>
+          <li>Zitrusfrüchte (Orange, Grapefruit, Zitrone, Mandarinen)</li>
+          <li>Bananen, Erdbeeren, Himbeeren, Ananas, Birnen, Kiwi</li>
+          <li>Obst aus der Dose</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Sonstiges</h3>
+        <ul>
+          <li>Nüsse, Mohn, Schokolade, Kakao, Lakritze</li>
+          <li>Rotweinessig, Balsamicoessig</li>
+          <li>Alle alkoholischen Getränke</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hinweis warn">
+      <span class="icon">🍅</span>
+      <p><strong>Tomatensauce ist ein Klassiker-Fehler!</strong> Pasta mit Tomatensauce scheint harmlos, ist aber für Histamin-Patienten problematisch. Immer Alternativen anbieten.</p>
+    </div>
   </div>
 </section>
 
@@ -369,25 +948,197 @@
 <section id="lvk" class="section">
   <div class="card">
     <h2>🥗 LVK – Leichte Vollkost</h2>
-    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Leichte Vollkost = vollwertige Ernährung, aber leicht verdaulich. Kein Fettiges, Frittiertes, Blähende oder schwer Verdauliches.</p>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:10px">Leichte Vollkost = vollwertige Ernährung, aber leicht verdaulich. Kein Fettiges, Frittiertes, Blähende oder schwer Verdauliches. Für Patienten mit empfindlichem Magen-Darm-Trakt.</p>
     <div class="ev-grid">
-      <div class="ev-col ja"><h4>✅ Erlaubt</h4><ul><li>Alle Suppen, wenn Gemüse LVK-tauglich ist</li><li>Semmel, Milchbrot</li><li>Schwarzbrot „ohne Körner"</li><li>Reis, Polenta, Nudeln, Kartoffeln</li><li>Karotte, Sellerie, Kürbis, Spargel</li><li>Melanzani, Zucchini, Fenchel, Tomaten</li><li>Spinat, Schwarzwurzel, Brokkoli</li><li>Kopfsalat, Rote Rüben, Vogerlsalat</li><li>Bananen, Himbeeren, Erdbeeren, Heidelbeeren, Äpfel</li><li>Milch, Joghurt, Molke, Buttermilch</li><li>Topfen, milde Käsesorten (Edamer, Gouda)</li><li>Magere Fleisch/Fisch-Sorten, fettarm zubereitet</li><li>Biskuit, leichter Obstkuchen, Butterkekse</li></ul></div>
-      <div class="ev-col nein"><h4>❌ Nicht erlaubt</h4><ul><li>Kohlsprossensuppe, Karfiolsuppe, Pilzsuppe</li><li>Vollkorngebäck, Weckerl mit Körner</li><li>Nichts Frittiertes (Pommes etc.)</li><li>Kraut, Kohl, Gurken, Rettich, Paprika, Zwiebel</li><li>Knoblauch, Lauch, Bohnen, Pilze, Hülsenfrüchte</li><li>Birnen, Weintrauben, Steinobst roh</li><li>Brie, länger gereifte Käsesorten</li><li>Fettes, Frittiertes, Räucherware</li><li>Sehr scharfe Gerichte, viel Pfeffer, Curry, Chili</li><li>Zwetschkenröster/Kompott, üppige Kuchen</li></ul></div>
+      <div class="ev-col ja">
+        <h4>✅ Erlaubt</h4>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:8px">Suppen</h3>
+        <ul><li>Alle Suppen, wenn Gemüse LVK-tauglich ist</li></ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Getreide</h3>
+        <ul>
+          <li>Semmel, Milchbrot</li>
+          <li>Schwarzbrot „ohne Körner"</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Beilagen</h3>
+        <ul><li>Reis, Polenta, Nudeln, Kartoffeln</li></ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Salat / Gemüse</h3>
+        <ul>
+          <li>Karotte, Sellerie, Kürbis, Spargel</li>
+          <li>Melanzani, Zucchini, Fenchel, Tomaten</li>
+          <li>Spinat, Schwarzwurzel, Brokkoli</li>
+          <li>Kopfsalat, Rote Rüben, Vogerlsalat</li>
+          <li>Eisbergsalat, Kartoffeln</li>
+          <li>Essiggurken in kleinen Mengen</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Obst</h3>
+        <ul>
+          <li>Bananen, Himbeeren, Erdbeeren</li>
+          <li>Heidelbeeren, Äpfel, Melonen</li>
+          <li>Weiche Kiwi, Orangen, Mandarinen, Mango</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Milch/Milchprodukte</h3>
+        <ul>
+          <li>Milch, Joghurt, Molke, Buttermilch</li>
+          <li>Topfen, milde Käsesorten (Edamer, Gouda, Mossbacher)</li>
+          <li>Hüttenkäse</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Fleisch / Fisch</h3>
+        <ul><li>Magere Sorten, fettarm zubereitet (⚠️ Achtung bei Saucen!)</li></ul>
+        <h3 style="font-size:0.9rem;color:var(--green);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Biskuit (Diätkuchen)</li>
+          <li>Obstkuchen ohne üppige Creme</li>
+          <li>Topfencremen, Naturjoghurt, Fruchtjoghurt</li>
+          <li>Butterkekse, Buttermilch, Sojapudding</li>
+          <li>Kompotte außer Zwetschke</li>
+        </ul>
+      </div>
+      <div class="ev-col nein">
+        <h4>❌ Nicht erlaubt</h4>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:8px">Suppen</h3>
+        <ul>
+          <li>Kohlsprossensuppe, Karfiolsuppe</li>
+          <li>Schwammerl-/Pilzsuppe</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Getreide</h3>
+        <ul>
+          <li>Vollkorngebäck</li>
+          <li>Weckerl „mit Körner"</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Beilagen</h3>
+        <ul>
+          <li>Keine Vollkornbeilage</li>
+          <li>Nichts Frittiertes (Pommes etc.)</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Salat / Gemüse</h3>
+        <ul>
+          <li>Kraut, Kohl, Gurken, Rettich</li>
+          <li>Radieschen, Paprika, Zwiebel</li>
+          <li>Knoblauch, Lauch, Bohnen, Pilze</li>
+          <li>Hülsenfrüchte, Kohlrabi, Karfiol</li>
+          <li>Chips, Pommes und fettreiche Zubereitungen</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Obst</h3>
+        <ul>
+          <li>Birnen, Weintrauben</li>
+          <li>Roher Steinobst: Zwetschken, Pfirsich, Marillen, Kirschen</li>
+          <li>Kompotte außer Zwetschke</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Milch/Milchprodukte</h3>
+        <ul>
+          <li>Überreife, frittierte Produkte</li>
+          <li>Brie, länger gereifte Käsesorten (Jerome, Emmentaler)</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Fleisch / Fisch</h3>
+        <ul>
+          <li>Fettes, Frittiertes</li>
+          <li>Sehr scharf angebratenes Fleisch</li>
+          <li>Räucherware</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Gewürze</h3>
+        <ul>
+          <li>Zwiebel, Knoblauch</li>
+          <li>Sehr scharfe Gerichte, viel Pfeffer, Paprika, Kren, Curry, Chili</li>
+        </ul>
+        <h3 style="font-size:0.9rem;color:var(--red);margin-top:10px">Dessert</h3>
+        <ul>
+          <li>Zwetschkenröster/Kompott</li>
+          <li>Üppige Kuchen (Bienenstich)</li>
+          <li>Obst: siehe oben</li>
+        </ul>
+      </div>
     </div>
-    <div class="hinweis warn"><span class="icon">🍲</span><p><strong>Achtung bei Saucen!</strong> Auch wenn das Fleisch mager ist – schwere Rahmsaucen sind für LVK nicht geeignet. Immer leichte Saucen verwenden.</p></div>
+    <div class="hinweis warn">
+      <span class="icon">🍲</span>
+      <p><strong>Achtung bei Saucen!</strong> Auch wenn das Fleisch mager ist – schwere Rahmsaucen oder gebundene Saucen sind für LVK nicht geeignet. Immer leichte Saucen verwenden.</p>
+    </div>
   </div>
 </section>
+
 <!-- CAFE -->
 <section id="cafe" class="section">
-  <div class="card yellow"><h2>☕ Cafe – wird aufgebaut</h2><p style="font-size:0.95rem;color:var(--muted);margin-bottom:6px">Diese Rubrik wird laufend ergänzt.</p><div class="hinweis info"><span class="icon">🚧</span><p><strong>Im Aufbau.</strong> Die aktuellen Getränkerezepte sind bereits hinterlegt.</p></div></div>
-  <div class="card"><h2>🍷 Alkoholische Getränke – Rezepte & Allergiehinweise</h2>
-    <div class="hinweis warn"><span class="icon">⚠️</span><p><strong>Alkohol ist für Histamin-Patienten tabu!</strong> Hugo, Aperol, Limoncello und Sekt-Rosé sind für Histamin-Intoleranz NICHT geeignet.</p></div>
+  <div class="card yellow">
+    <h2>☕ Cafe – wird aufgebaut</h2>
+    <p style="font-size:0.95rem;color:var(--muted);margin-bottom:6px">Diese Rubrik wird laufend ergänzt. Geplante Unterkategorien: Heißgetränke, Kaltgetränke, Alkoholische Getränke, Snacks & Mehlspeisen, Saisonales Angebot.</p>
+    <div class="hinweis info">
+      <span class="icon">🚧</span>
+      <p><strong>Im Aufbau.</strong> Die aktuellen Getränkerezepte sind bereits hinterlegt. Weitere Inhalte folgen.</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:18px">
+    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.9rem">
+      ☕<br><strong>Heißgetränke</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
+    </div>
+    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.9rem">
+      🥤<br><strong>Kaltgetränke</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
+    </div>
+    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.9rem">
+      🥐<br><strong>Snacks & Mehlspeisen</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
+    </div>
+    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.9rem">
+      🌿<br><strong>Saisonales</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🥂 Alkoholische Getränke – Rezepte & Allergiehinweise</h2>
+    <div class="hinweis warn">
+      <span class="icon">⚠️</span>
+      <p><strong>Alkohol ist für Histamin-Patienten tabu!</strong> Hugo, Aperol, Limoncello und Sekt-Rosé sind für Histamin-Intoleranz NICHT geeignet. Für diese Patienten Alternativen anbieten.</p>
+    </div>
     <div class="drinks-grid">
-      <div class="drink-card"><h4>🌿 Hugo</h4><ul><li>Holundersirup</li><li>1/8 Soda</li><li>1/8 Prosecco</li><li>Minze, Limette, Eiswürfel, Strohhalm</li></ul><div style="font-size:0.72rem;margin-top:8px;color:var(--red)">⚠️ Kein Histamin, kein Fruktose-streng</div></div>
-      <div class="drink-card"><h4>🍊 Aperol-Spritz</h4><ul><li>1/8 Soda</li><li>1/8 Wein</li><li>‚Aperol' Sirup</li><li>Orangescheibe, Eiswürfel, Strohhalm</li></ul><div style="font-size:0.72rem;margin-top:8px;color:var(--red)">⚠️ Kein Histamin (Alkohol + Orange)</div></div>
-      <div class="drink-card"><h4>🍋 Limoncello</h4><ul><li>1/8 Soda</li><li>1/8 Prosecco</li><li>Limoncello (Schuss)</li><li>Minze, Zitrone, Eiswürfel, Strohhalm</li></ul><div style="font-size:0.72rem;margin-top:8px;color:var(--red)">⚠️ Kein Histamin (Alkohol + Zitrone)</div></div>
-      <div class="drink-card"><h4>🌸 Sekt-Rosé</h4><ul><li>1/8 Soda</li><li>1/8 Rosé Sekt</li><li>Himbeere (TK)</li><li>Minze, Limette, Eiswürfel, Strohhalm</li></ul><div style="font-size:0.72rem;margin-top:8px;color:var(--red)">⚠️ Kein Histamin (Alkohol + Himbeere)</div></div>
-      <div class="drink-card"><h4>☕ Winterkaffee</h4><ul><li>Espresso</li><li>Milch</li><li>Kakao</li><li>Ahornsirup</li><li>Sahne</li></ul><div style="font-size:0.72rem;margin-top:8px;color:var(--yellow)">⚠️ Kakao = Histamin, Milch = Laktose</div></div>
+      <div class="drink-card">
+        <h4>🌿 Hugo</h4>
+        <ul>
+          <li>Holundersirup</li>
+          <li>1/8 Soda</li>
+          <li>1/8 Prosecco</li>
+          <li>Minze, Limette, Eiswürfel, Strohhalm</li>
+        </ul>
+        <div style="font-size:0.72rem;margin-top:8px;color:var(--red)">⚠️ Kein Histamin, kein Fruktose-streng</div>
+      </div>
+      <div class="drink-card">
+        <h4>🍊 Aperol-Spritz</h4>
+        <ul>
+          <li>1/8 Soda</li>
+          <li>1/8 Wein</li>
+          <li>‚Aperol' Sirup</li>
+          <li>Orangescheibe, Eiswürfel, Strohhalm</li>
+        </ul>
+        <div style="font-size:0.72rem;margin-top:8px;color:var(--red)">⚠️ Kein Histamin (Alkohol + Orange)</div>
+      </div>
+      <div class="drink-card">
+        <h4>🍋 Limoncello</h4>
+        <ul>
+          <li>1/8 Soda</li>
+          <li>1/8 Prosecco</li>
+          <li>Limoncello (Schuss)</li>
+          <li>Minze, Zitrone, Eiswürfel, Strohhalm</li>
+        </ul>
+        <div style="font-size:0.72rem;margin-top:8px;color:var(--red)">⚠️ Kein Histamin (Alkohol + Zitrone)</div>
+      </div>
+      <div class="drink-card">
+        <h4>🌸 Sekt-Rosé</h4>
+        <ul>
+          <li>1/8 Soda</li>
+          <li>1/8 Rosé Sekt</li>
+          <li>Himbeere (TK)</li>
+          <li>Minze, Limette, Eiswürfel, Strohhalm</li>
+        </ul>
+        <div style="font-size:0.72rem;margin-top:8px;color:var(--red)">⚠️ Kein Histamin (Alkohol + Himbeere)</div>
+      </div>
+      <div class="drink-card">
+        <h4>☕ Winterkaffee</h4>
+        <ul>
+          <li>Espresso</li>
+          <li>Milch</li>
+          <li>Kakao</li>
+          <li>Ahornsirup</li>
+          <li>Sahne</li>
+        </ul>
+        <div style="font-size:0.72rem;margin-top:8px;color:var(--yellow)">⚠️ Kakao = Histamin, Milch = Laktose</div>
+      </div>
     </div>
     <h3 style="margin-top:18px;margin-bottom:10px">🥤 Limonaden</h3>
     <div class="drinks-grid">
@@ -399,33 +1150,50 @@
 </section>
 
 <!-- REINIGUNG -->
+
 <section id="reinigung" class="section">
   <div class="card">
     <h2>🧹 Reinigungs- & Arbeitsplan Cafeteria</h2>
-    <div class="hinweis danger"><span class="icon">🧽</span><p><strong>Allergiehygiene:</strong> Arbeitsflächen, Schneidebretter und Utensilien nach Kontakt mit Allergenen sofort reinigen und desinfizieren – nicht nur abwischen!</p></div>
-    <div style="overflow-x:auto"><table class="clean-table"><thead><tr><th>Tätigkeit</th><th>MO</th><th>Di</th><th>MI</th><th>DO</th><th>FR</th><th>SA</th><th>SO</th><th>1×/Monat</th></tr></thead><tbody>
-      <tr><td>Buffetrahmen abstauben & wischen</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
-      <tr><td>Buffetaufsteller abwischen & desinfizieren</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
-      <tr><td>Sideboard putzen & desinfizieren</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
-      <tr><td>Salatvitrine putzen & desinfizieren & Wand</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
-      <tr><td>Servietten/Tee nachfüllen</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
-      <tr><td>Bänke/Sessel abkehren</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
-      <tr><td>Sozialraum Tische wischen/Menagen (14:15)</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
-      <tr><td>Getränkelager reinigen/ordnen</td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Getränke/Gläser Sozialraum auffüllen/kontrollieren</td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Wäschekammer wischen & Wäsche wegräumen</td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td></tr>
-      <tr><td>Heißwasserautomat 2 St. & Speisesaal entkalken (ungerade Woche)</td><td></td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td></tr>
-      <tr><td>Heißwasserautomat & Geschirrspüler Teebar 3 St. entkalken (gerade Woche)</td><td></td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td></tr>
-      <tr><td>Menagen auffüllen/wischen & Kärchenhalter wischen</td><td></td><td></td><td class="x">✓</td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
-      <tr><td>Sessel und Tischbeine nass wischen</td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Menükarten Neuanreise schreiben</td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
-      <tr><td>Besteckladen reinigen/desinfizieren</td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
-      <tr><td>Türen reinigen</td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
-      <tr><td>Buffetkästen reinigen & desinfizieren</td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
-      <tr><td>Absperrständer putzen</td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td></tr>
-      <tr><td>Aushelfen in der Cafeteria</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td></tr>
-      <tr><td>Motor Salatbuffet absaugen</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td></tr>
-    </tbody></table></div>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:12px">Hygieneplan für tägliche und wöchentliche Aufgaben. Besonders wichtig bei Allergieküche: Kreuzverunreinigung durch unzureichende Reinigung vermeiden!</p>
+
+    <div class="hinweis danger">
+      <span class="icon">🧽</span>
+      <p><strong>Allergiehygiene:</strong> Arbeitsflächen, Schneidebretter und Utensilien nach Kontakt mit Allergenen (Gluten, Nüsse etc.) sofort reinigen und desinfizieren – nicht nur abwischen!</p>
+    </div>
+
+    <div style="overflow-x:auto">
+    <table class="clean-table">
+      <thead>
+        <tr>
+          <th>Tätigkeit</th>
+          <th>MO</th><th>Di</th><th>MI</th><th>DO</th><th>FR</th><th>SA</th><th>SO</th><th>1×/Monat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Buffetrahmen abstauben & wischen</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Buffetaufsteller abwischen & desinfizieren</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Sideboard putzen & desinfizieren</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Salatvitrine putzen & desinfizieren & Wand</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Servietten/Tee nachfüllen</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Bänke/Sessel abkehren</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Sozialraum Tische wischen/Menagen (14:15)</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td class="x">✓</td><td></td></tr>
+        <tr><td>Getränkelager reinigen/ordnen</td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Getränke/Gläser Sozialraum auffüllen/kontrollieren</td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Wäschekammer wischen & Wäsche wegräumen</td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td></tr>
+        <tr><td>Heißwasserautomat 2 St. & Speisesaal entkalken (ungerade Woche)</td><td></td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td></tr>
+        <tr><td>Heißwasserautomat & Geschirrspüler Teebar 3 St. entkalken (gerade Woche)</td><td></td><td class="x">✓</td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td></tr>
+        <tr><td>Menagen auffüllen/wischen & Kärchenhalter wischen</td><td></td><td></td><td class="x">✓</td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
+        <tr><td>Sessel und Tischbeine nass wischen</td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Menükarten Neuanreise schreiben</td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
+        <tr><td>Besteckladen reinigen/desinfizieren</td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
+        <tr><td>Türen reinigen</td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
+        <tr><td>Buffetkästen reinigen & desinfizieren</td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td><td></td></tr>
+        <tr><td>Absperrständer putzen</td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td><td></td></tr>
+        <tr><td>Aushelfen in der Cafeteria</td><td></td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td><td></td></tr>
+        <tr><td>Motor Salatbuffet absaugen</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td class="x">✓</td></tr>
+      </tbody>
+    </table>
+    </div>
   </div>
 </section>
 
@@ -434,9 +1202,189 @@
   <div class="card">
     <h2>🔍 Schnellsuche – Lebensmittel & Unverträglichkeit</h2>
     <p style="font-size:0.93rem;color:var(--muted);margin-bottom:14px">Gib ein Lebensmittel ein, um zu sehen, bei welchen Diäten es erlaubt oder verboten ist.</p>
-    <div class="search-bar"><input type="text" id="search-input" placeholder="z.B. Tomaten, Joghurt, Kuchen, Butter…" oninput="doSearch(this.value)"></div>
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="z.B. Tomaten, Joghurt, Kuchen, Butter…" oninput="doSearch(this.value)">
+    </div>
     <div id="search-results"></div>
   </div>
+</section>
+
+<!-- ARBEITSABLÄUFE -->
+<section id="arbeitsablaeufe" class="section">
+  <div class="ab-tabs">
+    <button class="ab-tab-btn active" onclick="abSetTab('frueh',this)">🌅 Frühdienst</button>
+    <button class="ab-tab-btn" onclick="abSetTab('mittag',this)">🍽️ Mittag & Abend</button>
+    <button class="ab-tab-btn" onclick="abSetTab('cafe',this)">☕ Café</button>
+    <button class="ab-tab-btn" onclick="abSetTab('kassa',this)">🧾 Kassa</button>
+  </div>
+
+  <!-- Frühdienst -->
+  <div id="ab-frueh" class="ab-pane active">
+    <div class="card">
+      <h2>🌅 Frühdienst – Ablauf</h2>
+      <div class="ab-step"><div class="ab-num">1</div><div class="ab-text"><strong>Büfett anfüllen</strong>Alle Stationen vollständig auffüllen und anrichten.</div></div>
+      <div class="ab-step"><div class="ab-num">2</div><div class="ab-text"><strong>Glutenfreies Brot aufschneiden</strong>Je 2 Scheiben in Zellophan einpacken und bereitstellen.</div></div>
+      <div class="ab-step"><div class="ab-num">3</div><div class="ab-text"><strong>Buttermilch &amp; laktosefreies Joghurt</strong>Aus dem roten Buch (Kühlschrank) entnehmen und vor dem Service an den jeweiligen Platz stellen.</div></div>
+      <div class="ab-step"><div class="ab-num">4</div><div class="ab-text"><strong>Service – nur warme Hauptgerichte</strong>Keine Suppen, Salate, Desserts oder Getränke servieren. Nur die warmen Hauptspeisen werden an den Tisch gebracht.</div></div>
+      <div class="ab-step"><div class="ab-num">5</div><div class="ab-text"><strong>Tische abräumen &amp; neu aufdecken</strong>Sobald alle Gäste an einem Tisch fertig sind, sofort wieder aufdecken.</div></div>
+      <div class="ab-step"><div class="ab-num">6</div><div class="ab-text"><strong>Büfett nachfüllen</strong>Laufend kontrollieren und nachfüllen.</div></div>
+      <div class="hinweis info" style="margin-top:12px"><span class="icon">📝</span><p>Abläufe können jederzeit ergänzt und in die richtige Reihenfolge gebracht werden.</p></div>
+    </div>
+  </div>
+
+  <!-- Mittag & Abend -->
+  <div id="ab-mittag" class="ab-pane">
+    <div class="card">
+      <h2>🍽️ Mittag & Abend – Ablauf</h2>
+      <div class="ab-step"><div class="ab-num">1</div><div class="ab-text"><strong>Nachmittagsarbeiten laut Liste</strong>Alle auf der internen Nachmittags-Liste angeführten Arbeiten durchführen.</div></div>
+      <div class="ab-step"><div class="ab-num">2</div><div class="ab-text"><strong>Büfett für Abend vorbereiten &amp; auffüllen</strong></div></div>
+      <div class="ab-step"><div class="ab-num">3</div><div class="ab-text"><strong>Service – nur warme Hauptgerichte</strong>Keine Suppen, Salate, Desserts oder Getränke servieren.</div></div>
+      <div class="ab-step"><div class="ab-num">4</div><div class="ab-text"><strong>Tische abräumen &amp; neu aufdecken</strong>Sobald Tisch frei, sofort wieder aufdecken.</div></div>
+      <div class="ab-step"><div class="ab-num">5</div><div class="ab-text"><strong>Teeküchen nachfüllen</strong>Alle Teeküchen auf Station kontrollieren und auffüllen.</div></div>
+      <div class="ab-step"><div class="ab-num">6</div><div class="ab-text"><strong>Geschirrspüler auslassen</strong>Am Ende des Abenddienstes Geschirrspüler ausleeren und für den nächsten Dienst bereitstellen.</div></div>
+    </div>
+    <div class="card">
+      <h2>🎴 Tischkarten – Bedeutung & Wochenraster</h2>
+      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:12px">Farbige Tischkarten zeigen auf einen Blick die Menüwahl. Farben werden noch eingetragen.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+        <span class="tischkarte" style="background:#fff3e0;border-color:#ff9800;color:#e65100">🟠 Ankunft <small style="font-weight:400">(noch keine Auswahl)</small></span>
+        <span class="tischkarte" style="background:#e8f5e9;border-color:#4caf50;color:#2e7d32">🟢 Normal</span>
+        <span class="tischkarte" style="background:#e3f2fd;border-color:#2196f3;color:#1565c0">🔵 Halbe Portion</span>
+        <span class="tischkarte" style="background:#f3e5f5;border-color:#9c27b0;color:#6a1b9a">🟣 Große Portion</span>
+        <span class="tischkarte" style="background:#ffebee;border-color:#f44336;color:#c62828">🔴 Allergie</span>
+      </div>
+      <div class="tk-grid">
+        <table class="tk-table">
+          <thead>
+            <tr><th rowspan="2">Karte</th><th rowspan="2">Menü</th><th colspan="7">Wochentag</th></tr>
+            <tr><th>Mo</th><th>Di</th><th>Mi</th><th>Do</th><th>Fr</th><th>Sa</th><th>So</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="tk-section-label" colspan="9">MITTAG</td></tr>
+            <tr><td rowspan="3">Normal</td><td>Menü 1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Menü 2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Menü 3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td rowspan="3">½ Portion</td><td>Menü 1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Menü 2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Menü 3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td class="tk-section-label" colspan="9">ABEND</td></tr>
+            <tr><td rowspan="3">Normal</td><td>Menü 1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Menü 2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Menü 3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td rowspan="3">½ Portion</td><td>Menü 1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Menü 2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>Menü 3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="hinweis warn" style="margin-top:12px"><span class="icon">📝</span><p>Tischkartenfarben noch eintragen. Raster dient als Vorlage zum Abhaken.</p></div>
+    </div>
+  </div>
+
+  <!-- Café -->
+  <div id="ab-cafe" class="ab-pane">
+    <div class="card">
+      <h2>☕ Café – Ablauf</h2>
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Abläufe werden laufend ergänzt.</p></div>
+      <div class="ab-step"><div class="ab-num">1</div><div class="ab-text"><strong>Büfett anfüllen &amp; herrichten</strong></div></div>
+      <div class="ab-step"><div class="ab-num">2</div><div class="ab-text"><strong>Getränke vorbereiten</strong>Limonaden, Heißgetränke, Saisonales bereitstellen.</div></div>
+      <div class="ab-step"><div class="ab-num">3</div><div class="ab-text"><strong>Allerginweise beachten</strong>Hugo, Aperol, Limoncello: kein Histamin! Siehe Café-Tab für Details.</div></div>
+    </div>
+  </div>
+
+  <!-- Kassa -->
+  <div id="ab-kassa" class="ab-pane">
+    <div class="card">
+      <h2>🧾 Kassa – Ablauf</h2>
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Abläufe werden laufend ergänzt.</p></div>
+      <div class="ab-step"><div class="ab-num">1</div><div class="ab-text"><strong>Kassaabrechnung</strong>Tagesabschluss durchführen.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FREIZEIT / PRIVATER KALENDER -->
+<section id="freizeit" class="section">
+  <div class="card" style="margin-bottom:12px;padding:12px 16px">
+    <div class="fz-legend">
+      <span class="fz-dot wunsch">Wunsch-Termin</span>
+      <span class="fz-dot genehmigt">Genehmigt</span>
+      <span class="fz-dot privat">Privat (Konzert, Probe…)</span>
+      <button class="dp-view-btn" onclick="fzToggleAddForm()" style="border-color:var(--green);color:var(--green);margin-left:auto">+ Termin</button>
+      <a class="dp-gcal-btn" href="https://calendar.google.com/calendar/r" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm0 16H5V8h14v11z"/></svg>
+        Google Kalender öffnen
+      </a>
+    </div>
+  </div>
+
+  <div id="fz-add-form" style="display:none" class="fz-add-form">
+    <h3>Termin eintragen</h3>
+    <div class="fz-row">
+      <div><label>Titel</label><input type="text" id="fz-inp-title" placeholder="z.B. Konzert, Urlaub…" style="width:180px"></div>
+      <div><label>Von</label><input type="date" id="fz-inp-from"></div>
+      <div><label>Bis (opt.)</label><input type="date" id="fz-inp-to"></div>
+      <div><label>Typ</label>
+        <select id="fz-inp-type">
+          <option value="wunsch">🟠 Wunsch-Termin</option>
+          <option value="genehmigt">🟢 Genehmigt</option>
+          <option value="privat">🔵 Privat</option>
+        </select>
+      </div>
+      <div><label>⏰ Erinnerung (Tage vorher)</label><input type="number" id="fz-inp-remind" value="14" min="1" max="60" style="width:70px"></div>
+      <button onclick="fzAddEvent()">Speichern</button>
+      <button onclick="document.getElementById('fz-add-form').style.display='none'" style="background:#eee;color:var(--text)">✕</button>
+    </div>
+  </div>
+
+  <div id="fz-alarm-banner" style="display:none" class="hinweis warn" id="fz-alarm-banner">
+    <span class="icon">⏰</span>
+    <div id="fz-alarm-text"></div>
+  </div>
+
+  <div class="fz-toolbar">
+    <h2>🏖️ Mein Freizeitkalender</h2>
+    <button class="fz-nav-btn" onclick="fzNav(-1)">&#8249;</button>
+    <span class="fz-period" id="fz-period-label"></span>
+    <button class="fz-nav-btn" onclick="fzNav(1)">&#8250;</button>
+    <button class="fz-view-btn active" id="fzbtn-monat" onclick="fzSetView('monat')">Monat</button>
+    <button class="fz-view-btn" id="fzbtn-woche" onclick="fzSetView('woche')">Woche</button>
+    <button class="fz-view-btn" id="fzbtn-tag" onclick="fzSetView('tag')">Tag</button>
+    <button class="fz-view-btn" id="fzbtn-jahr" onclick="fzSetView('jahr')">Jahr</button>
+  </div>
+
+  <div id="fz-calendar"></div>
+
+  <div class="fz-gcal-note" style="margin-top:14px">
+    💡 <strong>Tipp:</strong> Mit „Google Kalender öffnen" siehst du, was bereits übertragen wurde. Übertrage genehmigte Termine manuell dort – dann hast du alles synchron.
+  </div>
+</section>
+
+<!-- INTERNE NUMMERN -->
+<section id="nummern" class="section">
+  <div style="display:flex;gap:10px;margin-bottom:16px;align-items:center;flex-wrap:wrap">
+    <h2 style="font-size:1.1rem;color:var(--primary);margin:0">📞 Interne Nummern & Kontakte</h2>
+    <button onclick="numToggleForm()" style="background:var(--primary);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:0.85rem;font-weight:600;cursor:pointer;margin-left:auto">+ Eintrag</button>
+  </div>
+
+  <div class="num-add-form" id="num-add-form">
+    <h3 style="font-size:0.95rem;color:var(--primary);margin-bottom:12px">Neuer Eintrag</h3>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+      <div><label style="font-size:0.78rem;color:var(--muted);display:block;margin-bottom:3px">Bezeichnung</label><input type="text" id="num-inp-title" placeholder="z.B. Küche" style="border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:0.85rem;width:180px"></div>
+      <div><label style="font-size:0.78rem;color:var(--muted);display:block;margin-bottom:3px">Nummer / Kontakt</label><input type="text" id="num-inp-val" placeholder="z.B. 4420766" style="border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:0.85rem;width:180px"></div>
+      <div><label style="font-size:0.78rem;color:var(--muted);display:block;margin-bottom:3px">Notiz</label><input type="text" id="num-inp-sub" placeholder="optional" style="border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:0.85rem;width:160px"></div>
+      <div><label style="font-size:0.78rem;color:var(--muted);display:block;margin-bottom:3px">Typ</label>
+        <select id="num-inp-type" style="border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:0.85rem;background:var(--bg)">
+          <option value="">Standard</option>
+          <option value="urgent">Wichtig</option>
+          <option value="info">Info</option>
+        </select>
+      </div>
+      <button onclick="numSave()" style="background:var(--primary);color:#fff;border:none;border-radius:6px;padding:8px 16px;font-size:0.85rem;cursor:pointer;font-weight:600">Speichern</button>
+      <button onclick="numToggleForm()" style="background:#eee;color:var(--text);border:none;border-radius:6px;padding:8px 12px;font-size:0.85rem;cursor:pointer">Abbrechen</button>
+    </div>
+  </div>
+
+  <div id="num-list" class="num-grid"></div>
 </section>
 
 <!-- DIENSTPLAN -->
@@ -449,9 +1397,13 @@
     <button class="dp-view-btn active" id="dpbtn-monat" onclick="dpSetView('monat')">Monat</button>
     <button class="dp-view-btn" id="dpbtn-woche" onclick="dpSetView('woche')">Woche</button>
     <button class="dp-view-btn" id="dpbtn-jahr" onclick="dpSetView('jahr')">Jahr</button>
-    <a class="dp-gcal-btn" href="https://calendar.google.com/calendar/r" target="_blank"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg> Google Kalender</a>
+    <a class="dp-gcal-btn" href="https://calendar.google.com/calendar/r" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
+      Google Kalender
+    </a>
     <button class="dp-view-btn" onclick="dpToggleAddForm()" style="border-color:var(--green);color:var(--green)">+ Dienst</button>
   </div>
+
   <div id="dp-add-form" style="display:none" class="dp-add-form">
     <h3>Neuen Dienst eintragen</h3>
     <div class="dp-row">
@@ -462,26 +1414,38 @@
       <button onclick="dpAddShift()">Speichern</button>
     </div>
   </div>
+
   <div id="dp-calendar"></div>
 </section>
 
 </main>
-<footer>Privatklinik St. Radegund · Sanlas Holding · KostKompass v2.0 · Bei Unsicherheit immer Allergenordner oder Diätologin konsultieren.</footer>
+
+<footer>
+  Privatklinik St. Radegund · Sanlas Holding · KostKompass v2.0 · Bei Unsicherheit immer Allergenordner oder Diätologin konsultieren.
+</footer>
+
 <script>
+// ─── SUPABASE CONFIG ──────────────────────────────────────────────────────────
+// Trage hier deine Werte ein (Supabase → Settings → API)
 const SUPABASE_URL  = 'https://oauinbjtszjjxclqgcnw.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hdWluYmp0c3pqanhjbHFnY253Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5NDc2MDIsImV4cCI6MjA5MjUyMzYwMn0.9pAJQXikSlBvtEzdv6LZO2O8eWExTFyAE84AR4Ywx8c';
+// ─────────────────────────────────────────────────────────────────────────────
+
 let sb = null;
 function initSupabase() {
   if (SUPABASE_URL.startsWith('DEINE') || SUPABASE_ANON_KEY.startsWith('DEIN')) return null;
   if (!sb) sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   return sb;
 }
+
+// Header-Badge mit KW + Datum
 (function() {
   const now = new Date();
   const startOfYear = new Date(now.getFullYear(), 0, 1);
   const kw = Math.ceil(((now - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
   document.getElementById('header-badge').textContent = `KW ${kw} / ${now.getFullYear()}`;
 })();
+
 function showSection(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
@@ -490,66 +1454,109 @@ function showSection(id, btn) {
   if (id === 'einstellplan') epLoad();
   if (id === 'dienstplan') dpRender();
 }
+
 function toggleAcc(btn) {
   const content = btn.nextElementSibling;
   const isOpen = btn.classList.contains('open');
   btn.classList.toggle('open', !isOpen);
   content.classList.toggle('open', !isOpen);
 }
+
+// ─── EINSTELLPLAN ─────────────────────────────────────────────────────────────
 const DIET_CLASS = { 'Zöliakie': 'gluten', 'Laktose': 'laktose', 'Fruktose': 'fruktose', 'Histamin': 'histamin', 'LVK': 'lvk' };
 const DIET_ICON  = { 'Zöliakie': '🌾', 'Laktose': '🥛', 'Fruktose': '🍎', 'Histamin': '⚠️', 'LVK': '🥗' };
+
 function epToggleForm() {
   const f = document.getElementById('ep-form');
   f.classList.toggle('open');
   if (!f.classList.contains('open')) epResetForm();
 }
+
 function epResetForm() {
   document.getElementById('ep-name').value = '';
   document.getElementById('ep-zimmer').value = '';
   document.getElementById('ep-abreise').value = '';
   document.querySelectorAll('.ep-checkboxes input').forEach(c => c.checked = false);
 }
+
 async function epLoad() {
   const list = document.getElementById('ep-list');
   const status = document.getElementById('ep-status');
   const client = initSupabase();
+
   if (!client) {
     document.getElementById('ep-setup-banner').style.display = 'block';
     list.innerHTML = '<div class="ep-empty">Supabase nicht verbunden – siehe Hinweis oben.</div>';
     return;
   }
+
   list.innerHTML = '<div class="ep-loading">⏳ Lade…</div>';
   status.textContent = '';
-  const { data, error } = await client.from('patients').select('*').order('abreise', { ascending: true });
-  if (error) { list.innerHTML = `<div class="ep-empty" style="color:var(--red)">Fehler: ${error.message}</div>`; return; }
+
+  const { data, error } = await client
+    .from('patients')
+    .select('*')
+    .order('abreise', { ascending: true });
+
+  if (error) {
+    list.innerHTML = `<div class="ep-empty" style="color:var(--red)">Fehler: ${error.message}</div>`;
+    return;
+  }
+
   const today = new Date().toISOString().slice(0, 10);
   const tomorrow = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
-  if (!data.length) { list.innerHTML = '<div class="ep-empty">Keine Patienten eingetragen.</div>'; status.textContent = '0 Patienten'; return; }
+
+  if (!data.length) {
+    list.innerHTML = '<div class="ep-empty">Keine Patienten eingetragen.</div>';
+    status.textContent = '0 Patienten';
+    return;
+  }
+
   status.textContent = `${data.length} Patient${data.length !== 1 ? 'en' : ''}`;
+
   list.innerHTML = data.map(p => {
     const diets = p.diaeten || [];
-    const tags = diets.length ? diets.map(d => `<span class="diet-tag ${DIET_CLASS[d] || ''}">${DIET_ICON[d] || ''} ${d}</span>`).join('') : `<span class="diet-tag normal">Normale Kost</span>`;
-    const abreiseLabel = p.abreise ? new Date(p.abreise).toLocaleDateString('de-AT', { day:'2-digit', month:'2-digit', year:'numeric' }) : '–';
+    const tags = diets.length
+      ? diets.map(d => `<span class="diet-tag ${DIET_CLASS[d] || ''}">${DIET_ICON[d] || ''} ${d}</span>`).join('')
+      : `<span class="diet-tag normal">Normale Kost</span>`;
+
+    const abreiseLabel = p.abreise
+      ? new Date(p.abreise).toLocaleDateString('de-AT', { day:'2-digit', month:'2-digit', year:'numeric' })
+      : '–';
+
     let cardClass = 'patient-card';
     if (p.abreise === today) cardClass += ' ep-abreise-today';
     else if (p.abreise === tomorrow) cardClass += ' ep-abreise-soon';
-    return `<div class="${cardClass}"><button class="pc-delete" onclick="epDelete('${p.id}')" title="Entlassen / löschen">✕</button><div class="pc-name">${p.name}</div><div class="pc-meta">Zimmer ${p.zimmer || '–'} · Abreise: ${abreiseLabel}</div><div class="pc-tags">${tags}</div></div>`;
+
+    return `
+      <div class="${cardClass}">
+        <button class="pc-delete" onclick="epDelete('${p.id}')" title="Entlassen / löschen">✕</button>
+        <div class="pc-name">${p.name}</div>
+        <div class="pc-meta">Zimmer ${p.zimmer || '–'} · Abreise: ${abreiseLabel}</div>
+        <div class="pc-tags">${tags}</div>
+      </div>`;
   }).join('');
 }
+
 async function epSave() {
   const client = initSupabase();
   if (!client) return;
+
   const name = document.getElementById('ep-name').value.trim();
   if (!name) { alert('Bitte Namen eingeben.'); return; }
+
   const diaeten = [...document.querySelectorAll('.ep-checkboxes input:checked')].map(c => c.value);
   const abreise = document.getElementById('ep-abreise').value || null;
   const zimmer  = document.getElementById('ep-zimmer').value.trim() || null;
+
   const { error } = await client.from('patients').insert([{ name, zimmer, abreise, diaeten }]);
   if (error) { alert('Fehler beim Speichern: ' + error.message); return; }
+
   epResetForm();
   document.getElementById('ep-form').classList.remove('open');
   await epLoad();
 }
+
 async function epDelete(id) {
   if (!confirm('Patient entlassen / löschen?')) return;
   const client = initSupabase();
@@ -557,6 +1564,8 @@ async function epDelete(id) {
   if (error) { alert('Fehler: ' + error.message); return; }
   await epLoad();
 }
+
+// Search database
 const searchDB = [
   { term: 'tomaten', text: 'Tomaten', gluten: '✅', laktose: '✅', fruktose: '✅', histamin: '❌ VERBOTEN – enthält viel Histamin', lvk: '✅' },
   { term: 'joghurt', text: 'Joghurt (normal)', gluten: '✅ (ohne Getreidezusatz)', laktose: '❌ enthält Laktose', fruktose: '✅ (Naturjoghurt)', histamin: '✅ (Naturjoghurt, Fruchtjoghurt prüfen)', lvk: '✅' },
@@ -573,58 +1582,91 @@ const searchDB = [
   { term: 'avocado', text: 'Avocado', gluten: '✅', laktose: '✅', fruktose: '✅', histamin: '❌ VERBOTEN', lvk: '❌ zu fettreich' },
   { term: 'bananen', text: 'Bananen', gluten: '✅', laktose: '✅', fruktose: '✅ (in kleiner Menge)', histamin: '❌ VERBOTEN', lvk: '✅' },
   { term: 'erdbeeren', text: 'Erdbeeren', gluten: '✅', laktose: '✅', fruktose: '❌ (hoher Fruktosegehalt)', histamin: '❌ VERBOTEN', lvk: '✅' },
+  { term: 'orangensaft', text: 'Orangensaft / Orangen', gluten: '✅', laktose: '✅', fruktose: '⚠️ 1 Orange OK', histamin: '❌ VERBOTEN (Zitrusfrüchte)', lvk: '✅' },
   { term: 'orange', text: 'Orange', gluten: '✅', laktose: '✅', fruktose: '⚠️ 1 Orange OK', histamin: '❌ VERBOTEN (Zitrusfrüchte)', lvk: '✅' },
   { term: 'roggenbrot', text: 'Roggenbrot / Schwarzbrot', gluten: '❌ VERBOTEN (Roggen = Gluten)', laktose: '✅', fruktose: '✅', histamin: '✅', lvk: '✅ (ohne Körner)' },
   { term: 'semmel', text: 'Semmel (normal)', gluten: '❌ VERBOTEN (Weizen)', laktose: '✅', fruktose: '✅', histamin: '✅', lvk: '✅' },
   { term: 'käse', text: 'Käse (allgemein)', gluten: '✅', laktose: '⚠️ Hartkäse OK, Frischkäse NEIN', fruktose: '✅', histamin: '⚠️ Nur junger/milder Käse', lvk: '✅ (milde Sorten)' },
-  { term: 'wurst', text: 'Wurst / Aufschnitt', gluten: '⚠️ prüfen', laktose: '⚠️ prüfen', fruktose: '✅', histamin: '⚠️ nur Extrawurst/Frankfurter/gekochter Schinken', lvk: '✅ (mager)' },
+  { term: 'frischkäse', text: 'Frischkäse / Topfen', gluten: '✅', laktose: '❌ enthält Laktose', fruktose: '✅', histamin: '✅', lvk: '✅' },
+  { term: 'wurst', text: 'Wurst / Aufschnitt (allgemein)', gluten: '⚠️ prüfen', laktose: '⚠️ prüfen', fruktose: '✅', histamin: '⚠️ nur Extrawurst/Frankfurter/gekochter Schinken', lvk: '✅ (mager)' },
   { term: 'salami', text: 'Salami / Rohschinken / Speck', gluten: '✅', laktose: '✅', fruktose: '✅', histamin: '❌ VERBOTEN (gereift)', lvk: '❌' },
   { term: 'pilze', text: 'Pilze / Schwammerl', gluten: '✅', laktose: '✅', fruktose: '✅', histamin: '❌ VERBOTEN', lvk: '❌ (Schwammerlsuppe verboten)' },
   { term: 'essig', text: 'Essig', gluten: '✅', laktose: '✅', fruktose: '✅', histamin: '⚠️ Nur stark verdünnt; Balsamico & Rotweinessig VERBOTEN', lvk: '⚠️ wenig' },
   { term: 'alkohol', text: 'Alkohol (Wein, Bier, Schnaps)', gluten: '⚠️ Bier = Gluten!', laktose: '✅', fruktose: '⚠️', histamin: '❌ VERBOTEN', lvk: '❌' },
 ];
+
 function doSearch(val) {
   const out = document.getElementById('search-results');
   if (!val || val.trim().length < 2) { out.innerHTML = ''; return; }
   const q = val.toLowerCase().trim();
   const hits = searchDB.filter(d => d.term.includes(q) || d.text.toLowerCase().includes(q));
-  if (!hits.length) { out.innerHTML = '<p style="color:var(--muted);font-size:0.93rem">Kein Eintrag gefunden. Bitte Allergenordner konsultieren.</p>'; return; }
-  out.innerHTML = hits.map(h => `<div class="search-hit"><strong>${h.text}</strong><div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;font-size:0.9rem"><div>🌾 Zöliakie/Gluten: ${h.gluten}</div><div>🥛 Laktose: ${h.laktose}</div><div>🍎 Fruktose: ${h.fruktose}</div><div>⚠️ Histamin: ${h.histamin}</div><div>🥗 LVK: ${h.lvk}</div></div></div>`).join('');
+  if (!hits.length) {
+    out.innerHTML = '<p style="color:var(--muted);font-size:0.93rem">Kein Eintrag gefunden. Bitte Allergenordner konsultieren.</p>';
+    return;
+  }
+  out.innerHTML = hits.map(h => `
+    <div class="search-hit">
+      <strong>${h.text}</strong>
+      <div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;font-size:0.9rem">
+        <div>🌾 Zöliakie/Gluten: ${h.gluten}</div>
+        <div>🥛 Laktose: ${h.laktose}</div>
+        <div>🍎 Fruktose: ${h.fruktose}</div>
+        <div>⚠️ Histamin: ${h.histamin}</div>
+        <div>🥗 LVK: ${h.lvk}</div>
+      </div>
+    </div>
+  `).join('');
 }
+
+// ─── DIENSTPLAN ───────────────────────────────────────────────────────────────
+// Initiale Schichtdaten: Juni 2026 (Di, Mi, Fr, Sa = 11:30-19:30)
 const DP_INIT_SHIFTS = (() => {
   const shifts = [];
+  // Juni 2026: 1=Mo, 2=Di, 3=Mi, 4=Do, 5=Fr, 6=Sa, 7=So
+  // Arbeitstage: Di(2), Mi(3), Fr(5), Sa(6)
   for (let d = 1; d <= 30; d++) {
-    const date = new Date(2026, 5, d);
-    const dow = date.getDay();
-    if ([2,3,5,6].includes(dow)) shifts.push({ date: `2026-06-${String(d).padStart(2,'0')}`, from: '11:30', to: '19:30', note: '' });
+    const date = new Date(2026, 5, d); // Month 5 = Juni
+    const dow = date.getDay(); // 0=So,1=Mo,...,6=Sa
+    if ([2,3,5,6].includes(dow)) { // Di, Mi, Fr, Sa
+      shifts.push({ date: `2026-06-${String(d).padStart(2,'0')}`, from: '11:30', to: '19:30', note: '' });
+    }
   }
   return shifts;
 })();
-let dpView = 'monat';
-let dpCursor = new Date();
+
+let dpView = 'monat'; // 'monat' | 'woche' | 'jahr'
+let dpCursor = new Date(); // current nav position
 let dpShifts = JSON.parse(localStorage.getItem('dpShifts') || 'null') || DP_INIT_SHIFTS;
+
 function dpSave() { try { localStorage.setItem('dpShifts', JSON.stringify(dpShifts)); } catch(e){} }
+
 function dpSetView(v) {
   dpView = v;
-  ['monat','woche','jahr'].forEach(x => document.getElementById('dpbtn-'+x).classList.toggle('active', x===v));
+  ['monat','woche','jahr'].forEach(x => {
+    document.getElementById('dpbtn-'+x).classList.toggle('active', x===v);
+  });
   dpRender();
 }
+
 function dpNav(dir) {
   if (dpView === 'monat') dpCursor = new Date(dpCursor.getFullYear(), dpCursor.getMonth() + dir, 1);
   else if (dpView === 'woche') dpCursor = new Date(dpCursor.getTime() + dir * 7 * 86400000);
   else dpCursor = new Date(dpCursor.getFullYear() + dir, dpCursor.getMonth(), 1);
   dpRender();
 }
+
 function dpToggleAddForm() {
   const f = document.getElementById('dp-add-form');
   f.style.display = f.style.display === 'none' ? 'block' : 'none';
 }
+
 function dpAddShift() {
   const date = document.getElementById('dp-inp-date').value;
   const from = document.getElementById('dp-inp-from').value;
   const to   = document.getElementById('dp-inp-to').value;
   const note = document.getElementById('dp-inp-note').value.trim();
   if (!date || !from || !to) return alert('Bitte Datum und Zeiten eintragen.');
+  // Remove existing for same date, then add
   dpShifts = dpShifts.filter(s => s.date !== date);
   dpShifts.push({ date, from, to, note });
   dpShifts.sort((a,b) => a.date.localeCompare(b.date));
@@ -633,22 +1675,41 @@ function dpAddShift() {
   document.getElementById('dp-inp-date').value = '';
   dpRender();
 }
-function dpDeleteShift(date) { dpShifts = dpShifts.filter(s => s.date !== date); dpSave(); dpRender(); }
-function dpShiftForDate(dateStr) { return dpShifts.find(s => s.date === dateStr); }
+
+function dpDeleteShift(date) {
+  dpShifts = dpShifts.filter(s => s.date !== date);
+  dpSave();
+  dpRender();
+}
+
+function dpShiftForDate(dateStr) {
+  return dpShifts.find(s => s.date === dateStr);
+}
+
+function dpFmtDate(dateStr) {
+  return new Date(dateStr + 'T00:00:00').toLocaleDateString('de-AT', { weekday:'short', day:'2-digit', month:'2-digit' });
+}
+
 const DP_DOW = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+const DP_DOW_FULL = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
 const DP_MONTHS = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+
 function dpRender() {
   const today = new Date(); today.setHours(0,0,0,0);
   const todayStr = today.toISOString().slice(0,10);
   const cal = document.getElementById('dp-calendar');
   if (!cal) return;
+
   if (dpView === 'monat') {
     const y = dpCursor.getFullYear(), m = dpCursor.getMonth();
     document.getElementById('dp-period-label').textContent = DP_MONTHS[m] + ' ' + y;
-    const first = new Date(y, m, 1), last = new Date(y, m+1, 0);
-    let startDow = first.getDay(); if (startDow===0) startDow=7;
+    const first = new Date(y, m, 1);
+    const last  = new Date(y, m+1, 0);
+    // Start on Monday
+    let startDow = first.getDay(); if (startDow===0) startDow=7; // 1=Mo..7=So
     let html = '<div class="dp-month-grid">';
     ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(d => html += `<div class="dh">${d}</div>`);
+    // Empty cells before first
     for (let i=1; i<startDow; i++) html += `<div class="dc other-month"></div>`;
     for (let d=1; d<=last.getDate(); d++) {
       const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
@@ -656,37 +1717,54 @@ function dpRender() {
       const isToday = dateStr === todayStr;
       html += `<div class="dc${isToday?' today':''}">
         <div class="dn">${d}</div>
-        ${shift ? `<div class="ds">🟢 ${shift.from}–${shift.to}${shift.note?' <em>'+shift.note+'</em>':''}</div><div style="font-size:0.62rem;color:#c62828;cursor:pointer;margin-top:2px" onclick="dpDeleteShift('${dateStr}')">✕</div>` : ''}
+        ${shift ? `<div class="ds">🟢 ${shift.from}–${shift.to}${shift.note?' <em>'+shift.note+'</em>':''}</div>
+          <div style="font-size:0.62rem;color:#c62828;cursor:pointer;margin-top:2px" onclick="dpDeleteShift('${dateStr}')">✕</div>` : ''}
       </div>`;
     }
+    // Fill rest
     const total = startDow - 1 + last.getDate();
     const remainder = total % 7 === 0 ? 0 : 7 - (total % 7);
     for (let i=0; i<remainder; i++) html += `<div class="dc other-month"></div>`;
     html += '</div>';
     cal.innerHTML = html;
+
   } else if (dpView === 'woche') {
+    // Find Monday of current week
     const cur = new Date(dpCursor); cur.setHours(0,0,0,0);
     const dow = cur.getDay(); const diff = (dow===0?-6:1-dow);
     const monday = new Date(cur.getTime() + diff*86400000);
     const days = Array.from({length:7}, (_,i) => new Date(monday.getTime() + i*86400000));
-    document.getElementById('dp-period-label').textContent = `${monday.getDate()}.${monday.getMonth()+1}. – ${days[6].getDate()}.${days[6].getMonth()+1}.${days[6].getFullYear()}`;
+    const label = `${monday.getDate()}.${monday.getMonth()+1}. – ${days[6].getDate()}.${days[6].getMonth()+1}.${days[6].getFullYear()}`;
+    document.getElementById('dp-period-label').textContent = label;
+
     let html = '<div style="background:#fff;border-radius:10px;box-shadow:var(--shadow);overflow:hidden">';
+    // Header row
     html += '<div style="display:grid;grid-template-columns:repeat(7,1fr);background:var(--primary)">';
     days.forEach(d => {
       const ds = d.toISOString().slice(0,10);
       const isToday = ds === todayStr;
       html += `<div style="padding:10px 6px;text-align:center;border-right:1px solid rgba(255,255,255,0.2);${isToday?'background:var(--accent)':''}">
         <div style="font-size:0.75rem;color:rgba(255,255,255,0.7)">${DP_DOW[d.getDay()]}</div>
-        <div style="font-size:1rem;font-weight:700;color:#fff">${d.getDate()}.${d.getMonth()+1}.</div></div>`;
+        <div style="font-size:1rem;font-weight:700;color:#fff">${d.getDate()}.${d.getMonth()+1}.</div>
+      </div>`;
     });
-    html += '</div><div style="display:grid;grid-template-columns:repeat(7,1fr)">';
+    html += '</div>';
+    // Shift row
+    html += '<div style="display:grid;grid-template-columns:repeat(7,1fr)">';
     days.forEach(d => {
       const ds = d.toISOString().slice(0,10);
       const shift = dpShiftForDate(ds);
-      html += `<div style="min-height:80px;padding:8px 6px;border-right:1px solid var(--border);${shift?'background:#e8f5e9':''}">${shift ? `<div style="background:var(--green);color:#fff;border-radius:5px;padding:4px 6px;font-size:0.75rem;font-weight:600;line-height:1.4">${shift.from}<br>–<br>${shift.to}${shift.note?`<br><em style="font-size:0.67rem">${shift.note}</em>`:''}</div><div style="font-size:0.62rem;color:#c62828;cursor:pointer;margin-top:4px;text-align:center" onclick="dpDeleteShift('${ds}')">✕ löschen</div>` : '<div style="color:var(--muted);font-size:0.75rem;text-align:center;margin-top:20px">–</div>'}</div>`;
+      html += `<div style="min-height:80px;padding:8px 6px;border-right:1px solid var(--border);${shift?'background:#e8f5e9':''}">
+        ${shift ? `<div style="background:var(--green);color:#fff;border-radius:5px;padding:4px 6px;font-size:0.75rem;font-weight:600;line-height:1.4">
+          ${shift.from}<br>–<br>${shift.to}${shift.note?`<br><em style="font-size:0.67rem">${shift.note}</em>`:''}
+        </div>
+        <div style="font-size:0.62rem;color:#c62828;cursor:pointer;margin-top:4px;text-align:center" onclick="dpDeleteShift('${ds}')">✕ löschen</div>`
+        : '<div style="color:var(--muted);font-size:0.75rem;text-align:center;margin-top:20px">–</div>'}
+      </div>`;
     });
     html += '</div></div>';
     cal.innerHTML = html;
+
   } else if (dpView === 'jahr') {
     const y = dpCursor.getFullYear();
     document.getElementById('dp-period-label').textContent = String(y);
@@ -709,6 +1787,249 @@ function dpRender() {
     cal.innerHTML = html;
   }
 }
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─── ARBEITSABLÄUFE ──────────────────────────────────────────────────────────
+function abSetTab(id, btn) {
+  document.querySelectorAll('.ab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.ab-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('ab-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ─── INTERNE NUMMERN ─────────────────────────────────────────────────────────
+const NUM_DEFAULT = [
+  { id: 'n1', title: 'Reinigung', val: '44 20766', sub: 'Intern', type: '' },
+  { id: 'n2', title: 'IT-LAHÖ', val: '0031 / 33 22 748 244', sub: 'IT-Support Laßnitzhöhe', type: 'urgent' },
+  { id: 'n3', title: 'KÜRE Gastronomie GmbH', val: '8301 Laßnitzhöhe, Liebmannweg 1', sub: 'Träger', type: 'info' },
+  { id: 'n4', title: 'E-Mail Küche', val: 'rad.kueche@sanlas.at', sub: 'Küchen-E-Mail Radegund', type: 'info' },
+];
+let numEntries = JSON.parse(localStorage.getItem('numEntries') || 'null') || NUM_DEFAULT;
+
+function numSave() {
+  const title = document.getElementById('num-inp-title').value.trim();
+  const val   = document.getElementById('num-inp-val').value.trim();
+  const sub   = document.getElementById('num-inp-sub').value.trim();
+  const type  = document.getElementById('num-inp-type').value;
+  if (!title || !val) return alert('Bitte Bezeichnung und Nummer/Kontakt eintragen.');
+  numEntries.push({ id: 'n' + Date.now(), title, val, sub, type });
+  localStorage.setItem('numEntries', JSON.stringify(numEntries));
+  document.getElementById('num-inp-title').value = '';
+  document.getElementById('num-inp-val').value = '';
+  document.getElementById('num-inp-sub').value = '';
+  document.getElementById('num-add-form').classList.remove('open');
+  numRender();
+}
+
+function numDelete(id) {
+  if (!confirm('Eintrag löschen?')) return;
+  numEntries = numEntries.filter(e => e.id !== id);
+  localStorage.setItem('numEntries', JSON.stringify(numEntries));
+  numRender();
+}
+
+function numToggleForm() {
+  document.getElementById('num-add-form').classList.toggle('open');
+}
+
+function numRender() {
+  const list = document.getElementById('num-list');
+  if (!list) return;
+  list.innerHTML = numEntries.map(e => `
+    <div class="num-card ${e.type || ''}">
+      <button class="num-del" onclick="numDelete('${e.id}')">✕</button>
+      <h3>${e.title}</h3>
+      <div class="num-val">${e.val}</div>
+      ${e.sub ? `<div class="num-sub">${e.sub}</div>` : ''}
+    </div>`).join('');
+}
+
+// ─── FREIZEIT KALENDER ───────────────────────────────────────────────────────
+let fzView = 'monat';
+let fzCursor = new Date();
+let fzEvents = JSON.parse(localStorage.getItem('fzEvents') || '[]');
+const FZ_MONTHS = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const FZ_DOW = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+
+function fzSave() { localStorage.setItem('fzEvents', JSON.stringify(fzEvents)); }
+
+function fzToggleAddForm() {
+  const f = document.getElementById('fz-add-form');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+function fzSetView(v) {
+  fzView = v;
+  ['monat','woche','tag','jahr'].forEach(x => document.getElementById('fzbtn-'+x)?.classList.toggle('active', x===v));
+  fzRender();
+}
+
+function fzNav(dir) {
+  if (fzView === 'monat') fzCursor = new Date(fzCursor.getFullYear(), fzCursor.getMonth() + dir, 1);
+  else if (fzView === 'woche') fzCursor = new Date(fzCursor.getTime() + dir * 7 * 86400000);
+  else if (fzView === 'tag') fzCursor = new Date(fzCursor.getTime() + dir * 86400000);
+  else fzCursor = new Date(fzCursor.getFullYear() + dir, 0, 1);
+  fzRender();
+}
+
+function fzAddEvent() {
+  const title  = document.getElementById('fz-inp-title').value.trim();
+  const from   = document.getElementById('fz-inp-from').value;
+  const to     = document.getElementById('fz-inp-to').value || from;
+  const type   = document.getElementById('fz-inp-type').value;
+  const remind = parseInt(document.getElementById('fz-inp-remind').value) || 14;
+  if (!title || !from) return alert('Bitte Titel und Datum eintragen.');
+  fzEvents.push({ id: 'fz' + Date.now(), title, from, to, type, remind });
+  fzSave();
+  document.getElementById('fz-inp-title').value = '';
+  document.getElementById('fz-inp-from').value = '';
+  document.getElementById('fz-inp-to').value = '';
+  document.getElementById('fz-add-form').style.display = 'none';
+  fzCheckAlarms();
+  fzRender();
+}
+
+function fzDeleteEvent(id) {
+  fzEvents = fzEvents.filter(e => e.id !== id);
+  fzSave();
+  fzRender();
+}
+
+function fzEventsForDate(dateStr) {
+  return fzEvents.filter(e => dateStr >= e.from && dateStr <= (e.to || e.from));
+}
+
+function fzCheckAlarms() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const todayStr = today.toISOString().slice(0,10);
+  const alarms = [];
+  fzEvents.forEach(e => {
+    if (e.type !== 'wunsch') return;
+    const eventDate = new Date(e.from + 'T00:00:00');
+    const remindDate = new Date(eventDate.getTime() - (e.remind || 14) * 86400000);
+    remindDate.setHours(0,0,0,0);
+    const daysUntil = Math.round((eventDate - today) / 86400000);
+    if (today >= remindDate && today <= eventDate) {
+      alarms.push(`⏰ <strong>${e.title}</strong> am ${e.from} – noch ${daysUntil} Tag${daysUntil !== 1 ? 'e' : ''}: Wunsch rechtzeitig bekannt geben!`);
+    }
+  });
+  const banner = document.getElementById('fz-alarm-banner');
+  const text = document.getElementById('fz-alarm-text');
+  if (banner && text && alarms.length) {
+    text.innerHTML = alarms.join('<br>');
+    banner.style.display = 'flex';
+  }
+}
+
+function fzRender() {
+  const today = new Date(); today.setHours(0,0,0,0);
+  const todayStr = today.toISOString().slice(0,10);
+  const cal = document.getElementById('fz-calendar');
+  if (!cal) return;
+
+  if (fzView === 'monat') {
+    const y = fzCursor.getFullYear(), m = fzCursor.getMonth();
+    document.getElementById('fz-period-label').textContent = FZ_MONTHS[m] + ' ' + y;
+    const first = new Date(y, m, 1), last = new Date(y, m+1, 0);
+    let startDow = first.getDay(); if (startDow===0) startDow=7;
+    let html = '<div class="fz-month-grid">';
+    ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(d => html += `<div class="dh" style="text-align:center;font-size:0.75rem;font-weight:700;color:var(--muted);padding:3px 0;border-bottom:2px solid var(--border)">${d}</div>`);
+    for (let i=1; i<startDow; i++) html += `<div class="fz-dc other-month"></div>`;
+    for (let d=1; d<=last.getDate(); d++) {
+      const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const evs = fzEventsForDate(ds);
+      const isToday = ds === todayStr;
+      html += `<div class="fz-dc${isToday?' today':''}" onclick="fzDayClick('${ds}')">
+        <div class="fz-dn">${d}</div>
+        ${evs.map(e => `<div class="fz-ev ${e.type}" title="${e.title}" onclick="event.stopPropagation();if(confirm('${e.title} löschen?'))fzDeleteEvent('${e.id}')">${e.title}</div>`).join('')}
+      </div>`;
+    }
+    const total = startDow - 1 + last.getDate();
+    const rem = total % 7 === 0 ? 0 : 7 - (total % 7);
+    for (let i=0; i<rem; i++) html += `<div class="fz-dc other-month"></div>`;
+    html += '</div>';
+    cal.innerHTML = html;
+
+  } else if (fzView === 'woche') {
+    const cur = new Date(fzCursor); cur.setHours(0,0,0,0);
+    const dow = cur.getDay(); const diff = (dow===0?-6:1-dow);
+    const monday = new Date(cur.getTime() + diff*86400000);
+    const days = Array.from({length:7}, (_,i) => new Date(monday.getTime() + i*86400000));
+    document.getElementById('fz-period-label').textContent = `${monday.getDate()}.${monday.getMonth()+1}. – ${days[6].getDate()}.${days[6].getMonth()+1}.${days[6].getFullYear()}`;
+    let html = '<div class="fz-week-grid">';
+    days.forEach(d => {
+      const ds = d.toISOString().slice(0,10);
+      const evs = fzEventsForDate(ds);
+      const isToday = ds === todayStr;
+      html += `<div class="fz-week-col" style="${isToday?'border:2px solid var(--accent)':''}">
+        <div class="fz-wh">${FZ_DOW[d.getDay()]} ${d.getDate()}.${d.getMonth()+1}.</div>
+        ${evs.map(e => `<div class="fz-ev ${e.type}" title="${e.title}" onclick="if(confirm('${e.title} löschen?'))fzDeleteEvent('${e.id}')">${e.title}</div>`).join('')}
+        ${evs.length===0 ? '<div style="color:var(--muted);font-size:0.72rem;text-align:center;margin-top:8px">–</div>' : ''}
+      </div>`;
+    });
+    html += '</div>';
+    cal.innerHTML = html;
+
+  } else if (fzView === 'tag') {
+    const ds = fzCursor.toISOString().slice(0,10);
+    document.getElementById('fz-period-label').textContent = fzCursor.toLocaleDateString('de-AT', {weekday:'long', day:'2-digit', month:'long', year:'numeric'});
+    const evs = fzEventsForDate(ds);
+    let html = `<div class="fz-day-view"><h3 style="color:var(--primary);margin-bottom:12px">${ds === todayStr ? '⭐ Heute' : ''}</h3>`;
+    if (evs.length === 0) html += '<p style="color:var(--muted);font-size:0.9rem">Keine Termine an diesem Tag.</p>';
+    else evs.forEach(e => {
+      html += `<div style="background:${e.type==='wunsch'?'#fff3e0':e.type==='genehmigt'?'#e8f5e9':'#e3f2fd'};border-radius:8px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+        <div><strong>${e.title}</strong><div style="font-size:0.8rem;color:var(--muted)">${e.from}${e.to!==e.from?' bis '+e.to:''} · ${e.type==='wunsch'?'Wunsch':e.type==='genehmigt'?'Genehmigt':'Privat'}</div></div>
+        <button onclick="if(confirm('${e.title} löschen?'))fzDeleteEvent('${e.id}')" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:1.1rem">✕</button>
+      </div>`;
+    });
+    html += '</div>';
+    cal.innerHTML = html;
+
+  } else if (fzView === 'jahr') {
+    const y = fzCursor.getFullYear();
+    document.getElementById('fz-period-label').textContent = String(y);
+    let html = '<div class="dp-year-grid">';
+    for (let mo=0; mo<12; mo++) {
+      const first = new Date(y,mo,1), last = new Date(y,mo+1,0);
+      html += `<div class="dp-mini-month"><h4>${FZ_MONTHS[mo]}</h4><div class="dp-mini-grid">`;
+      ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(d => html += `<div class="dh">${d}</div>`);
+      let sd = first.getDay(); if (sd===0) sd=7;
+      for (let i=1;i<sd;i++) html += `<div class="dd"></div>`;
+      for (let d=1;d<=last.getDate();d++) {
+        const ds = `${y}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        const evs = fzEventsForDate(ds);
+        const isToday = ds===todayStr;
+        const cls = evs.length ? evs[0].type : '';
+        html += `<div class="dd${cls?' work':''}${isToday?' today':''}" style="${cls==='wunsch'?'background:#ffcc80':cls==='genehmigt'?'background:#c8e6c9':cls==='privat'?'background:#bbdefb':''}" title="${evs.map(e=>e.title).join(', ')}">${d}</div>`;
+      }
+      html += '</div></div>';
+    }
+    html += '</div>';
+    cal.innerHTML = html;
+  }
+}
+
+function fzDayClick(ds) {
+  fzCursor = new Date(ds + 'T00:00:00');
+  fzSetView('tag');
+}
+
+// Init on load
+window.addEventListener('load', () => {
+  numRender();
+  fzCheckAlarms();
+  if (document.getElementById('freizeit').classList.contains('active')) fzRender();
+  if (document.getElementById('nummern').classList.contains('active')) numRender();
+});
+
+// Also render when tabs become active
+const _origShowSection = showSection;
+showSection = function(id, btn) {
+  _origShowSection(id, btn);
+  if (id === 'freizeit') fzRender();
+  if (id === 'nummern') numRender();
+};
+// ─────────────────────────────────────────────────────────────────────────────
 </script>
 </body>
 </html>
