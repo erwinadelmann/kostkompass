@@ -28,7 +28,7 @@
     --shadow: 0 2px 8px rgba(0,0,0,0.10);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 16px; }
 
   /* HEADER */
   header {
@@ -61,7 +61,7 @@
   nav::-webkit-scrollbar { display: none; }
   nav button {
     border: none; cursor: pointer; border-radius: 8px 8px 0 0;
-    padding: 8px 14px; font-size: 0.82rem; font-weight: 600;
+    padding: 9px 15px; font-size: 0.9rem; font-weight: 600;
     background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.8);
     white-space: nowrap; transition: all 0.18s;
   }
@@ -83,8 +83,8 @@
   .card.red { border-left-color: var(--red); }
   .card.blue { border-left-color: var(--blue); }
   .card.yellow { border-left-color: var(--yellow); }
-  .card h2 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
-  .card h3 { font-size: 1rem; font-weight: 700; margin: 12px 0 6px; }
+  .card h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; color: var(--primary); }
+  .card h3 { font-size: 1.05rem; font-weight: 700; margin: 12px 0 6px; }
 
   /* ERLAUBT / VERBOTEN GRID */
   .ev-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px; }
@@ -96,7 +96,7 @@
   .ev-col.ja h4 { color: var(--green); }
   .ev-col.nein h4 { color: var(--red); }
   .ev-col ul { list-style: none; }
-  .ev-col ul li { font-size: 0.93rem; padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+  .ev-col ul li { font-size: 0.97rem; padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
   .ev-col ul li:last-child { border: none; }
   .ev-col ul li::before { content: '· '; color: var(--muted); }
 
@@ -110,7 +110,7 @@
   .hinweis.danger { background: var(--red-bg); border: 1px solid #ef9a9a; }
   .hinweis.tip { background: var(--green-bg); border: 1px solid #a5d6a7; }
   .hinweis .icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
-  .hinweis p { line-height: 1.6; font-size: 0.92rem; }
+  .hinweis p { line-height: 1.6; font-size: 0.97rem; }
   .hinweis strong { display: block; margin-bottom: 2px; }
 
   /* OPENING HOURS */
@@ -141,7 +141,7 @@
   .accordion { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
   .accordion-btn {
     width: 100%; text-align: left; background: var(--card); border: none;
-    padding: 13px 16px; font-size: 1rem; font-weight: 600; cursor: pointer;
+    padding: 14px 16px; font-size: 1.05rem; font-weight: 600; cursor: pointer;
     display: flex; align-items: center; gap: 8px; color: var(--text);
     transition: background 0.15s;
   }
@@ -1394,8 +1394,9 @@
     <button class="dp-nav-btn" onclick="dpNav(-1)">&#8249;</button>
     <span class="dp-period-label" id="dp-period-label"></span>
     <button class="dp-nav-btn" onclick="dpNav(1)">&#8250;</button>
-    <button class="dp-view-btn active" id="dpbtn-monat" onclick="dpSetView('monat')">Monat</button>
-    <button class="dp-view-btn" id="dpbtn-woche" onclick="dpSetView('woche')">Woche</button>
+    <button class="dp-view-btn" id="dpbtn-monat" onclick="dpSetView('monat')">Monat</button>
+    <button class="dp-view-btn active" id="dpbtn-woche" onclick="dpSetView('woche')">Woche</button>
+    <button class="dp-view-btn" id="dpbtn-tag" onclick="dpSetView('tag')">Tag</button>
     <button class="dp-view-btn" id="dpbtn-jahr" onclick="dpSetView('jahr')">Jahr</button>
     <a class="dp-gcal-btn" href="https://calendar.google.com/calendar/r" target="_blank">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
@@ -1410,7 +1411,7 @@
       <div><label>Datum</label><input type="date" id="dp-inp-date"></div>
       <div><label>Von</label><input type="time" id="dp-inp-from" value="11:30"></div>
       <div><label>Bis</label><input type="time" id="dp-inp-to" value="19:30"></div>
-      <div><label>Notiz</label><input type="text" id="dp-inp-note" placeholder="z.B. Küche" style="width:130px"></div>
+      <div><label>Notiz</label><input type="text" id="dp-inp-note" placeholder="z.B. Service, Cafe" style="width:140px"></div>
       <button onclick="dpAddShift()">Speichern</button>
     </div>
   </div>
@@ -1634,7 +1635,8 @@ const DP_INIT_SHIFTS = (() => {
   return shifts;
 })();
 
-let dpView = 'monat'; // 'monat' | 'woche' | 'jahr'
+let dpView = 'woche'; // 'monat' | 'woche' | 'tag' | 'jahr'
+let dpDayCursor = null; // for day view
 let dpCursor = new Date(); // current nav position
 let dpShifts = JSON.parse(localStorage.getItem('dpShifts') || 'null') || DP_INIT_SHIFTS;
 
@@ -1642,8 +1644,9 @@ function dpSave() { try { localStorage.setItem('dpShifts', JSON.stringify(dpShif
 
 function dpSetView(v) {
   dpView = v;
-  ['monat','woche','jahr'].forEach(x => {
-    document.getElementById('dpbtn-'+x).classList.toggle('active', x===v);
+  ['monat','woche','tag','jahr'].forEach(x => {
+    const el = document.getElementById('dpbtn-'+x);
+    if (el) el.classList.toggle('active', x===v);
   });
   dpRender();
 }
@@ -1651,8 +1654,15 @@ function dpSetView(v) {
 function dpNav(dir) {
   if (dpView === 'monat') dpCursor = new Date(dpCursor.getFullYear(), dpCursor.getMonth() + dir, 1);
   else if (dpView === 'woche') dpCursor = new Date(dpCursor.getTime() + dir * 7 * 86400000);
+  else if (dpView === 'tag') { dpCursor = new Date(dpCursor.getTime() + dir * 86400000); dpDayCursor = dpCursor.toISOString().slice(0,10); }
   else dpCursor = new Date(dpCursor.getFullYear() + dir, dpCursor.getMonth(), 1);
   dpRender();
+}
+
+function dpGoToDay(dateStr) {
+  dpDayCursor = dateStr;
+  dpCursor = new Date(dateStr + 'T00:00:00');
+  dpSetView('tag');
 }
 
 function dpToggleAddForm() {
@@ -1692,6 +1702,18 @@ function dpFmtDate(dateStr) {
 
 const DP_DOW = ['So','Mo','Di','Mi','Do','Fr','Sa'];
 const DP_DOW_FULL = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+
+function dpSaveDay(dateStr) {
+  const from = document.getElementById('dp-day-from')?.value;
+  const to   = document.getElementById('dp-day-to')?.value;
+  const note = document.getElementById('dp-day-note')?.value.trim() || '';
+  if (!from || !to) return alert('Bitte Zeiten eintragen.');
+  dpShifts = dpShifts.filter(s => s.date !== dateStr);
+  dpShifts.push({ date: dateStr, from, to, note });
+  dpShifts.sort((a,b) => a.date.localeCompare(b.date));
+  dpSave();
+  dpRender();
+}
 const DP_MONTHS = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 
 function dpRender() {
@@ -1715,10 +1737,9 @@ function dpRender() {
       const dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
       const shift = dpShiftForDate(dateStr);
       const isToday = dateStr === todayStr;
-      html += `<div class="dc${isToday?' today':''}">
+      html += `<div class="dc${isToday?' today':''}" onclick="dpGoToDay('${dateStr}')" style="cursor:pointer" title="Tag öffnen">
         <div class="dn">${d}</div>
-        ${shift ? `<div class="ds">🟢 ${shift.from}–${shift.to}${shift.note?' <em>'+shift.note+'</em>':''}</div>
-          <div style="font-size:0.62rem;color:#c62828;cursor:pointer;margin-top:2px" onclick="dpDeleteShift('${dateStr}')">✕</div>` : ''}
+        ${shift ? `<div class="ds">🟢 ${shift.from}–${shift.to}${shift.note?' <em>'+shift.note+'</em>':''}</div>` : '<div style="font-size:0.65rem;color:var(--muted);margin-top:2px">tippen…</div>'}
       </div>`;
     }
     // Fill rest
@@ -1743,7 +1764,7 @@ function dpRender() {
     days.forEach(d => {
       const ds = d.toISOString().slice(0,10);
       const isToday = ds === todayStr;
-      html += `<div style="padding:10px 6px;text-align:center;border-right:1px solid rgba(255,255,255,0.2);${isToday?'background:var(--accent)':''}">
+      html += `<div style="padding:10px 6px;text-align:center;border-right:1px solid rgba(255,255,255,0.2);${isToday?'background:var(--accent)':''};cursor:pointer" onclick="dpGoToDay('${ds}')" title="Tag öffnen">
         <div style="font-size:0.75rem;color:rgba(255,255,255,0.7)">${DP_DOW[d.getDay()]}</div>
         <div style="font-size:1rem;font-weight:700;color:#fff">${d.getDate()}.${d.getMonth()+1}.</div>
       </div>`;
@@ -1763,6 +1784,36 @@ function dpRender() {
       </div>`;
     });
     html += '</div></div>';
+    cal.innerHTML = html;
+
+  } else if (dpView === 'tag') {
+    const ds = dpDayCursor || todayStr;
+    const d = new Date(ds + 'T00:00:00');
+    document.getElementById('dp-period-label').textContent = d.toLocaleDateString('de-AT', {weekday:'long', day:'2-digit', month:'long', year:'numeric'});
+    const shift = dpShiftForDate(ds);
+    let html = `<div style="background:#fff;border-radius:12px;box-shadow:var(--shadow);padding:20px 22px;">`;
+    html += `<div style="font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:14px">${ds===todayStr?'⭐ Heute · ':''} ${DP_DOW_FULL[d.getDay()]}, ${d.getDate()}. ${DP_MONTHS[d.getMonth()]} ${d.getFullYear()}</div>`;
+    if (shift) {
+      html += `<div style="background:#e8f5e9;border-radius:8px;padding:14px 16px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:1.1rem;font-weight:700;color:var(--green)">🟢 ${shift.from} – ${shift.to} Uhr</div>
+          ${shift.note ? `<div style="font-size:0.9rem;color:var(--muted);margin-top:4px">📝 ${shift.note}</div>` : ''}
+        </div>
+        <button onclick="dpDeleteShift('${ds}')" style="background:#ffebee;color:var(--red);border:none;border-radius:6px;padding:6px 12px;cursor:pointer;font-size:0.85rem">✕ Löschen</button>
+      </div>`;
+    } else {
+      html += `<div style="color:var(--muted);font-size:0.95rem;margin-bottom:14px">Kein Dienst eingetragen.</div>`;
+    }
+    // Quick-add form directly in day view
+    html += `<div style="border-top:1px solid var(--border);padding-top:14px;margin-top:4px">
+      <div style="font-size:0.9rem;font-weight:600;color:var(--primary);margin-bottom:10px">➕ Dienst eintragen / ändern</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+        <div><label style="font-size:0.8rem;color:var(--muted);display:block;margin-bottom:3px">Von</label><input type="time" id="dp-day-from" value="${shift?.from||'11:30'}" style="border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:0.95rem;background:var(--bg)"></div>
+        <div><label style="font-size:0.8rem;color:var(--muted);display:block;margin-bottom:3px">Bis</label><input type="time" id="dp-day-to" value="${shift?.to||'19:30'}" style="border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:0.95rem;background:var(--bg)"></div>
+        <div><label style="font-size:0.8rem;color:var(--muted);display:block;margin-bottom:3px">Notiz</label><input type="text" id="dp-day-note" value="${shift?.note||''}" placeholder="z.B. Service, Cafe" style="border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:0.95rem;background:var(--bg);width:150px"></div>
+        <button onclick="dpSaveDay('${ds}')" style="background:var(--primary);color:#fff;border:none;border-radius:6px;padding:8px 18px;font-size:0.95rem;cursor:pointer;font-weight:600">💾 Speichern</button>
+      </div>
+    </div></div>`;
     cal.innerHTML = html;
 
   } else if (dpView === 'jahr') {
