@@ -2618,8 +2618,10 @@ function cafeInitEditing() {
 }
 
 // ─── FOTO-GALERIE (IndexedDB) ─────────────────────────────────────────────────
-const GAL_CATS = ['Eingang','Café','Kassa','Buffet – Frühstück','Buffet – Mittag','Buffet – Abend','Tee-Küchen'];
+const GAL_CATS = ['Eingang','Café','Kassa','Buffet – Frühstück','Buffet – Mittag','Buffet – Abend','Tee-Küchen','Allergiker','Tischkarten-Farben'];
+const GAL_ICONS = { 'Eingang':'📥','Café':'☕','Kassa':'🧾','Buffet – Frühstück':'🌅','Buffet – Mittag':'🍽️','Buffet – Abend':'🌙','Tee-Küchen':'🍵','Allergiker':'⚠️','Tischkarten-Farben':'🎴' };
 let galActiveCat = 'Eingang';
+let galCatDesc = JSON.parse(localStorage.getItem('galCatDesc') || '{}');
 
 // IndexedDB setup
 let galDB = null;
@@ -2648,7 +2650,7 @@ async function galUpload(input) {
       const reader = new FileReader();
       reader.onload = e => {
         const tx = db.transaction('fotos', 'readwrite');
-        tx.objectStore('fotos').add({ cat: 'Eingang', dataURL: e.target.result, name: file.name, ts: Date.now() });
+        tx.objectStore('fotos').add({ cat: 'Eingang', dataURL: e.target.result, name: file.name, desc: '', ts: Date.now() });
         tx.oncomplete = res;
       };
       reader.readAsDataURL(file);
@@ -2677,12 +2679,16 @@ async function galMoveCat(id, newCat) {
   const tx = db.transaction('fotos', 'readwrite');
   const store = tx.objectStore('fotos');
   const getReq = store.get(id);
-  getReq.onsuccess = () => {
-    const item = getReq.result;
-    item.cat = newCat;
-    store.put(item);
-  };
+  getReq.onsuccess = () => { const item = getReq.result; item.cat = newCat; store.put(item); };
   tx.oncomplete = () => galRender();
+}
+
+async function galSaveDesc(id, desc) {
+  const db = await galInitDB();
+  const tx = db.transaction('fotos', 'readwrite');
+  const store = tx.objectStore('fotos');
+  const getReq = store.get(id);
+  getReq.onsuccess = () => { const item = getReq.result; item.desc = desc; store.put(item); };
 }
 
 async function galDelete(id) {
@@ -2706,6 +2712,11 @@ async function galCountAll() {
   return counts;
 }
 
+function galSaveCatDesc(cat, val) {
+  galCatDesc[cat] = val;
+  localStorage.setItem('galCatDesc', JSON.stringify(galCatDesc));
+}
+
 function galOpen() {
   document.getElementById('gal-modal').style.display = 'block';
   document.body.style.overflow = 'hidden';
@@ -2723,42 +2734,57 @@ async function galRender() {
   tabsEl.innerHTML = GAL_CATS.map(cat => {
     const n = counts[cat] || 0;
     const active = cat === galActiveCat;
-    return `<button onclick="galSetCat('${cat}')" style="
-      border:none;cursor:pointer;border-radius:7px 7px 0 0;padding:8px 14px;font-size:0.82rem;font-weight:600;white-space:nowrap;
+    const icon = GAL_ICONS[cat] || '📁';
+    return `<button onclick="galSetCat('${cat.replace(/'/g,"\\'")}') " style="
+      border:none;cursor:pointer;border-radius:7px 7px 0 0;padding:8px 13px;font-size:0.8rem;font-weight:600;white-space:nowrap;
       background:${active ? 'var(--primary)' : '#f5f3ee'};color:${active ? '#fff' : 'var(--text)'};
       border-bottom:${active ? '2px solid var(--primary)' : 'none'}">
-      ${cat === 'Eingang' ? '📥' : cat === 'Café' ? '☕' : cat === 'Kassa' ? '🧾' : cat.startsWith('Buffet') ? '🍽️' : '🍵'} ${cat} ${n ? `<span style="background:${active?'rgba(255,255,255,0.3)':'var(--accent)'};color:#fff;border-radius:10px;padding:1px 7px;font-size:0.7rem">${n}</span>` : ''}
+      ${icon} ${cat}${n ? ` <span style="background:${active?'rgba(255,255,255,0.3)':'var(--accent)'};color:#fff;border-radius:10px;padding:1px 6px;font-size:0.68rem">${n}</span>` : ''}
     </button>`;
   }).join('');
 
   const fotos = await galGetAll(galActiveCat);
   const gridEl = document.getElementById('gal-grid');
+  const catDescVal = galCatDesc[galActiveCat] || '';
+  const icon = GAL_ICONS[galActiveCat] || '📁';
+
+  // Kategorie-Beschreibung
+  let html = `<div style="background:#f8f6f2;border-radius:8px;padding:12px 14px;margin-bottom:16px;border:1px solid var(--border)">
+    <div style="font-size:0.78rem;font-weight:700;color:var(--primary);margin-bottom:6px">${icon} Beschreibung für Kategorie „${galActiveCat}"</div>
+    <textarea onchange="galSaveCatDesc('${galActiveCat.replace(/'/g,"\\'")}',this.value)" style="width:100%;border:1px solid var(--border);border-radius:6px;padding:8px;font-size:0.85rem;font-family:inherit;resize:vertical;min-height:60px;background:#fff" placeholder="Notizen zur Kategorie – z.B. Verwendungszweck, Hinweise, Ablauf…">${catDescVal}</textarea>
+  </div>`;
 
   if (!fotos.length) {
-    gridEl.innerHTML = `<div style="text-align:center;padding:40px;color:var(--muted)">
-      <div style="font-size:3rem;margin-bottom:12px">📷</div>
+    html += `<div style="text-align:center;padding:30px;color:var(--muted)">
+      <div style="font-size:2.5rem;margin-bottom:10px">${icon}</div>
       <p>Noch keine Fotos in <strong>${galActiveCat}</strong>.</p>
-      ${galActiveCat === 'Eingang' ? '<p style="font-size:0.85rem;margin-top:6px">Fotos oben rechts hochladen – sie landen hier zuerst.</p>' : ''}
+      ${galActiveCat === 'Eingang' ? '<p style="font-size:0.85rem;margin-top:6px">Fotos oben rechts im Header hochladen – sie landen hier zuerst.</p>' : ''}
     </div>`;
+    gridEl.innerHTML = html;
     return;
   }
 
   const otherCats = GAL_CATS.filter(c => c !== galActiveCat);
-  const catOptions = otherCats.map(c => `<option value="${c}">${c}</option>`).join('');
+  const catOptions = otherCats.map(c => `<option value="${c}">${GAL_ICONS[c]||'📁'} ${c}</option>`).join('');
 
-  gridEl.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px">` +
+  html += `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px">` +
     fotos.map(f => `
-      <div style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:var(--shadow);position:relative">
-        <img src="${f.dataURL}" style="width:100%;height:130px;object-fit:cover;display:block;cursor:pointer" onclick="galLightbox('${f.id}')" loading="lazy">
-        <div style="padding:8px">
-          <div style="font-size:0.72rem;color:var(--muted);margin-bottom:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${f.name}">${f.name}</div>
-          <select onchange="galMoveCat(${f.id},this.value)" style="width:100%;border:1px solid var(--border);border-radius:5px;padding:3px 5px;font-size:0.75rem;background:var(--bg)">
+      <div style="background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column">
+        <div style="position:relative">
+          <img src="${f.dataURL}" style="width:100%;height:140px;object-fit:cover;display:block;cursor:zoom-in" onclick="galLightbox(this.src,'${(f.desc||'').replace(/'/g,"\\'")}','${f.name}')" loading="lazy">
+        </div>
+        <div style="padding:10px;flex:1;display:flex;flex-direction:column;gap:6px">
+          <div style="font-size:0.7rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${f.name}">📎 ${f.name}</div>
+          <textarea onchange="galSaveDesc(${f.id},this.value)" style="border:1px solid var(--border);border-radius:5px;padding:5px 7px;font-size:0.78rem;font-family:inherit;resize:none;height:52px;background:#fafaf8" placeholder="Beschreibung, Notiz…">${f.desc||''}</textarea>
+          <select onchange="galMoveCat(${f.id},this.value)" style="border:1px solid var(--border);border-radius:5px;padding:4px 6px;font-size:0.75rem;background:var(--bg)">
             <option value="${galActiveCat}" selected>📂 ${galActiveCat}</option>
             ${catOptions}
           </select>
-          <button onclick="galDelete(${f.id})" style="width:100%;margin-top:5px;background:none;border:1px solid #ef9a9a;color:var(--red);border-radius:5px;padding:3px;font-size:0.72rem;cursor:pointer">🗑️ Löschen</button>
+          <button onclick="galDelete(${f.id})" style="background:none;border:1px solid #ef9a9a;color:var(--red);border-radius:5px;padding:4px;font-size:0.72rem;cursor:pointer">🗑️ Löschen</button>
         </div>
       </div>`).join('') + `</div>`;
+
+  gridEl.innerHTML = html;
 }
 
 function galSetCat(cat) {
@@ -2767,8 +2793,14 @@ function galSetCat(cat) {
 }
 
 // Lightbox
-function galLightbox(id) {
-  // einfache Vollbild-Vorschau
+function galLightbox(src, desc, name) {
+  const lb = document.createElement('div');
+  lb.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:zoom-out;padding:20px';
+  lb.onclick = () => lb.remove();
+  lb.innerHTML = `<img src="${src}" style="max-width:95vw;max-height:80vh;object-fit:contain;border-radius:6px">
+    ${desc ? `<div style="color:#fff;margin-top:12px;font-size:0.95rem;max-width:600px;text-align:center">${desc}</div>` : ''}
+    <div style="color:rgba(255,255,255,0.5);font-size:0.75rem;margin-top:6px">${name}</div>`;
+  document.body.appendChild(lb);
 }
 
 // Café-Edit beim Tab-Wechsel initialisieren
