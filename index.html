@@ -430,7 +430,6 @@
   <button onclick="showSection('nummern', this)" style="margin-left:auto">📞 Nummern</button>
   <button onclick="showSection('freizeit', this)">🏖️ Freizeit</button>
   <button onclick="showSection('dienstplan', this)">📅 Dienstplan</button>
-  <button onclick="showSection('kassa', this)" style="background:rgba(255,255,255,0.3);color:#fff;font-weight:800;font-size:1rem;border:2px solid rgba(255,255,255,0.6)">🧾 Kassa</button>
   <button onclick="showSection('impfungen', this)" style="background:rgba(255,200,0,0.25);color:#fff;border:1px solid rgba(255,200,0,0.5)">💉 Impfungen</button>
 </nav>
 
@@ -1111,11 +1110,38 @@
     </div>
   </div>
 
-  <!-- Mitarbeiter -->
-  <div class="accordion">
-    <button class="accordion-btn" onclick="toggleAcc(this)">👥 Mitarbeiter <span class="arrow">▼</span></button>
-    <div class="accordion-content">
-      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
+  <!-- KASSA – prominenter Unterordner -->
+  <div style="margin-top:10px;border:2px solid var(--primary);border-radius:10px;overflow:hidden">
+    <div style="background:var(--primary);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:8px;cursor:pointer" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.arrow').classList.toggle('open')">
+      <span style="font-size:1.1rem">🧾</span>
+      <strong style="font-size:1.05rem">Kassa</strong>
+      <button class="arrow" style="margin-left:auto;background:none;border:none;color:#fff;font-size:1rem;cursor:pointer;transition:transform 0.2s">▼</button>
+    </div>
+    <div class="accordion-content" style="background:#fafaf8;padding:0">
+      <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
+        <button class="accordion-btn" onclick="toggleAcc(this)">📊 Tagesabschlüsse <span class="arrow">▼</span></button>
+        <div class="accordion-content">
+          <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
+        </div>
+      </div>
+      <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
+        <button class="accordion-btn" onclick="toggleAcc(this)">💰 Einnahmen <span class="arrow">▼</span></button>
+        <div class="accordion-content">
+          <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
+        </div>
+      </div>
+      <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
+        <button class="accordion-btn" onclick="toggleAcc(this)">📤 Ausgaben <span class="arrow">▼</span></button>
+        <div class="accordion-content">
+          <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
+        </div>
+      </div>
+      <div class="accordion" style="border-radius:0;border:none">
+        <button class="accordion-btn" onclick="toggleAcc(this)">🗂️ Rechnungen <span class="arrow">▼</span></button>
+        <div class="accordion-content">
+          <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1436,78 +1462,30 @@
   <div id="dp-calendar"></div>
 </section>
 
-<!-- KASSA -->
-<section id="kassa" class="section">
-  <div class="card">
-    <h2>🧾 Kassa</h2>
-    <p style="font-size:0.93rem;color:var(--muted)">Übersicht über Tagesabschlüsse, Einnahmen, Ausgaben und Rechnungen.</p>
-  </div>
-
-  <div class="accordion">
-    <button class="accordion-btn" onclick="toggleAcc(this)">📊 Tagesabschlüsse <span class="arrow">▼</span></button>
-    <div class="accordion-content">
-      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <button class="accordion-btn" onclick="toggleAcc(this)">💰 Einnahmen <span class="arrow">▼</span></button>
-    <div class="accordion-content">
-      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <button class="accordion-btn" onclick="toggleAcc(this)">📤 Ausgaben <span class="arrow">▼</span></button>
-    <div class="accordion-content">
-      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
-    </div>
-  </div>
-
-  <div class="accordion">
-    <button class="accordion-btn" onclick="toggleAcc(this)">🗂️ Rechnungen <span class="arrow">▼</span></button>
-    <div class="accordion-content">
-      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
-    </div>
-  </div>
-</section>
-
 <!-- IMPFUNGEN (vorübergehend) -->
 <section id="impfungen" class="section">
   <div class="card yellow" style="margin-bottom:14px">
-    <h2>💉 Impfungen – Terminübersicht</h2>
-    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:8px">Vorübergehende Rubrik zur Erfassung von Impfterminen für Mitarbeiter. Termine eintragen und im Kalender verfolgen.</p>
+    <h2>💉 Mein Impfplan</h2>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:8px">Persönlicher Impfstatus – Daten werden lokal im Browser gespeichert.</p>
     <div class="hinweis warn">
       <span class="icon">⚠️</span>
-      <p><strong>Temporäre Rubrik.</strong> Diese Sektion wird nach Abschluss der Impfaktion wieder entfernt.</p>
+      <p><strong>Temporäre Rubrik.</strong> Wird nach Abschluss wieder entfernt.</p>
     </div>
   </div>
 
-  <!-- Termin hinzufügen -->
-  <div class="fz-add-form" style="margin-bottom:16px">
-    <h3>💉 Impftermin eintragen</h3>
-    <div class="fz-row">
-      <div><label>Name / Mitarbeiter</label><input type="text" id="impf-inp-name" placeholder="z.B. Maria M." style="width:160px"></div>
-      <div><label>Impfung</label><input type="text" id="impf-inp-titel" placeholder="z.B. Hepatitis B, Grippe…" style="width:180px"></div>
-      <div><label>Datum</label><input type="date" id="impf-inp-datum"></div>
-      <div><label>Dosis / Notiz</label><input type="text" id="impf-inp-notiz" placeholder="z.B. 1. Dosis" style="width:130px"></div>
-      <button onclick="impfAdd()">Speichern</button>
-    </div>
-  </div>
+  <!-- IMPFKARTEN -->
+  <div id="impf-karten"></div>
 
-  <!-- Kalender-Navigation -->
-  <div class="fz-toolbar">
-    <h2>📅 Impfkalender</h2>
+  <!-- KALENDER -->
+  <div class="fz-toolbar" style="margin-top:24px">
+    <h2>📅 Auffrischungs-Kalender</h2>
     <button class="fz-nav-btn" onclick="impfNav(-1)">&#8249;</button>
     <span class="fz-period" id="impf-period-label"></span>
     <button class="fz-nav-btn" onclick="impfNav(1)">&#8250;</button>
     <button class="fz-view-btn active" id="impfbtn-monat" onclick="impfSetView('monat')">Monat</button>
-    <button class="fz-view-btn" id="impfbtn-liste" onclick="impfSetView('liste')">Liste</button>
+    <button class="fz-view-btn" id="impfbtn-liste" onclick="impfSetView('liste')">Alle Termine</button>
   </div>
-
   <div id="impf-calendar"></div>
-
-  <!-- Liste aller Einträge -->
   <div id="impf-list-view" style="display:none;margin-top:8px">
     <div id="impf-list-container"></div>
   </div>
@@ -2263,68 +2241,157 @@ showSection = function(id, btn) {
   if (id === 'impfungen') { impfCursor = new Date(); impfView = 'monat'; impfRender(); }
 };
 
-// ─── IMPFKALENDER ────────────────────────────────────────────────────────────
-let impfEvents = JSON.parse(localStorage.getItem('impfEvents')||'[]');
+// ─── IMPFPLAN ────────────────────────────────────────────────────────────────
+const IMPF_GRUPPEN = [
+  {
+    id: 'hepatitis',
+    icon: '🩸',
+    titel: 'Hepatitis A + B',
+    info: 'Grundimmunisierung: 3 Dosen (0 / 1 / 6 Monate). Auffrischung alle 10 Jahre empfohlen.'
+  },
+  {
+    id: 'dtpp',
+    icon: '🦠',
+    titel: 'Diphtherie, Tetanus, Polio, Pertussis',
+    info: 'Kombinationsimpfung. Auffrischung alle 10 Jahre. Bei Verletzungen ggf. früher.'
+  },
+  {
+    id: 'mmrv',
+    icon: '🔴',
+    titel: 'Masern, Mumps, Röteln, Varizellen',
+    info: 'Lebendimpfstoff. 2 Dosen für vollständigen Schutz. Keine Auffrischung nötig bei dokumentierter Grundimmunisierung.'
+  },
+  {
+    id: 'influenza',
+    icon: '🤧',
+    titel: 'Influenza (Grippe)',
+    info: 'Jährliche Auffrischung empfohlen (Herbst). Impfstoff wird jährlich angepasst.'
+  },
+  {
+    id: 'fsme',
+    icon: '🌲',
+    titel: 'FSME (Frühsommer-Meningoenzephalitis)',
+    info: 'Grundimmunisierung: 3 Dosen. Auffrischung alle 3–5 Jahre je nach Alter und Hersteller.'
+  }
+];
+
+let impfData = JSON.parse(localStorage.getItem('impfPlan') || '{}');
 let impfCursor = new Date();
 let impfView = 'monat';
 
-function impfSave() { try { localStorage.setItem('impfEvents', JSON.stringify(impfEvents)); } catch(e){} }
+function impfSave() { try { localStorage.setItem('impfPlan', JSON.stringify(impfData)); } catch(e){} }
 
-function impfAdd() {
-  const name  = document.getElementById('impf-inp-name').value.trim();
-  const titel = document.getElementById('impf-inp-titel').value.trim();
-  const datum = document.getElementById('impf-inp-datum').value;
-  const notiz = document.getElementById('impf-inp-notiz').value.trim();
-  if (!titel || !datum) { alert('Bitte Impfung und Datum ausfüllen.'); return; }
-  impfEvents.push({ id: Date.now(), name, titel, datum, notiz });
+function impfSaveField(id, field, val) {
+  if (!impfData[id]) impfData[id] = {};
+  impfData[id][field] = val;
   impfSave();
-  document.getElementById('impf-inp-name').value = '';
-  document.getElementById('impf-inp-titel').value = '';
-  document.getElementById('impf-inp-datum').value = '';
-  document.getElementById('impf-inp-notiz').value = '';
-  impfRender();
+  impfRenderKalender();
 }
 
-function impfNav(dir) {
-  if (impfView === 'monat') impfCursor = new Date(impfCursor.getFullYear(), impfCursor.getMonth() + dir, 1);
-  impfRender();
+function impfRenderKarten() {
+  const container = document.getElementById('impf-karten');
+  if (!container) return;
+
+  const statusColors = {
+    offen:      { bg: '#fff3e0', border: '#ffcc80', label: '⬜ Noch nicht geimpft', color: '#e65100' },
+    teilweise:  { bg: '#e3f2fd', border: '#90caf9', label: '🔵 Teilweise immunisiert', color: '#1565c0' },
+    vollstaendig: { bg: '#e8f5e9', border: '#a5d6a7', label: '✅ Vollständig immunisiert', color: '#2e7d32' }
+  };
+
+  container.innerHTML = IMPF_GRUPPEN.map(g => {
+    const d = impfData[g.id] || {};
+    let status = 'offen';
+    if (d.vollstaendig) status = 'vollstaendig';
+    else if (d.erste) status = 'teilweise';
+    const sc = statusColors[status];
+
+    return `
+    <div style="background:${sc.bg};border:1px solid ${sc.border};border-radius:10px;padding:16px 18px;margin-bottom:14px;box-shadow:var(--shadow)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <span style="font-size:1.5rem">${g.icon}</span>
+        <div style="flex:1">
+          <strong style="font-size:1.05rem;color:var(--primary)">${g.titel}</strong>
+          <div style="font-size:0.78rem;color:var(--muted);margin-top:2px">${g.info}</div>
+        </div>
+        <span style="font-size:0.75rem;font-weight:700;color:${sc.color};white-space:nowrap">${sc.label}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div>
+          <label style="font-size:0.75rem;color:var(--muted);display:block;margin-bottom:3px;font-weight:600">💉 Erste Impfung</label>
+          <input type="date" value="${d.erste||''}"
+            onchange="impfSaveField('${g.id}','erste',this.value)"
+            style="width:100%;border:1px solid ${sc.border};border-radius:6px;padding:6px 8px;font-size:0.85rem;background:#fff">
+        </div>
+        <div>
+          <label style="font-size:0.75rem;color:var(--muted);display:block;margin-bottom:3px;font-weight:600">🔁 Auffrischung möglich ab</label>
+          <input type="date" value="${d.auffrischung||''}"
+            onchange="impfSaveField('${g.id}','auffrischung',this.value)"
+            style="width:100%;border:1px solid ${sc.border};border-radius:6px;padding:6px 8px;font-size:0.85rem;background:#fff">
+        </div>
+        <div>
+          <label style="font-size:0.75rem;color:var(--muted);display:block;margin-bottom:3px;font-weight:600">✅ Vollständig immunisiert ab</label>
+          <input type="date" value="${d.vollstaendig||''}"
+            onchange="impfSaveField('${g.id}','vollstaendig',this.value)"
+            style="width:100%;border:1px solid ${sc.border};border-radius:6px;padding:6px 8px;font-size:0.85rem;background:#fff">
+        </div>
+      </div>
+      ${d.auffrischung ? `<div style="font-size:0.78rem;margin-top:8px;color:#1565c0">📅 Auffrischung eingetragen: <strong>${d.auffrischung}</strong></div>` : ''}
+    </div>`;
+  }).join('');
 }
 
-function impfSetView(v) {
-  impfView = v;
-  document.querySelectorAll('#impfbtn-monat,#impfbtn-liste').forEach(b => b.classList.remove('active'));
-  const btn = document.getElementById('impfbtn-' + v);
-  if (btn) btn.classList.add('active');
-  document.getElementById('impf-calendar').style.display = v === 'monat' ? '' : 'none';
-  document.getElementById('impf-list-view').style.display = v === 'liste' ? '' : 'none';
-  impfRender();
+function impfGetAllEvents() {
+  const evs = [];
+  IMPF_GRUPPEN.forEach(g => {
+    const d = impfData[g.id] || {};
+    if (d.erste)        evs.push({ datum: d.erste,        label: `💉 ${g.titel} – Erste Impfung`,   color: 'privat' });
+    if (d.auffrischung) evs.push({ datum: d.auffrischung, label: `🔁 ${g.titel} – Auffrischung`,    color: 'wunsch' });
+    if (d.vollstaendig) evs.push({ datum: d.vollstaendig, label: `✅ ${g.titel} – Vollimmunisiert`, color: 'genehmigt' });
+  });
+  return evs;
 }
 
 const DE_MONTHS = ['Jänner','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 
-function impfRender() {
+function impfNav(dir) {
+  impfCursor = new Date(impfCursor.getFullYear(), impfCursor.getMonth() + dir, 1);
+  impfRenderKalender();
+}
+
+function impfSetView(v) {
+  impfView = v;
+  ['monat','liste'].forEach(x => {
+    const b = document.getElementById('impfbtn-' + x);
+    if (b) b.classList.toggle('active', x === v);
+  });
+  const cal = document.getElementById('impf-calendar');
+  const lst = document.getElementById('impf-list-view');
+  if (cal) cal.style.display = v === 'monat' ? '' : 'none';
+  if (lst) lst.style.display = v === 'liste' ? '' : 'none';
+  impfRenderKalender();
+}
+
+function impfRenderKalender() {
   const lbl = document.getElementById('impf-period-label');
+  const allEvs = impfGetAllEvents();
+
   if (impfView === 'monat') {
     const y = impfCursor.getFullYear(), m = impfCursor.getMonth();
     if (lbl) lbl.textContent = DE_MONTHS[m] + ' ' + y;
     const cal = document.getElementById('impf-calendar');
     if (!cal) return;
-    const first = new Date(y, m, 1);
-    const last  = new Date(y, m+1, 0);
-    let startDow = first.getDay(); if (startDow===0) startDow=7;
+    const last = new Date(y, m+1, 0);
+    let startDow = new Date(y, m, 1).getDay(); if (startDow===0) startDow=7;
     const today = new Date(); today.setHours(0,0,0,0);
     let html = '<div class="fz-month-grid">';
     ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(d => html += `<div class="dh">${d}</div>`);
     for (let i = 1; i < startDow; i++) html += '<div class="fz-dc other-month"></div>';
     for (let d = 1; d <= last.getDate(); d++) {
-      const dateStr = y + '-' + String(m+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      const ds = y + '-' + String(m+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
       const isToday = new Date(y,m,d).getTime() === today.getTime();
-      const evs = impfEvents.filter(e => e.datum === dateStr);
-      html += `<div class="fz-dc${isToday?' today':''}">`;
-      html += `<div class="fz-dn">${d}</div>`;
-      evs.forEach(e => {
-        html += `<div class="fz-ev genehmigt" title="${e.name||''} – ${e.notiz||''}" onclick="impfDelete(${e.id})">💉 ${e.titel}</div>`;
-      });
+      const dayEvs = allEvs.filter(e => e.datum === ds);
+      html += `<div class="fz-dc${isToday?' today':''}"><div class="fz-dn">${d}</div>`;
+      dayEvs.forEach(e => html += `<div class="fz-ev ${e.color}" title="${e.label}">${e.label.slice(0,18)}</div>`);
       html += '</div>';
     }
     html += '</div>';
@@ -2333,33 +2400,21 @@ function impfRender() {
     if (lbl) lbl.textContent = 'Alle Termine';
     const con = document.getElementById('impf-list-container');
     if (!con) return;
-    if (impfEvents.length === 0) { con.innerHTML = '<p style="color:var(--muted);font-size:0.9rem;padding:12px">Noch keine Einträge.</p>'; return; }
-    const sorted = [...impfEvents].sort((a,b) => a.datum.localeCompare(b.datum));
+    const sorted = [...allEvs].sort((a,b) => a.datum.localeCompare(b.datum));
+    if (!sorted.length) { con.innerHTML = '<p style="color:var(--muted);padding:12px;font-size:0.9rem">Noch keine Daten eingetragen.</p>'; return; }
     con.innerHTML = sorted.map(e => `
-      <div class="card" style="margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px">
-        <div>
-          <strong style="color:var(--primary)">💉 ${e.titel}</strong>
-          ${e.name ? `<span style="font-size:0.85rem;color:var(--muted);margin-left:8px">👤 ${e.name}</span>` : ''}
-          <div style="font-size:0.82rem;color:var(--muted);margin-top:3px">📅 ${e.datum}${e.notiz ? ' · ' + e.notiz : ''}</div>
-        </div>
-        <button onclick="impfDelete(${e.id})" style="border:none;background:none;cursor:pointer;font-size:1.1rem;color:var(--muted)" title="Löschen">🗑️</button>
+      <div style="background:#fff;border-radius:8px;padding:12px 16px;margin-bottom:8px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:center">
+        <span style="font-size:1.1rem">${e.label.slice(0,2)}</span>
+        <div><div style="font-weight:600;font-size:0.95rem">${e.label.slice(3)}</div>
+        <div style="font-size:0.8rem;color:var(--muted)">📅 ${e.datum}</div></div>
       </div>`).join('');
   }
 }
 
-function impfDelete(id) {
-  if (!confirm('Eintrag löschen?')) return;
-  impfEvents = impfEvents.filter(e => e.id !== id);
-  impfSave();
-  impfRender();
+function impfRender() {
+  impfRenderKarten();
+  impfRenderKalender();
 }
-
-window.addEventListener('DOMContentLoaded', () => {
-  const today = new Date();
-  const todayStr = today.toISOString().split('T')[0];
-  const datumInput = document.getElementById('impf-inp-datum');
-  if (datumInput) datumInput.value = todayStr;
-});
 // ─────────────────────────────────────────────────────────────────────────────
 </script>
 </body>
