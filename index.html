@@ -420,11 +420,11 @@
     <p>Privatklinik St. Radegund · Schnell-Orientierung für Küche & Service</p>
   </div>
   <div class="badge" id="header-badge">...</div>
-  <label title="Foto hochladen" style="cursor:pointer;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:8px;padding:6px 12px;display:flex;align-items:center;gap:5px;font-size:0.82rem;color:#fff;white-space:nowrap;transition:background 0.15s" onmouseover="this.style.background='rgba(255,255,255,0.35)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
-    📷 <span style="font-weight:600">Fotos</span>
+  <label title="Foto hochladen" style="cursor:pointer;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:8px;padding:8px 13px;display:flex;align-items:center;gap:5px;font-size:0.85rem;color:#fff;white-space:nowrap">
+    📷 <span class="hdr-txt" style="font-weight:600">Foto</span>
     <input type="file" accept="image/*" multiple style="display:none" onchange="galUpload(this)">
   </label>
-  <button onclick="galOpen()" title="Foto-Galerie öffnen" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:8px;padding:6px 10px;color:#fff;font-size:0.82rem;cursor:pointer;white-space:nowrap" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">🗂️ Galerie</button>
+  <button onclick="galOpen()" title="Foto-Galerie öffnen" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:8px;padding:8px 12px;color:#fff;font-size:0.85rem;cursor:pointer;white-space:nowrap;font-weight:600">🗂️ <span class="hdr-txt">Galerie</span></button>
 </header>
 
 <nav id="main-nav">
@@ -1565,22 +1565,80 @@
 </main>
 
 <!-- FOTO-GALERIE MODAL -->
-<div id="gal-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;overflow-y:auto">
-  <div style="background:var(--bg);max-width:1100px;margin:16px auto;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.4)">
+<style>
+  @media(max-width:520px) { .hdr-txt { display:none; } header h1 { font-size:1rem; } header p { display:none; } }
+  #gal-modal { display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;overflow-y:auto; }
+  .gal-inner { background:var(--bg);max-width:1100px;margin:16px auto;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.4); }
+  .gal-header { background:linear-gradient(135deg,#6b4c2a,#a07040);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10; }
+  .gal-header strong { flex:1;font-size:1.05rem; }
+  .gal-upload-btn { background:rgba(255,255,255,0.2);border:1.5px solid rgba(255,255,255,0.5);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:0.85rem;font-weight:700;color:#fff;white-space:nowrap; }
+  .gal-upload-btn-cam { background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.3);border-radius:8px;padding:8px 12px;cursor:pointer;font-size:1rem;color:#fff; }
+  .gal-close { background:rgba(0,0,0,0.2);border:none;color:#fff;font-size:1.2rem;cursor:pointer;border-radius:8px;padding:6px 12px;font-weight:700; }
+  /* Gruppen-Nav */
+  #gal-groups { display:flex;gap:6px;padding:10px 14px 6px;background:#fff;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid #eee; }
+  #gal-groups::-webkit-scrollbar { display:none; }
+  .gal-grp-btn { border:none;cursor:pointer;border-radius:20px;padding:6px 14px;font-size:0.78rem;font-weight:700;white-space:nowrap;background:#f0ebe4;color:var(--primary);transition:all 0.15s; }
+  .gal-grp-btn.active { background:var(--primary);color:#fff; }
+  /* Kategorie-Tabs */
+  #gal-tabs { display:flex;flex-wrap:wrap;gap:4px;padding:8px 14px 10px;background:#f8f6f2;border-bottom:2px solid var(--border); }
+  .gal-cat-btn { border:none;cursor:pointer;border-radius:6px;padding:7px 12px;font-size:0.78rem;font-weight:600;background:#fff;color:var(--text);border:1px solid var(--border);transition:all 0.15s;white-space:nowrap; }
+  .gal-cat-btn.active { background:var(--primary);color:#fff;border-color:var(--primary); }
+  .gal-cat-btn .gal-badge { background:var(--accent);color:#fff;border-radius:8px;padding:1px 6px;font-size:0.65rem;margin-left:4px; }
+  .gal-cat-btn.active .gal-badge { background:rgba(255,255,255,0.35); }
+  /* Grid */
+  #gal-grid { padding:14px; }
+  .gal-photo-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px; }
+  .gal-photo-card { background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column; }
+  .gal-photo-card img { width:100%;height:140px;object-fit:cover;cursor:zoom-in; }
+  .gal-photo-info { padding:10px;flex:1;display:flex;flex-direction:column;gap:6px; }
+  .gal-photo-name { font-size:0.7rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+  .gal-photo-desc { border:1px solid var(--border);border-radius:5px;padding:6px 8px;font-size:0.8rem;font-family:inherit;resize:none;height:56px;background:#fafaf8;width:100%; }
+  .gal-photo-select { border:1px solid var(--border);border-radius:5px;padding:5px 7px;font-size:0.78rem;background:var(--bg);width:100%; }
+  .gal-photo-del { background:none;border:1px solid #ef9a9a;color:var(--red);border-radius:5px;padding:5px;font-size:0.75rem;cursor:pointer;width:100%; }
+  /* Kategorie-Beschreibung */
+  .gal-cat-desc-box { background:#f8f6f2;border-radius:8px;padding:12px 14px;margin-bottom:14px;border:1px solid var(--border); }
+  .gal-cat-desc-box textarea { width:100%;border:1px solid var(--border);border-radius:6px;padding:8px;font-size:0.85rem;font-family:inherit;resize:vertical;min-height:56px;background:#fff; }
+  /* MOBILE */
+  @media(max-width:640px) {
+    #gal-modal { background:rgba(0,0,0,0.95); }
+    .gal-inner { margin:0;border-radius:0;min-height:100dvh;display:flex;flex-direction:column; }
+    .gal-header { padding:12px 14px; }
+    .gal-upload-btn { padding:8px 10px;font-size:0.8rem; }
+    #gal-grid { padding:10px;flex:1; }
+    .gal-photo-grid { grid-template-columns:repeat(2,1fr);gap:8px; }
+    .gal-photo-card img { height:110px; }
+    .gal-photo-info { padding:7px; }
+    .gal-photo-desc { height:44px;font-size:0.75rem; }
+    #gal-tabs { padding:6px 10px 8px; }
+    .gal-cat-btn { padding:8px 11px;font-size:0.8rem; }
+    #gal-groups { padding:8px 10px 5px; }
+  }
+</style>
+
+<div id="gal-modal">
+  <div class="gal-inner">
     <!-- Header -->
-    <div style="background:linear-gradient(135deg,#6b4c2a,#a07040);color:#fff;padding:16px 20px;display:flex;align-items:center;gap:12px">
+    <div class="gal-header">
       <span style="font-size:1.3rem">📷</span>
-      <strong style="font-size:1.1rem;flex:1">Foto-Galerie</strong>
-      <label style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:7px;padding:7px 14px;cursor:pointer;font-size:0.85rem;font-weight:600">
-        + Foto hinzufügen
+      <strong>Foto-Galerie</strong>
+      <!-- Kamera (Handy: direkt fotografieren) -->
+      <label class="gal-upload-btn-cam" title="Kamera öffnen">
+        📸
+        <input type="file" accept="image/*" capture="environment" style="display:none" onchange="galUpload(this)">
+      </label>
+      <!-- Aus Galerie / Dateien wählen -->
+      <label class="gal-upload-btn">
+        + Foto
         <input type="file" accept="image/*" multiple style="display:none" onchange="galUpload(this)">
       </label>
-      <button onclick="galClose()" style="background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:1.3rem;cursor:pointer;border-radius:6px;padding:4px 10px">✕</button>
+      <button class="gal-close" onclick="galClose()">✕</button>
     </div>
-    <!-- Kategorie-Tabs -->
-    <div id="gal-tabs" style="display:flex;flex-wrap:wrap;gap:4px;padding:10px 14px 0;background:#fff;border-bottom:2px solid var(--border)"></div>
-    <!-- Grid -->
-    <div id="gal-grid" style="padding:16px;min-height:200px"></div>
+    <!-- Gruppen-Navigation -->
+    <div id="gal-groups"></div>
+    <!-- Kategorie-Buttons der aktiven Gruppe -->
+    <div id="gal-tabs"></div>
+    <!-- Inhalt -->
+    <div id="gal-grid"></div>
   </div>
 </div>
 
@@ -2618,6 +2676,16 @@ function cafeInitEditing() {
 }
 
 // ─── FOTO-GALERIE (IndexedDB) ─────────────────────────────────────────────────
+const GAL_GROUPS = [
+  { id:'eingang',   label:'📥 Eingang',    cats:['Eingang'] },
+  { id:'frueh',     label:'🌅 Frühdienst', cats:['Vorbereitung – Frühstück','Frühstücksdienst','Nacharbeiten – Frühstück'] },
+  { id:'mittag',    label:'☀️ Mittag',     cats:['Vorbereitung – Mittag','Mittagsdienst','Nacharbeiten – Mittag'] },
+  { id:'abend',     label:'🌆 Abend',      cats:['Vorbereitung – Abend','Abenddienst','Abschluss & Tagesende'] },
+  { id:'nachm',     label:'📅 Nachmittag', cats:['Nachmittag – Mo','Nachmittag – Di','Nachmittag – Mi','Nachmittag – Do','Nachmittag – Fr','Nachmittag – Sa/So'] },
+  { id:'bereiche',  label:'🏢 Bereiche',   cats:['Café','Kassa','Tee-Küchen','Buffet – Frühstück','Buffet – Mittag','Buffet – Abend'] },
+  { id:'sonstiges', label:'📌 Sonstiges',  cats:['Allergiker','Tischkarten-Farben','Kolleginnen','Standards & Vorlagen','Offene Punkte','Persönliche Unterlagen'] }
+];
+
 const GAL_CATS = [
   'Eingang',
   'Vorbereitung – Frühstück','Frühstücksdienst','Nacharbeiten – Frühstück',
@@ -2750,36 +2818,29 @@ function galClose() {
 async function galRender() {
   const counts = await galCountAll();
   const tabsEl = document.getElementById('gal-tabs');
-  // Gruppen für visuelle Trennung
-  const GAL_GROUPS = [
-    { label: '📥 Eingang', cats: ['Eingang'] },
-    { label: '🌅 Früh', cats: ['Vorbereitung – Frühstück','Frühstücksdienst','Nacharbeiten – Frühstück'] },
-    { label: '☀️ Mittag', cats: ['Vorbereitung – Mittag','Mittagsdienst','Nacharbeiten – Mittag'] },
-    { label: '🌆 Abend', cats: ['Vorbereitung – Abend','Abenddienst','Abschluss & Tagesende'] },
-    { label: '📅 Nachmittag', cats: ['Nachmittag – Mo','Nachmittag – Di','Nachmittag – Mi','Nachmittag – Do','Nachmittag – Fr','Nachmittag – Sa/So'] },
-    { label: '🏢 Bereiche', cats: ['Café','Kassa','Tee-Küchen','Buffet – Frühstück','Buffet – Mittag','Buffet – Abend'] },
-    { label: '📌 Sonstiges', cats: ['Allergiker','Tischkarten-Farben','Kolleginnen','Standards & Vorlagen','Offene Punkte','Persönliche Unterlagen'] }
-  ];
+  // Gruppen-Navigation rendern
+  const grpsEl = document.getElementById('gal-groups');
+  grpsEl.innerHTML = GAL_GROUPS.map(grp => {
+    const isActive = grp.cats.includes(galActiveCat);
+    const total = grp.cats.reduce((s,c) => s + (counts[c]||0), 0);
+    return `<button class="gal-grp-btn${isActive?' active':''}" onclick="galSetGroup('${grp.id}')">
+      ${grp.label}${total ? ` <span style="font-size:0.7rem;opacity:0.8">${total}</span>` : ''}
+    </button>`;
+  }).join('');
 
-  let tabHtml = '';
-  GAL_GROUPS.forEach(grp => {
-    tabHtml += `<div style="display:flex;flex-wrap:wrap;gap:3px;align-items:center;margin-bottom:4px;margin-right:8px">
-      <span style="font-size:0.68rem;color:var(--muted);font-weight:700;padding:0 4px;white-space:nowrap">${grp.label}</span>`;
-    grp.cats.forEach(cat => {
-      const n = counts[cat] || 0;
-      const active = cat === galActiveCat;
-      const icon = GAL_ICONS[cat] || '📁';
-      const shortName = cat.replace('Vorbereitung – ','Vorbr. ').replace('Nacharbeiten – ','Nach. ').replace('Nachmittag – ','');
-      tabHtml += `<button onclick="galSetCat('${cat.replace(/'/g,"\\'")}')" style="
-        border:none;cursor:pointer;border-radius:5px;padding:5px 9px;font-size:0.75rem;font-weight:600;white-space:nowrap;
-        background:${active ? 'var(--primary)' : '#eee'};color:${active ? '#fff' : 'var(--text)'};
-        outline:${active ? '2px solid var(--accent)' : 'none'}">
-        ${icon} ${shortName}${n ? ` <span style="background:${active?'rgba(255,255,255,0.35)':'#a07040'};color:#fff;border-radius:8px;padding:0 5px;font-size:0.65rem">${n}</span>` : ''}
-      </button>`;
-    });
-    tabHtml += '</div>';
-  });
-  tabsEl.innerHTML = tabHtml;
+  // Aktive Gruppe bestimmen
+  const activeGrp = GAL_GROUPS.find(g => g.cats.includes(galActiveCat)) || GAL_GROUPS[0];
+
+  // Kategorie-Tabs der aktiven Gruppe
+  tabsEl.innerHTML = activeGrp.cats.map(cat => {
+    const n = counts[cat] || 0;
+    const active = cat === galActiveCat;
+    const icon = GAL_ICONS[cat] || '📁';
+    const shortName = cat.replace('Vorbereitung – ','Vorbr. ').replace('Nacharbeiten – ','Nach. ').replace('Nachmittag – ','');
+    return `<button class="gal-cat-btn${active?' active':''}" onclick="galSetCat('${cat.replace(/'/g,"\\'")}')">
+      ${icon} ${shortName}${n ? `<span class="gal-badge">${n}</span>` : ''}
+    </button>`;
+  }).join('');
 
   const fotos = await galGetAll(galActiveCat);
   const gridEl = document.getElementById('gal-grid');
@@ -2787,9 +2848,9 @@ async function galRender() {
   const icon = GAL_ICONS[galActiveCat] || '📁';
 
   // Kategorie-Beschreibung
-  let html = `<div style="background:#f8f6f2;border-radius:8px;padding:12px 14px;margin-bottom:16px;border:1px solid var(--border)">
-    <div style="font-size:0.78rem;font-weight:700;color:var(--primary);margin-bottom:6px">${icon} Beschreibung für Kategorie „${galActiveCat}"</div>
-    <textarea onchange="galSaveCatDesc('${galActiveCat.replace(/'/g,"\\'")}',this.value)" style="width:100%;border:1px solid var(--border);border-radius:6px;padding:8px;font-size:0.85rem;font-family:inherit;resize:vertical;min-height:60px;background:#fff" placeholder="Notizen zur Kategorie – z.B. Verwendungszweck, Hinweise, Ablauf…">${catDescVal}</textarea>
+  let html = `<div class="gal-cat-desc-box">
+    <div style="font-size:0.78rem;font-weight:700;color:var(--primary);margin-bottom:6px">${icon} Beschreibung für „${galActiveCat}"</div>
+    <textarea onchange="galSaveCatDesc('${galActiveCat.replace(/'/g,"\\'")}',this.value)" placeholder="Notizen, Hinweise, Ablauf für diese Kategorie…">${catDescVal}</textarea>
   </div>`;
 
   if (!fotos.length) {
@@ -2805,20 +2866,18 @@ async function galRender() {
   const otherCats = GAL_CATS.filter(c => c !== galActiveCat);
   const catOptions = otherCats.map(c => `<option value="${c}">${GAL_ICONS[c]||'📁'} ${c}</option>`).join('');
 
-  html += `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px">` +
+  html += `<div class="gal-photo-grid">` +
     fotos.map(f => `
-      <div style="background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column">
-        <div style="position:relative">
-          <img src="${f.dataURL}" style="width:100%;height:140px;object-fit:cover;display:block;cursor:zoom-in" onclick="galLightbox(this.src,'${(f.desc||'').replace(/'/g,"\\'")}','${f.name}')" loading="lazy">
-        </div>
-        <div style="padding:10px;flex:1;display:flex;flex-direction:column;gap:6px">
-          <div style="font-size:0.7rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${f.name}">📎 ${f.name}</div>
-          <textarea onchange="galSaveDesc(${f.id},this.value)" style="border:1px solid var(--border);border-radius:5px;padding:5px 7px;font-size:0.78rem;font-family:inherit;resize:none;height:52px;background:#fafaf8" placeholder="Beschreibung, Notiz…">${f.desc||''}</textarea>
-          <select onchange="galMoveCat(${f.id},this.value)" style="border:1px solid var(--border);border-radius:5px;padding:4px 6px;font-size:0.75rem;background:var(--bg)">
+      <div class="gal-photo-card">
+        <img src="${f.dataURL}" class="gal-photo-card img" style="width:100%;height:140px;object-fit:cover;cursor:zoom-in" onclick="galLightbox(this.src,'${(f.desc||'').replace(/'/g,"\\'").replace(/\n/g,' ')}','${f.name}')" loading="lazy">
+        <div class="gal-photo-info">
+          <div class="gal-photo-name" title="${f.name}">📎 ${f.name}</div>
+          <textarea class="gal-photo-desc" onchange="galSaveDesc(${f.id},this.value)" placeholder="Beschreibung, Notiz…">${f.desc||''}</textarea>
+          <select class="gal-photo-select" onchange="galMoveCat(${f.id},this.value)">
             <option value="${galActiveCat}" selected>📂 ${galActiveCat}</option>
             ${catOptions}
           </select>
-          <button onclick="galDelete(${f.id})" style="background:none;border:1px solid #ef9a9a;color:var(--red);border-radius:5px;padding:4px;font-size:0.72rem;cursor:pointer">🗑️ Löschen</button>
+          <button class="gal-photo-del" onclick="galDelete(${f.id})">🗑️ Löschen</button>
         </div>
       </div>`).join('') + `</div>`;
 
@@ -2828,6 +2887,11 @@ async function galRender() {
 function galSetCat(cat) {
   galActiveCat = cat;
   galRender();
+}
+
+function galSetGroup(grpId) {
+  const grp = GAL_GROUPS.find(g => g.id === grpId);
+  if (grp) { galActiveCat = grp.cats[0]; galRender(); }
 }
 
 // Lightbox
