@@ -430,6 +430,8 @@
   <button onclick="showSection('nummern', this)" style="margin-left:auto">📞 Nummern</button>
   <button onclick="showSection('freizeit', this)">🏖️ Freizeit</button>
   <button onclick="showSection('dienstplan', this)">📅 Dienstplan</button>
+  <button onclick="showSection('kassa', this)" style="background:rgba(255,255,255,0.3);color:#fff;font-weight:800;font-size:1rem;border:2px solid rgba(255,255,255,0.6)">🧾 Kassa</button>
+  <button onclick="showSection('impfungen', this)" style="background:rgba(255,200,0,0.25);color:#fff;border:1px solid rgba(255,200,0,0.5)">💉 Impfungen</button>
 </nav>
 
 <main>
@@ -1048,27 +1050,72 @@
 
 <!-- CAFE -->
 <section id="cafe" class="section">
-  <div class="card yellow">
-    <h2>☕ Cafe – wird aufgebaut</h2>
-    <p style="font-size:0.95rem;color:var(--muted);margin-bottom:6px">Diese Rubrik wird laufend ergänzt. Geplante Unterkategorien: Heißgetränke, Kaltgetränke, Alkoholische Getränke, Snacks & Mehlspeisen, Saisonales Angebot.</p>
-    <div class="hinweis info">
-      <span class="icon">🚧</span>
-      <p><strong>Im Aufbau.</strong> Die aktuellen Getränkerezepte sind bereits hinterlegt. Weitere Inhalte folgen.</p>
+  <div class="card">
+    <h2>☕ Café</h2>
+    <p style="font-size:0.93rem;color:var(--muted)">Inhalte werden laufend ergänzt. Rubriken per Klick aufklappen.</p>
+  </div>
+
+  <!-- Mise en Place -->
+  <div class="accordion">
+    <button class="accordion-btn" onclick="toggleAcc(this)">🍽️ Mise en Place <span class="arrow">▼</span></button>
+    <div class="accordion-content">
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
     </div>
   </div>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:18px">
-    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.9rem">
-      ☕<br><strong>Heißgetränke</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
+  <!-- Heißgetränke -->
+  <div class="accordion">
+    <button class="accordion-btn" onclick="toggleAcc(this)">☕ Heißgetränke <span class="arrow">▼</span></button>
+    <div class="accordion-content">
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
     </div>
-    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.9rem">
-      🥤<br><strong>Kaltgetränke</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
+  </div>
+
+  <!-- Kaltgetränke -->
+  <div class="accordion">
+    <button class="accordion-btn" onclick="toggleAcc(this)">🥤 Kaltgetränke <span class="arrow">▼</span></button>
+    <div class="accordion-content">
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
     </div>
-    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.9rem">
-      🥐<br><strong>Snacks & Mehlspeisen</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
+  </div>
+
+  <!-- Snacks & Mehlspeisen -->
+  <div class="accordion">
+    <button class="accordion-btn" onclick="toggleAcc(this)">🥐 Snacks &amp; Mehlspeisen <span class="arrow">▼</span></button>
+    <div class="accordion-content">
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
     </div>
-    <div style="background:var(--card);border-radius:8px;padding:14px;border:2px dashed var(--border);text-align:center;color:var(--muted);font-size:0.9rem">
-      🌿<br><strong>Saisonales</strong><br><span style="font-size:0.72rem">in Bearbeitung</span>
+  </div>
+
+  <!-- Eis -->
+  <div class="accordion">
+    <button class="accordion-btn" onclick="toggleAcc(this)">🍦 Eis <span class="arrow">▼</span></button>
+    <div class="accordion-content">
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
+    </div>
+  </div>
+
+  <!-- Buchhaltung -->
+  <div class="accordion">
+    <button class="accordion-btn" onclick="toggleAcc(this)">📋 Buchhaltung <span class="arrow">▼</span></button>
+    <div class="accordion-content">
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
+    </div>
+  </div>
+
+  <!-- Technik -->
+  <div class="accordion">
+    <button class="accordion-btn" onclick="toggleAcc(this)">🔧 Technik <span class="arrow">▼</span></button>
+    <div class="accordion-content">
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
+    </div>
+  </div>
+
+  <!-- Mitarbeiter -->
+  <div class="accordion">
+    <button class="accordion-btn" onclick="toggleAcc(this)">👥 Mitarbeiter <span class="arrow">▼</span></button>
+    <div class="accordion-content">
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
     </div>
   </div>
 
@@ -1205,8 +1252,6 @@
   <div class="ab-tabs">
     <button class="ab-tab-btn active" onclick="abSetTab('frueh',this)">🌅 Frühdienst</button>
     <button class="ab-tab-btn" onclick="abSetTab('mittag',this)">🍽️ Mittag & Abend</button>
-    <button class="ab-tab-btn" onclick="abSetTab('cafe',this)">☕ Café</button>
-    <button class="ab-tab-btn" onclick="abSetTab('kassa',this)">🧾 Kassa</button>
   </div>
 
   <!-- Frühdienst -->
@@ -1272,25 +1317,6 @@
     </div>
   </div>
 
-  <!-- Café -->
-  <div id="ab-cafe" class="ab-pane">
-    <div class="card">
-      <h2>☕ Café – Ablauf</h2>
-      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Abläufe werden laufend ergänzt.</p></div>
-      <div class="ab-step"><div class="ab-num">1</div><div class="ab-text"><strong>Büfett anfüllen &amp; herrichten</strong></div></div>
-      <div class="ab-step"><div class="ab-num">2</div><div class="ab-text"><strong>Getränke vorbereiten</strong>Limonaden, Heißgetränke, Saisonales bereitstellen.</div></div>
-      <div class="ab-step"><div class="ab-num">3</div><div class="ab-text"><strong>Allerginweise beachten</strong>Hugo, Aperol, Limoncello: kein Histamin! Siehe Café-Tab für Details.</div></div>
-    </div>
-  </div>
-
-  <!-- Kassa -->
-  <div id="ab-kassa" class="ab-pane">
-    <div class="card">
-      <h2>🧾 Kassa – Ablauf</h2>
-      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Abläufe werden laufend ergänzt.</p></div>
-      <div class="ab-step"><div class="ab-num">1</div><div class="ab-text"><strong>Kassaabrechnung</strong>Tagesabschluss durchführen.</div></div>
-    </div>
-  </div>
 </section>
 
 <!-- FREIZEIT / PRIVATER KALENDER -->
@@ -1408,6 +1434,83 @@
   </div>
 
   <div id="dp-calendar"></div>
+</section>
+
+<!-- KASSA -->
+<section id="kassa" class="section">
+  <div class="card">
+    <h2>🧾 Kassa</h2>
+    <p style="font-size:0.93rem;color:var(--muted)">Übersicht über Tagesabschlüsse, Einnahmen, Ausgaben und Rechnungen.</p>
+  </div>
+
+  <div class="accordion">
+    <button class="accordion-btn" onclick="toggleAcc(this)">📊 Tagesabschlüsse <span class="arrow">▼</span></button>
+    <div class="accordion-content">
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="accordion-btn" onclick="toggleAcc(this)">💰 Einnahmen <span class="arrow">▼</span></button>
+    <div class="accordion-content">
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="accordion-btn" onclick="toggleAcc(this)">📤 Ausgaben <span class="arrow">▼</span></button>
+    <div class="accordion-content">
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="accordion-btn" onclick="toggleAcc(this)">🗂️ Rechnungen <span class="arrow">▼</span></button>
+    <div class="accordion-content">
+      <div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPFUNGEN (vorübergehend) -->
+<section id="impfungen" class="section">
+  <div class="card yellow" style="margin-bottom:14px">
+    <h2>💉 Impfungen – Terminübersicht</h2>
+    <p style="font-size:0.93rem;color:var(--muted);margin-bottom:8px">Vorübergehende Rubrik zur Erfassung von Impfterminen für Mitarbeiter. Termine eintragen und im Kalender verfolgen.</p>
+    <div class="hinweis warn">
+      <span class="icon">⚠️</span>
+      <p><strong>Temporäre Rubrik.</strong> Diese Sektion wird nach Abschluss der Impfaktion wieder entfernt.</p>
+    </div>
+  </div>
+
+  <!-- Termin hinzufügen -->
+  <div class="fz-add-form" style="margin-bottom:16px">
+    <h3>💉 Impftermin eintragen</h3>
+    <div class="fz-row">
+      <div><label>Name / Mitarbeiter</label><input type="text" id="impf-inp-name" placeholder="z.B. Maria M." style="width:160px"></div>
+      <div><label>Impfung</label><input type="text" id="impf-inp-titel" placeholder="z.B. Hepatitis B, Grippe…" style="width:180px"></div>
+      <div><label>Datum</label><input type="date" id="impf-inp-datum"></div>
+      <div><label>Dosis / Notiz</label><input type="text" id="impf-inp-notiz" placeholder="z.B. 1. Dosis" style="width:130px"></div>
+      <button onclick="impfAdd()">Speichern</button>
+    </div>
+  </div>
+
+  <!-- Kalender-Navigation -->
+  <div class="fz-toolbar">
+    <h2>📅 Impfkalender</h2>
+    <button class="fz-nav-btn" onclick="impfNav(-1)">&#8249;</button>
+    <span class="fz-period" id="impf-period-label"></span>
+    <button class="fz-nav-btn" onclick="impfNav(1)">&#8250;</button>
+    <button class="fz-view-btn active" id="impfbtn-monat" onclick="impfSetView('monat')">Monat</button>
+    <button class="fz-view-btn" id="impfbtn-liste" onclick="impfSetView('liste')">Liste</button>
+  </div>
+
+  <div id="impf-calendar"></div>
+
+  <!-- Liste aller Einträge -->
+  <div id="impf-list-view" style="display:none;margin-top:8px">
+    <div id="impf-list-container"></div>
+  </div>
 </section>
 
 </main>
@@ -2157,7 +2260,106 @@ showSection = function(id, btn) {
   _origShowSection(id, btn);
   if (id === 'freizeit') { fzCursor = new Date(); fzView = 'monat'; document.querySelectorAll('.fz-view-btn').forEach(b=>b.classList.remove('active')); const mb=document.getElementById('fzbtn-monat'); if(mb)mb.classList.add('active'); fzRender(); }
   if (id === 'nummern') numRender();
+  if (id === 'impfungen') { impfCursor = new Date(); impfView = 'monat'; impfRender(); }
 };
+
+// ─── IMPFKALENDER ────────────────────────────────────────────────────────────
+let impfEvents = JSON.parse(localStorage.getItem('impfEvents')||'[]');
+let impfCursor = new Date();
+let impfView = 'monat';
+
+function impfSave() { try { localStorage.setItem('impfEvents', JSON.stringify(impfEvents)); } catch(e){} }
+
+function impfAdd() {
+  const name  = document.getElementById('impf-inp-name').value.trim();
+  const titel = document.getElementById('impf-inp-titel').value.trim();
+  const datum = document.getElementById('impf-inp-datum').value;
+  const notiz = document.getElementById('impf-inp-notiz').value.trim();
+  if (!titel || !datum) { alert('Bitte Impfung und Datum ausfüllen.'); return; }
+  impfEvents.push({ id: Date.now(), name, titel, datum, notiz });
+  impfSave();
+  document.getElementById('impf-inp-name').value = '';
+  document.getElementById('impf-inp-titel').value = '';
+  document.getElementById('impf-inp-datum').value = '';
+  document.getElementById('impf-inp-notiz').value = '';
+  impfRender();
+}
+
+function impfNav(dir) {
+  if (impfView === 'monat') impfCursor = new Date(impfCursor.getFullYear(), impfCursor.getMonth() + dir, 1);
+  impfRender();
+}
+
+function impfSetView(v) {
+  impfView = v;
+  document.querySelectorAll('#impfbtn-monat,#impfbtn-liste').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('impfbtn-' + v);
+  if (btn) btn.classList.add('active');
+  document.getElementById('impf-calendar').style.display = v === 'monat' ? '' : 'none';
+  document.getElementById('impf-list-view').style.display = v === 'liste' ? '' : 'none';
+  impfRender();
+}
+
+const DE_MONTHS = ['Jänner','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+
+function impfRender() {
+  const lbl = document.getElementById('impf-period-label');
+  if (impfView === 'monat') {
+    const y = impfCursor.getFullYear(), m = impfCursor.getMonth();
+    if (lbl) lbl.textContent = DE_MONTHS[m] + ' ' + y;
+    const cal = document.getElementById('impf-calendar');
+    if (!cal) return;
+    const first = new Date(y, m, 1);
+    const last  = new Date(y, m+1, 0);
+    let startDow = first.getDay(); if (startDow===0) startDow=7;
+    const today = new Date(); today.setHours(0,0,0,0);
+    let html = '<div class="fz-month-grid">';
+    ['Mo','Di','Mi','Do','Fr','Sa','So'].forEach(d => html += `<div class="dh">${d}</div>`);
+    for (let i = 1; i < startDow; i++) html += '<div class="fz-dc other-month"></div>';
+    for (let d = 1; d <= last.getDate(); d++) {
+      const dateStr = y + '-' + String(m+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      const isToday = new Date(y,m,d).getTime() === today.getTime();
+      const evs = impfEvents.filter(e => e.datum === dateStr);
+      html += `<div class="fz-dc${isToday?' today':''}">`;
+      html += `<div class="fz-dn">${d}</div>`;
+      evs.forEach(e => {
+        html += `<div class="fz-ev genehmigt" title="${e.name||''} – ${e.notiz||''}" onclick="impfDelete(${e.id})">💉 ${e.titel}</div>`;
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+    cal.innerHTML = html;
+  } else {
+    if (lbl) lbl.textContent = 'Alle Termine';
+    const con = document.getElementById('impf-list-container');
+    if (!con) return;
+    if (impfEvents.length === 0) { con.innerHTML = '<p style="color:var(--muted);font-size:0.9rem;padding:12px">Noch keine Einträge.</p>'; return; }
+    const sorted = [...impfEvents].sort((a,b) => a.datum.localeCompare(b.datum));
+    con.innerHTML = sorted.map(e => `
+      <div class="card" style="margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+        <div>
+          <strong style="color:var(--primary)">💉 ${e.titel}</strong>
+          ${e.name ? `<span style="font-size:0.85rem;color:var(--muted);margin-left:8px">👤 ${e.name}</span>` : ''}
+          <div style="font-size:0.82rem;color:var(--muted);margin-top:3px">📅 ${e.datum}${e.notiz ? ' · ' + e.notiz : ''}</div>
+        </div>
+        <button onclick="impfDelete(${e.id})" style="border:none;background:none;cursor:pointer;font-size:1.1rem;color:var(--muted)" title="Löschen">🗑️</button>
+      </div>`).join('');
+  }
+}
+
+function impfDelete(id) {
+  if (!confirm('Eintrag löschen?')) return;
+  impfEvents = impfEvents.filter(e => e.id !== id);
+  impfSave();
+  impfRender();
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
+  const datumInput = document.getElementById('impf-inp-datum');
+  if (datumInput) datumInput.value = todayStr;
+});
 // ─────────────────────────────────────────────────────────────────────────────
 </script>
 </body>
