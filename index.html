@@ -1451,6 +1451,94 @@
     </div>
   </div>
 
+  <!-- LABOR-BERICHT -->
+  <div style="background:#fff;border:2px solid #1565c0;border-radius:10px;overflow:hidden;margin-bottom:20px">
+    <div style="background:#1565c0;color:#fff;padding:13px 18px;display:flex;align-items:center;gap:8px">
+      <span style="font-size:1.2rem">🔬</span>
+      <strong style="font-size:1.05rem">Labor-Bericht</strong>
+      <span style="font-size:0.78rem;opacity:0.8;margin-left:4px">Titer-Ergebnisse als Entscheidungsgrundlage</span>
+    </div>
+    <div style="padding:16px 18px">
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:14px">Eingetragene Werte entscheiden, ob eine Impfung überhaupt erforderlich ist. Bei positivem Titer besteht in der Regel bereits ausreichender Schutz.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px">
+
+        <!-- Hepatitis A -->
+        <div style="background:#f8f9ff;border:1px solid #90caf9;border-radius:8px;padding:12px">
+          <div style="font-weight:700;font-size:0.88rem;color:#1565c0;margin-bottom:6px">🩸 Hepatitis A – Anti-HAV (IgG)</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px">Positiv = immun, keine Impfung nötig</div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <select onchange="impfSaveLabor('hav_status',this.value)" style="border:1px solid #90caf9;border-radius:5px;padding:4px 8px;font-size:0.82rem;background:#fff">
+              <option value="" ${!(impfLabor.hav_status) ? 'selected':''}>– nicht getestet –</option>
+              <option value="positiv" ${impfLabor.hav_status==='positiv' ? 'selected':''}>✅ Positiv (immun)</option>
+              <option value="negativ" ${impfLabor.hav_status==='negativ' ? 'selected':''}>❌ Negativ (impfen!)</option>
+            </select>
+            <input type="text" placeholder="Wert / Datum" value="${impfLabor.hav_wert||''}" onchange="impfSaveLabor('hav_wert',this.value)" style="border:1px solid #90caf9;border-radius:5px;padding:4px 8px;font-size:0.82rem;width:130px;background:#fff">
+          </div>
+        </div>
+
+        <!-- Hepatitis B -->
+        <div style="background:#f8f9ff;border:1px solid #90caf9;border-radius:8px;padding:12px">
+          <div style="font-weight:700;font-size:0.88rem;color:#1565c0;margin-bottom:6px">🩸 Hepatitis B – Anti-HBs (IU/L)</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px">&gt;100 IU/L = ausreichend · 10–100 = Auffrischung · &lt;10 = Impfen</div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <select onchange="impfSaveLabor('hbv_status',this.value)" style="border:1px solid #90caf9;border-radius:5px;padding:4px 8px;font-size:0.82rem;background:#fff">
+              <option value="" ${!(impfLabor.hbv_status) ? 'selected':''}>– nicht getestet –</option>
+              <option value="hoch" ${impfLabor.hbv_status==='hoch' ? 'selected':''}>✅ &gt;100 (geschützt)</option>
+              <option value="mittel" ${impfLabor.hbv_status==='mittel' ? 'selected':''}>⚠️ 10–100 (Auffrischung)</option>
+              <option value="niedrig" ${impfLabor.hbv_status==='niedrig' ? 'selected':''}>❌ &lt;10 (impfen!)</option>
+            </select>
+            <input type="text" placeholder="z.B. 245 IU/L" value="${impfLabor.hbv_wert||''}" onchange="impfSaveLabor('hbv_wert',this.value)" style="border:1px solid #90caf9;border-radius:5px;padding:4px 8px;font-size:0.82rem;width:120px;background:#fff">
+          </div>
+        </div>
+
+        <!-- Masern/Mumps/Röteln -->
+        <div style="background:#f8f9ff;border:1px solid #90caf9;border-radius:8px;padding:12px">
+          <div style="font-weight:700;font-size:0.88rem;color:#1565c0;margin-bottom:6px">🔴 Masern / Mumps / Röteln</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px">IgG-Antikörper je Erreger prüfen</div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <select onchange="impfSaveLabor('mmr_status',this.value)" style="border:1px solid #90caf9;border-radius:5px;padding:4px 8px;font-size:0.82rem;background:#fff">
+              <option value="" ${!(impfLabor.mmr_status) ? 'selected':''}>– nicht getestet –</option>
+              <option value="alle_pos" ${impfLabor.mmr_status==='alle_pos' ? 'selected':''}>✅ Alle positiv</option>
+              <option value="teilweise" ${impfLabor.mmr_status==='teilweise' ? 'selected':''}>⚠️ Teilweise negativ</option>
+              <option value="negativ" ${impfLabor.mmr_status==='negativ' ? 'selected':''}>❌ Negativ (impfen!)</option>
+            </select>
+            <input type="text" placeholder="Notiz" value="${impfLabor.mmr_wert||''}" onchange="impfSaveLabor('mmr_wert',this.value)" style="border:1px solid #90caf9;border-radius:5px;padding:4px 8px;font-size:0.82rem;width:120px;background:#fff">
+          </div>
+        </div>
+
+        <!-- Varizellen -->
+        <div style="background:#f8f9ff;border:1px solid #90caf9;border-radius:8px;padding:12px">
+          <div style="font-weight:700;font-size:0.88rem;color:#1565c0;margin-bottom:6px">💜 Varizellen (VZV-IgG)</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px">Positiv = Windpocken durchgemacht oder geimpft</div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <select onchange="impfSaveLabor('vzv_status',this.value)" style="border:1px solid #90caf9;border-radius:5px;padding:4px 8px;font-size:0.82rem;background:#fff">
+              <option value="" ${!(impfLabor.vzv_status) ? 'selected':''}>– nicht getestet –</option>
+              <option value="positiv" ${impfLabor.vzv_status==='positiv' ? 'selected':''}>✅ Positiv (immun)</option>
+              <option value="negativ" ${impfLabor.vzv_status==='negativ' ? 'selected':''}>❌ Negativ (impfen!)</option>
+            </select>
+            <input type="text" placeholder="Wert / Datum" value="${impfLabor.vzv_wert||''}" onchange="impfSaveLabor('vzv_wert',this.value)" style="border:1px solid #90caf9;border-radius:5px;padding:4px 8px;font-size:0.82rem;width:130px;background:#fff">
+          </div>
+        </div>
+
+        <!-- FSME -->
+        <div style="background:#f8f9ff;border:1px solid #90caf9;border-radius:8px;padding:12px">
+          <div style="font-weight:700;font-size:0.88rem;color:#1565c0;margin-bottom:6px">🌲 FSME-Antikörper</div>
+          <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px">Positiver Titer = bestehender Impfschutz vorhanden</div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <select onchange="impfSaveLabor('fsme_status',this.value)" style="border:1px solid #90caf9;border-radius:5px;padding:4px 8px;font-size:0.82rem;background:#fff">
+              <option value="" ${!(impfLabor.fsme_status) ? 'selected':''}>– nicht getestet –</option>
+              <option value="positiv" ${impfLabor.fsme_status==='positiv' ? 'selected':''}>✅ Positiv (Schutz vorhanden)</option>
+              <option value="grenzwertig" ${impfLabor.fsme_status==='grenzwertig' ? 'selected':''}>⚠️ Grenzwertig</option>
+              <option value="negativ" ${impfLabor.fsme_status==='negativ' ? 'selected':''}>❌ Negativ (impfen!)</option>
+            </select>
+            <input type="text" placeholder="Wert / Datum" value="${impfLabor.fsme_wert||''}" onchange="impfSaveLabor('fsme_wert',this.value)" style="border:1px solid #90caf9;border-radius:5px;padding:4px 8px;font-size:0.82rem;width:130px;background:#fff">
+          </div>
+        </div>
+
+      </div><!-- end grid -->
+    </div>
+  </div>
+
   <!-- IMPFKARTEN -->
   <div id="impf-karten"></div>
 
@@ -2225,39 +2313,58 @@ const IMPF_GRUPPEN = [
     id: 'hepatitis',
     icon: '🩸',
     titel: 'Hepatitis A + B',
-    info: 'Grundimmunisierung: 3 Dosen (0 / 1 / 6 Monate). Auffrischung alle 10 Jahre empfohlen.'
+    info: 'Grundimmunisierung: 3 Dosen (0 / 1 / 6 Monate). Auffrischung alle 10 Jahre empfohlen.',
+    klinik: true,
+    laborHinweis: 'Entscheidung via Labor: Anti-HAV (IgG) + Anti-HBs → siehe Labor-Bericht oben.'
   },
   {
     id: 'dtpp',
     icon: '🦠',
     titel: 'Diphtherie, Tetanus, Polio, Pertussis',
-    info: 'Kombinationsimpfung. Auffrischung alle 10 Jahre. Bei Verletzungen ggf. früher.'
+    info: 'Kombinationsimpfung. Auffrischung alle 10 Jahre. Bei Verletzungen ggf. früher.',
+    klinik: true,
+    laborHinweis: 'Kein Routine-Titertest empfohlen – Entscheidung nach Impfpass und Zeitabstand.'
   },
   {
     id: 'mmrv',
     icon: '🔴',
     titel: 'Masern, Mumps, Röteln, Varizellen',
-    info: 'Lebendimpfstoff. 2 Dosen für vollständigen Schutz. Keine Auffrischung nötig bei dokumentierter Grundimmunisierung.'
+    info: 'Lebendimpfstoff. 2 Dosen für vollständigen Schutz. Keine Auffrischung bei dokumentierter Grundimmunisierung.',
+    klinik: false,
+    laborHinweis: 'Entscheidung via Labor: MMR-IgG + VZV-IgG → siehe Labor-Bericht oben. Lebendimpfstoff – muss vom Arzt verabreicht werden.'
   },
   {
     id: 'influenza',
     icon: '🤧',
     titel: 'Influenza (Grippe)',
-    info: 'Jährliche Auffrischung empfohlen (Herbst). Impfstoff wird jährlich angepasst.'
+    info: 'Jährliche Auffrischung. Optimaler Zeitpunkt: Oktober–November vor der Grippesaison.',
+    klinik: true,
+    laborHinweis: 'Kein Titertest nötig – jährliche Impfung unabhängig vom Vorjahr empfohlen.',
+    timing: {
+      jetzt: '⏳ Aktuell (Mai–August) ist ein Zeitpunkt außerhalb der optimalen Saison. Die Schutzwirkung lässt bis zur Grippesaison (Jänner–März) erfahrungsgemäß nach.',
+      herbst: '✅ Empfehlung: Im Oktober/November impfen – dann ist der Schutz zur Hochsaison am stärksten. Außer es besteht ein konkreter Risikoanlass jetzt.'
+    }
   },
   {
     id: 'fsme',
     icon: '🌲',
     titel: 'FSME (Frühsommer-Meningoenzephalitis)',
-    info: 'Grundimmunisierung: 3 Dosen. Auffrischung alle 3–5 Jahre je nach Alter und Hersteller.'
+    info: 'Grundimmunisierung: 3 Dosen (0 / 1–3 Monate / 5–12 Monate). Auffrischung alle 3–5 Jahre.',
+    klinik: true,
+    laborHinweis: 'Entscheidung via Labor: FSME-Antikörper-Titer → siehe Labor-Bericht oben.'
   }
 ];
 
-let impfData = JSON.parse(localStorage.getItem('impfPlan') || '{}');
+let impfData  = JSON.parse(localStorage.getItem('impfPlan')  || '{}');
+let impfLabor = JSON.parse(localStorage.getItem('impfLabor') || '{}');
 let impfCursor = new Date();
 let impfView = 'monat';
 
 function impfSave() { try { localStorage.setItem('impfPlan', JSON.stringify(impfData)); } catch(e){} }
+function impfSaveLabor(key, val) {
+  impfLabor[key] = val;
+  try { localStorage.setItem('impfLabor', JSON.stringify(impfLabor)); } catch(e){}
+}
 
 function impfSaveField(id, field, val) {
   if (!impfData[id]) impfData[id] = {};
@@ -2266,13 +2373,20 @@ function impfSaveField(id, field, val) {
   impfRenderKalender();
 }
 
+function impfToggleKlinik(id) {
+  if (!impfData[id]) impfData[id] = {};
+  impfData[id].klinikGebucht = !impfData[id].klinikGebucht;
+  impfSave();
+  impfRenderKarten();
+}
+
 function impfRenderKarten() {
   const container = document.getElementById('impf-karten');
   if (!container) return;
 
   const statusColors = {
-    offen:      { bg: '#fff3e0', border: '#ffcc80', label: '⬜ Noch nicht geimpft', color: '#e65100' },
-    teilweise:  { bg: '#e3f2fd', border: '#90caf9', label: '🔵 Teilweise immunisiert', color: '#1565c0' },
+    offen:        { bg: '#fff3e0', border: '#ffcc80', label: '⬜ Noch nicht geimpft',    color: '#e65100' },
+    teilweise:    { bg: '#e3f2fd', border: '#90caf9', label: '🔵 Teilweise immunisiert', color: '#1565c0' },
     vollstaendig: { bg: '#e8f5e9', border: '#a5d6a7', label: '✅ Vollständig immunisiert', color: '#2e7d32' }
   };
 
@@ -2282,16 +2396,37 @@ function impfRenderKarten() {
     if (d.vollstaendig) status = 'vollstaendig';
     else if (d.erste) status = 'teilweise';
     const sc = statusColors[status];
+    const klinikGebucht = !!d.klinikGebucht;
+
+    const klinikBadge = g.klinik
+      ? `<button onclick="impfToggleKlinik('${g.id}')" title="In der Klinik möglich – klicken zum Markieren"
+           style="border:none;border-radius:20px;padding:3px 10px;font-size:0.72rem;font-weight:700;cursor:pointer;
+           background:${klinikGebucht ? '#2e7d32' : '#e8f5e9'};color:${klinikGebucht ? '#fff' : '#2e7d32'};
+           border:1px solid #a5d6a7;white-space:nowrap">
+           🏥 ${klinikGebucht ? 'Klinik ✓ gemerkt' : 'In Klinik möglich'}
+         </button>`
+      : `<span style="font-size:0.72rem;color:var(--muted);background:#f5f3ee;border-radius:20px;padding:3px 10px;border:1px solid var(--border)">🏥 Nicht in Klinik</span>`;
+
+    const influenzaBox = g.id === 'influenza' ? `
+      <div style="background:#fff8e1;border:1px solid #ffcc02;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:0.82rem">
+        <strong style="color:#f57f17">⏰ Zeitpunkt-Empfehlung (aktuell: ${new Date().toLocaleDateString('de-AT',{month:'long',year:'numeric'})})</strong><br>
+        <div style="margin-top:5px;color:#555">${g.timing.jetzt}</div>
+        <div style="margin-top:4px;color:#2e7d32;font-weight:600">${g.timing.herbst}</div>
+      </div>` : '';
 
     return `
     <div style="background:${sc.bg};border:1px solid ${sc.border};border-radius:10px;padding:16px 18px;margin-bottom:14px;box-shadow:var(--shadow)">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;flex-wrap:wrap">
         <span style="font-size:1.5rem">${g.icon}</span>
-        <div style="flex:1">
+        <div style="flex:1;min-width:160px">
           <strong style="font-size:1.05rem;color:var(--primary)">${g.titel}</strong>
           <div style="font-size:0.78rem;color:var(--muted);margin-top:2px">${g.info}</div>
+          <div style="font-size:0.75rem;color:#1565c0;margin-top:4px;font-style:italic">🔬 ${g.laborHinweis}</div>
         </div>
-        <span style="font-size:0.75rem;font-weight:700;color:${sc.color};white-space:nowrap">${sc.label}</span>
+        <div style="display:flex;flex-direction:column;gap:5px;align-items:flex-end">
+          <span style="font-size:0.75rem;font-weight:700;color:${sc.color};white-space:nowrap">${sc.label}</span>
+          ${klinikBadge}
+        </div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
         <div>
@@ -2313,7 +2448,7 @@ function impfRenderKarten() {
             style="width:100%;border:1px solid ${sc.border};border-radius:6px;padding:6px 8px;font-size:0.85rem;background:#fff">
         </div>
       </div>
-      ${d.auffrischung ? `<div style="font-size:0.78rem;margin-top:8px;color:#1565c0">📅 Auffrischung eingetragen: <strong>${d.auffrischung}</strong></div>` : ''}
+      ${influenzaBox}
     </div>`;
   }).join('');
 }
