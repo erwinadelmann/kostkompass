@@ -1087,31 +1087,52 @@
       </div>
       <div style="border:2px solid var(--primary);border-top:none;border-radius:0 0 10px 10px;overflow:hidden">
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">🍽️ Mise en Place <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-mise" onclick="event.stopPropagation();cafeEditToggle('mise',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div style="display:flex;align-items:center">
+            <button class="accordion-btn" style="flex:1" onclick="toggleAcc(this)">🍽️ Mise en Place <span class="arrow">▼</span></button>
+            <button id="cafe-edit-btn-mise" onclick="cafeEditToggle('mise',this)" style="background:var(--accent);color:#fff;border:none;padding:6px 12px;font-size:0.8rem;cursor:pointer;flex-shrink:0;height:100%">✏️</button>
+          </div>
           <div class="accordion-content"><div id="cafe-content-mise"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">☕ Heißgetränke <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-heiss" onclick="event.stopPropagation();cafeEditToggle('heiss',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div style="display:flex;align-items:center">
+            <button class="accordion-btn" style="flex:1" onclick="toggleAcc(this)">☕ Heißgetränke <span class="arrow">▼</span></button>
+            <button id="cafe-edit-btn-heiss" onclick="cafeEditToggle('heiss',this)" style="background:var(--accent);color:#fff;border:none;padding:6px 12px;font-size:0.8rem;cursor:pointer;flex-shrink:0;height:100%">✏️</button>
+          </div>
           <div class="accordion-content"><div id="cafe-content-heiss"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">🥤 Kaltgetränke <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-kalt" onclick="event.stopPropagation();cafeEditToggle('kalt',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div style="display:flex;align-items:center">
+            <button class="accordion-btn" style="flex:1" onclick="toggleAcc(this)">🥤 Kaltgetränke <span class="arrow">▼</span></button>
+            <button id="cafe-edit-btn-kalt" onclick="cafeEditToggle('kalt',this)" style="background:var(--accent);color:#fff;border:none;padding:6px 12px;font-size:0.8rem;cursor:pointer;flex-shrink:0;height:100%">✏️</button>
+          </div>
           <div class="accordion-content"><div id="cafe-content-kalt"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">🥐 Snacks &amp; Mehlspeisen <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-snacks" onclick="event.stopPropagation();cafeEditToggle('snacks',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div style="display:flex;align-items:center">
+            <button class="accordion-btn" style="flex:1" onclick="toggleAcc(this)">🥐 Snacks &amp; Mehlspeisen <span class="arrow">▼</span></button>
+            <button id="cafe-edit-btn-snacks" onclick="cafeEditToggle('snacks',this)" style="background:var(--accent);color:#fff;border:none;padding:6px 12px;font-size:0.8rem;cursor:pointer;flex-shrink:0;height:100%">✏️</button>
+          </div>
           <div class="accordion-content"><div id="cafe-content-snacks"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">🍦 Eis <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-eis" onclick="event.stopPropagation();cafeEditToggle('eis',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div style="display:flex;align-items:center">
+            <button class="accordion-btn" style="flex:1" onclick="toggleAcc(this)">🍦 Eis <span class="arrow">▼</span></button>
+            <button id="cafe-edit-btn-eis" onclick="cafeEditToggle('eis',this)" style="background:var(--accent);color:#fff;border:none;padding:6px 12px;font-size:0.8rem;cursor:pointer;flex-shrink:0;height:100%">✏️</button>
+          </div>
           <div class="accordion-content"><div id="cafe-content-eis"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">📋 Buchhaltung <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-buchhaltung" onclick="event.stopPropagation();cafeEditToggle('buchhaltung',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div style="display:flex;align-items:center">
+            <button class="accordion-btn" style="flex:1" onclick="toggleAcc(this)">📋 Buchhaltung <span class="arrow">▼</span></button>
+            <button id="cafe-edit-btn-buchhaltung" onclick="cafeEditToggle('buchhaltung',this)" style="background:var(--accent);color:#fff;border:none;padding:6px 12px;font-size:0.8rem;cursor:pointer;flex-shrink:0;height:100%">✏️</button>
+          </div>
           <div class="accordion-content"><div id="cafe-content-buchhaltung"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none">
-          <button class="accordion-btn" onclick="toggleAcc(this)">🔧 Technik <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-technik" onclick="event.stopPropagation();cafeEditToggle('technik',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div style="display:flex;align-items:center">
+            <button class="accordion-btn" style="flex:1" onclick="toggleAcc(this)">🔧 Technik <span class="arrow">▼</span></button>
+            <button id="cafe-edit-btn-technik" onclick="cafeEditToggle('technik',this)" style="background:var(--accent);color:#fff;border:none;padding:6px 12px;font-size:0.8rem;cursor:pointer;flex-shrink:0;height:100%">✏️</button>
+          </div>
           <div class="accordion-content"><div id="cafe-content-technik"></div></div>
         </div>
       </div>
@@ -2790,7 +2811,13 @@ function cafeEditToggle(id, btn) {
   if (!content) return;
   const isEditing = content.getAttribute('data-editing') === '1';
   if (!isEditing) {
-    // Wechsel zu Edit-Modus
+    // Accordion öffnen falls geschlossen
+    const accContent = content.closest('.accordion-content');
+    if (accContent && !accContent.classList.contains('open')) {
+      accContent.classList.add('open');
+      const accBtn = accContent.previousElementSibling?.querySelector('.accordion-btn');
+      if (accBtn) accBtn.classList.add('open');
+    }
     const current = cafeInhalt[id] || '';
     content.innerHTML = `
       <textarea id="cafe-ta-${id}" style="width:100%;min-height:120px;border:1px solid var(--accent);border-radius:6px;padding:10px;font-size:0.9rem;font-family:inherit;resize:vertical">${current}</textarea>
@@ -2801,6 +2828,7 @@ function cafeEditToggle(id, btn) {
     content.setAttribute('data-editing', '1');
     btn.textContent = '✕';
     content.style.display = 'block';
+    document.getElementById('cafe-ta-' + id)?.focus();
   } else {
     cafeEditCancel(id);
     btn.textContent = '✏️';
