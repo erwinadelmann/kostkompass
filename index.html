@@ -1443,7 +1443,7 @@ function showSection(id, btn) {
   document.getElementById(id).classList.add('active');
   if (btn) btn.classList.add('active');
   if (id === 'einstellplan') epLoad();
-  if (id === 'dienstplan') dpRender();
+  if (id === 'dienstplan') { dpCursor = new Date(); dpView = 'woche'; document.querySelectorAll('.dp-view-btn').forEach(b=>b.classList.remove('active')); const wb=document.getElementById('dpbtn-woche'); if(wb)wb.classList.add('active'); dpRender(); }
 }
 
 function toggleAcc(btn) {
@@ -1971,7 +1971,7 @@ function numRender() {
 }
 
 // ─── FREIZEIT KALENDER ───────────────────────────────────────────────────────
-let fzView = 'woche';
+let fzView = 'monat';
 let fzCursor = new Date();
 let fzEvents = JSON.parse(localStorage.getItem('fzEvents') || '[]');
 const FZ_MONTHS = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
@@ -2154,7 +2154,7 @@ window.addEventListener('load', () => {
 const _origShowSection = showSection;
 showSection = function(id, btn) {
   _origShowSection(id, btn);
-  if (id === 'freizeit') fzRender();
+  if (id === 'freizeit') { fzCursor = new Date(); fzView = 'monat'; document.querySelectorAll('.fz-view-btn').forEach(b=>b.classList.remove('active')); const mb=document.getElementById('fzbtn-monat'); if(mb)mb.classList.add('active'); fzRender(); }
   if (id === 'nummern') numRender();
 };
 // ─────────────────────────────────────────────────────────────────────────────
