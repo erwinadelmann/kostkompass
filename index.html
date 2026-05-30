@@ -420,6 +420,11 @@
     <p>Privatklinik St. Radegund · Schnell-Orientierung für Küche & Service</p>
   </div>
   <div class="badge" id="header-badge">...</div>
+  <label title="Foto hochladen" style="cursor:pointer;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:8px;padding:6px 12px;display:flex;align-items:center;gap:5px;font-size:0.82rem;color:#fff;white-space:nowrap;transition:background 0.15s" onmouseover="this.style.background='rgba(255,255,255,0.35)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+    📷 <span style="font-weight:600">Fotos</span>
+    <input type="file" accept="image/*" multiple style="display:none" onchange="galUpload(this)">
+  </label>
+  <button onclick="galOpen()" title="Foto-Galerie öffnen" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:8px;padding:6px 10px;color:#fff;font-size:0.82rem;cursor:pointer;white-space:nowrap" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.15)'">🗂️ Galerie</button>
 </header>
 
 <nav id="main-nav">
@@ -1064,32 +1069,32 @@
       </div>
       <div style="border:2px solid var(--primary);border-top:none;border-radius:0 0 10px 10px;overflow:hidden">
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">🍽️ Mise en Place <span class="arrow">▼</span></button>
-          <div class="accordion-content"><div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div></div>
+          <button class="accordion-btn" onclick="toggleAcc(this)">🍽️ Mise en Place <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-mise" onclick="event.stopPropagation();cafeEditToggle('mise',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div class="accordion-content"><div id="cafe-content-mise"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">☕ Heißgetränke <span class="arrow">▼</span></button>
-          <div class="accordion-content"><div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div></div>
+          <button class="accordion-btn" onclick="toggleAcc(this)">☕ Heißgetränke <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-heiss" onclick="event.stopPropagation();cafeEditToggle('heiss',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div class="accordion-content"><div id="cafe-content-heiss"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">🥤 Kaltgetränke <span class="arrow">▼</span></button>
-          <div class="accordion-content"><div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div></div>
+          <button class="accordion-btn" onclick="toggleAcc(this)">🥤 Kaltgetränke <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-kalt" onclick="event.stopPropagation();cafeEditToggle('kalt',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div class="accordion-content"><div id="cafe-content-kalt"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">🥐 Snacks &amp; Mehlspeisen <span class="arrow">▼</span></button>
-          <div class="accordion-content"><div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div></div>
+          <button class="accordion-btn" onclick="toggleAcc(this)">🥐 Snacks &amp; Mehlspeisen <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-snacks" onclick="event.stopPropagation();cafeEditToggle('snacks',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div class="accordion-content"><div id="cafe-content-snacks"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">🍦 Eis <span class="arrow">▼</span></button>
-          <div class="accordion-content"><div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div></div>
+          <button class="accordion-btn" onclick="toggleAcc(this)">🍦 Eis <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-eis" onclick="event.stopPropagation();cafeEditToggle('eis',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div class="accordion-content"><div id="cafe-content-eis"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">📋 Buchhaltung <span class="arrow">▼</span></button>
-          <div class="accordion-content"><div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div></div>
+          <button class="accordion-btn" onclick="toggleAcc(this)">📋 Buchhaltung <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-buchhaltung" onclick="event.stopPropagation();cafeEditToggle('buchhaltung',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div class="accordion-content"><div id="cafe-content-buchhaltung"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none">
-          <button class="accordion-btn" onclick="toggleAcc(this)">🔧 Technik <span class="arrow">▼</span></button>
-          <div class="accordion-content"><div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div></div>
+          <button class="accordion-btn" onclick="toggleAcc(this)">🔧 Technik <span style="margin-left:auto;display:flex;gap:6px;align-items:center"><button id="cafe-edit-btn-technik" onclick="event.stopPropagation();cafeEditToggle('technik',this)" style="background:var(--accent);color:#fff;border:none;border-radius:5px;padding:2px 9px;font-size:0.75rem;cursor:pointer">✏️</button><span class="arrow">▼</span></span></button>
+          <div class="accordion-content"><div id="cafe-content-technik"></div></div>
         </div>
       </div>
     </div>
@@ -1558,6 +1563,26 @@
 </section>
 
 </main>
+
+<!-- FOTO-GALERIE MODAL -->
+<div id="gal-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:9999;overflow-y:auto">
+  <div style="background:var(--bg);max-width:900px;margin:20px auto;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.4)">
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,#6b4c2a,#a07040);color:#fff;padding:16px 20px;display:flex;align-items:center;gap:12px">
+      <span style="font-size:1.3rem">📷</span>
+      <strong style="font-size:1.1rem;flex:1">Foto-Galerie</strong>
+      <label style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);border-radius:7px;padding:7px 14px;cursor:pointer;font-size:0.85rem;font-weight:600">
+        + Foto hinzufügen
+        <input type="file" accept="image/*" multiple style="display:none" onchange="galUpload(this)">
+      </label>
+      <button onclick="galClose()" style="background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:1.3rem;cursor:pointer;border-radius:6px;padding:4px 10px">✕</button>
+    </div>
+    <!-- Kategorie-Tabs -->
+    <div id="gal-tabs" style="display:flex;gap:4px;padding:12px 16px 0;background:#fff;overflow-x:auto;border-bottom:2px solid var(--border)"></div>
+    <!-- Grid -->
+    <div id="gal-grid" style="padding:16px;min-height:200px"></div>
+  </div>
+</div>
 
 <footer>
   Privatklinik St. Radegund · Sanlas Holding · KostKompass v2.0 · Bei Unsicherheit immer Allergenordner oder Diätologin konsultieren.
@@ -2528,6 +2553,231 @@ function impfRender() {
   impfRenderKarten();
   impfRenderKalender();
 }
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─── CAFÉ INLINE EDITING ─────────────────────────────────────────────────────
+const cafeInhalt = JSON.parse(localStorage.getItem('cafeInhalt') || '{}');
+
+function cafeEditToggle(id, btn) {
+  const content = document.getElementById('cafe-content-' + id);
+  if (!content) return;
+  const isEditing = content.getAttribute('data-editing') === '1';
+  if (!isEditing) {
+    // Wechsel zu Edit-Modus
+    const current = cafeInhalt[id] || '';
+    content.innerHTML = `
+      <textarea id="cafe-ta-${id}" style="width:100%;min-height:120px;border:1px solid var(--accent);border-radius:6px;padding:10px;font-size:0.9rem;font-family:inherit;resize:vertical">${current}</textarea>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button onclick="cafeSave('${id}')" style="background:var(--primary);color:#fff;border:none;border-radius:6px;padding:7px 16px;font-size:0.85rem;cursor:pointer;font-weight:600">💾 Speichern</button>
+        <button onclick="cafeEditCancel('${id}')" style="background:#eee;color:var(--text);border:none;border-radius:6px;padding:7px 14px;font-size:0.85rem;cursor:pointer">Abbrechen</button>
+      </div>`;
+    content.setAttribute('data-editing', '1');
+    btn.textContent = '✕';
+    content.style.display = 'block';
+  } else {
+    cafeEditCancel(id);
+    btn.textContent = '✏️';
+  }
+}
+
+function cafeEditCancel(id) {
+  cafeShowContent(id);
+  const btn = document.getElementById('cafe-edit-btn-' + id);
+  if (btn) btn.textContent = '✏️';
+}
+
+function cafeSave(id) {
+  const ta = document.getElementById('cafe-ta-' + id);
+  if (!ta) return;
+  cafeInhalt[id] = ta.value.trim();
+  localStorage.setItem('cafeInhalt', JSON.stringify(cafeInhalt));
+  cafeShowContent(id);
+  const btn = document.getElementById('cafe-edit-btn-' + id);
+  if (btn) btn.textContent = '✏️';
+}
+
+function cafeShowContent(id) {
+  const content = document.getElementById('cafe-content-' + id);
+  if (!content) return;
+  const text = cafeInhalt[id] || '';
+  content.setAttribute('data-editing', '0');
+  if (text) {
+    content.innerHTML = `<div style="white-space:pre-wrap;font-size:0.9rem;line-height:1.6;padding:4px 0">${text.replace(/</g,'&lt;')}</div>`;
+  } else {
+    content.innerHTML = `<div class="hinweis info"><span class="icon">✏️</span><p><strong>Noch leer.</strong> Rechts oben auf ✏️ klicken, um Inhalte einzutragen.</p></div>`;
+  }
+}
+
+// Café-Accordion-Items mit Edit-Button initialisieren
+function cafeInitEditing() {
+  const ids = ['mise','heiss','kalt','snacks','eis','buchhaltung','technik'];
+  ids.forEach(id => {
+    const content = document.getElementById('cafe-content-' + id);
+    if (content) cafeShowContent(id);
+  });
+}
+
+// ─── FOTO-GALERIE (IndexedDB) ─────────────────────────────────────────────────
+const GAL_CATS = ['Eingang','Café','Kassa','Buffet – Frühstück','Buffet – Mittag','Buffet – Abend','Tee-Küchen'];
+let galActiveCat = 'Eingang';
+
+// IndexedDB setup
+let galDB = null;
+function galInitDB() {
+  return new Promise((res, rej) => {
+    if (galDB) { res(galDB); return; }
+    const req = indexedDB.open('fotoGalerie', 1);
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('fotos')) {
+        const store = db.createObjectStore('fotos', { keyPath: 'id', autoIncrement: true });
+        store.createIndex('cat', 'cat', { unique: false });
+      }
+    };
+    req.onsuccess = e => { galDB = e.target.result; res(galDB); };
+    req.onerror = () => rej('DB-Fehler');
+  });
+}
+
+async function galUpload(input) {
+  const files = Array.from(input.files);
+  if (!files.length) return;
+  const db = await galInitDB();
+  for (const file of files) {
+    await new Promise(res => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const tx = db.transaction('fotos', 'readwrite');
+        tx.objectStore('fotos').add({ cat: 'Eingang', dataURL: e.target.result, name: file.name, ts: Date.now() });
+        tx.oncomplete = res;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  input.value = '';
+  if (document.getElementById('gal-modal').style.display !== 'none') {
+    galRender();
+  } else {
+    galOpen();
+  }
+}
+
+async function galGetAll(cat) {
+  const db = await galInitDB();
+  return new Promise(res => {
+    const tx = db.transaction('fotos', 'readonly');
+    const idx = tx.objectStore('fotos').index('cat');
+    const req = idx.getAll(cat);
+    req.onsuccess = () => res(req.result);
+  });
+}
+
+async function galMoveCat(id, newCat) {
+  const db = await galInitDB();
+  const tx = db.transaction('fotos', 'readwrite');
+  const store = tx.objectStore('fotos');
+  const getReq = store.get(id);
+  getReq.onsuccess = () => {
+    const item = getReq.result;
+    item.cat = newCat;
+    store.put(item);
+  };
+  tx.oncomplete = () => galRender();
+}
+
+async function galDelete(id) {
+  if (!confirm('Foto löschen?')) return;
+  const db = await galInitDB();
+  const tx = db.transaction('fotos', 'readwrite');
+  tx.objectStore('fotos').delete(id);
+  tx.oncomplete = () => galRender();
+}
+
+async function galCountAll() {
+  const db = await galInitDB();
+  const counts = {};
+  for (const cat of GAL_CATS) {
+    await new Promise(res => {
+      const tx = db.transaction('fotos', 'readonly');
+      const req = tx.objectStore('fotos').index('cat').count(cat);
+      req.onsuccess = () => { counts[cat] = req.result; res(); };
+    });
+  }
+  return counts;
+}
+
+function galOpen() {
+  document.getElementById('gal-modal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  galRender();
+}
+
+function galClose() {
+  document.getElementById('gal-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+async function galRender() {
+  const counts = await galCountAll();
+  const tabsEl = document.getElementById('gal-tabs');
+  tabsEl.innerHTML = GAL_CATS.map(cat => {
+    const n = counts[cat] || 0;
+    const active = cat === galActiveCat;
+    return `<button onclick="galSetCat('${cat}')" style="
+      border:none;cursor:pointer;border-radius:7px 7px 0 0;padding:8px 14px;font-size:0.82rem;font-weight:600;white-space:nowrap;
+      background:${active ? 'var(--primary)' : '#f5f3ee'};color:${active ? '#fff' : 'var(--text)'};
+      border-bottom:${active ? '2px solid var(--primary)' : 'none'}">
+      ${cat === 'Eingang' ? '📥' : cat === 'Café' ? '☕' : cat === 'Kassa' ? '🧾' : cat.startsWith('Buffet') ? '🍽️' : '🍵'} ${cat} ${n ? `<span style="background:${active?'rgba(255,255,255,0.3)':'var(--accent)'};color:#fff;border-radius:10px;padding:1px 7px;font-size:0.7rem">${n}</span>` : ''}
+    </button>`;
+  }).join('');
+
+  const fotos = await galGetAll(galActiveCat);
+  const gridEl = document.getElementById('gal-grid');
+
+  if (!fotos.length) {
+    gridEl.innerHTML = `<div style="text-align:center;padding:40px;color:var(--muted)">
+      <div style="font-size:3rem;margin-bottom:12px">📷</div>
+      <p>Noch keine Fotos in <strong>${galActiveCat}</strong>.</p>
+      ${galActiveCat === 'Eingang' ? '<p style="font-size:0.85rem;margin-top:6px">Fotos oben rechts hochladen – sie landen hier zuerst.</p>' : ''}
+    </div>`;
+    return;
+  }
+
+  const otherCats = GAL_CATS.filter(c => c !== galActiveCat);
+  const catOptions = otherCats.map(c => `<option value="${c}">${c}</option>`).join('');
+
+  gridEl.innerHTML = `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px">` +
+    fotos.map(f => `
+      <div style="background:#fff;border-radius:8px;overflow:hidden;box-shadow:var(--shadow);position:relative">
+        <img src="${f.dataURL}" style="width:100%;height:130px;object-fit:cover;display:block;cursor:pointer" onclick="galLightbox('${f.id}')" loading="lazy">
+        <div style="padding:8px">
+          <div style="font-size:0.72rem;color:var(--muted);margin-bottom:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${f.name}">${f.name}</div>
+          <select onchange="galMoveCat(${f.id},this.value)" style="width:100%;border:1px solid var(--border);border-radius:5px;padding:3px 5px;font-size:0.75rem;background:var(--bg)">
+            <option value="${galActiveCat}" selected>📂 ${galActiveCat}</option>
+            ${catOptions}
+          </select>
+          <button onclick="galDelete(${f.id})" style="width:100%;margin-top:5px;background:none;border:1px solid #ef9a9a;color:var(--red);border-radius:5px;padding:3px;font-size:0.72rem;cursor:pointer">🗑️ Löschen</button>
+        </div>
+      </div>`).join('') + `</div>`;
+}
+
+function galSetCat(cat) {
+  galActiveCat = cat;
+  galRender();
+}
+
+// Lightbox
+function galLightbox(id) {
+  // einfache Vollbild-Vorschau
+}
+
+// Café-Edit beim Tab-Wechsel initialisieren
+const _origShowSection2 = showSection;
+showSection = function(id, btn) {
+  _origShowSection2(id, btn);
+  if (id === 'cafe') cafeInitEditing();
+};
+
 // ─────────────────────────────────────────────────────────────────────────────
 </script>
 </body>
