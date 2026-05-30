@@ -1305,27 +1305,22 @@
   <!-- Frühdienst -->
   <div id="ab-frueh" class="ab-pane active">
     <div class="card">
-      <h2>🌅 Frühdienst – Ablauf</h2>
-      <div class="ab-step"><div class="ab-num">1</div><div class="ab-text"><strong>Büfett anfüllen</strong>Alle Stationen vollständig auffüllen und anrichten.</div></div>
-      <div class="ab-step"><div class="ab-num">2</div><div class="ab-text"><strong>Glutenfreies Brot aufschneiden</strong>Je 2 Scheiben in Zellophan einpacken und bereitstellen.</div></div>
-      <div class="ab-step"><div class="ab-num">3</div><div class="ab-text"><strong>Buttermilch &amp; laktosefreies Joghurt</strong>Aus dem roten Buch (Kühlschrank) entnehmen und vor dem Service an den jeweiligen Platz stellen.</div></div>
-      <div class="ab-step"><div class="ab-num">4</div><div class="ab-text"><strong>Service – nur warme Hauptgerichte</strong>Keine Suppen, Salate, Desserts oder Getränke servieren. Nur die warmen Hauptspeisen werden an den Tisch gebracht.</div></div>
-      <div class="ab-step"><div class="ab-num">5</div><div class="ab-text"><strong>Tische abräumen &amp; neu aufdecken</strong>Sobald alle Gäste an einem Tisch fertig sind, sofort wieder aufdecken.</div></div>
-      <div class="ab-step"><div class="ab-num">6</div><div class="ab-text"><strong>Büfett nachfüllen</strong>Laufend kontrollieren und nachfüllen.</div></div>
-      <div class="hinweis info" style="margin-top:12px"><span class="icon">📝</span><p>Abläufe können jederzeit ergänzt und in die richtige Reihenfolge gebracht werden.</p></div>
+      <div style="display:flex;align-items:center;margin-bottom:12px">
+        <h2 style="flex:1;margin:0">🌅 Frühdienst – Ablauf</h2>
+        <button onclick="abEditToggle('frueh',this)" style="background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:0.82rem;font-weight:600;cursor:pointer">✏️ Bearbeiten</button>
+      </div>
+      <div id="ab-content-frueh"></div>
     </div>
   </div>
 
   <!-- Mittag & Abend -->
   <div id="ab-mittag" class="ab-pane">
     <div class="card">
-      <h2>🍽️ Mittag & Abend – Ablauf</h2>
-      <div class="ab-step"><div class="ab-num">1</div><div class="ab-text"><strong>Nachmittagsarbeiten laut Liste</strong>Alle auf der internen Nachmittags-Liste angeführten Arbeiten durchführen.</div></div>
-      <div class="ab-step"><div class="ab-num">2</div><div class="ab-text"><strong>Büfett für Abend vorbereiten &amp; auffüllen</strong></div></div>
-      <div class="ab-step"><div class="ab-num">3</div><div class="ab-text"><strong>Service – nur warme Hauptgerichte</strong>Keine Suppen, Salate, Desserts oder Getränke servieren.</div></div>
-      <div class="ab-step"><div class="ab-num">4</div><div class="ab-text"><strong>Tische abräumen &amp; neu aufdecken</strong>Sobald Tisch frei, sofort wieder aufdecken.</div></div>
-      <div class="ab-step"><div class="ab-num">5</div><div class="ab-text"><strong>Teeküchen nachfüllen</strong>Alle Teeküchen auf Station kontrollieren und auffüllen.</div></div>
-      <div class="ab-step"><div class="ab-num">6</div><div class="ab-text"><strong>Geschirrspüler auslassen</strong>Am Ende des Abenddienstes Geschirrspüler ausleeren und für den nächsten Dienst bereitstellen.</div></div>
+      <div style="display:flex;align-items:center;margin-bottom:12px">
+        <h2 style="flex:1;margin:0">🍽️ Mittag & Abend – Ablauf</h2>
+        <button onclick="abEditToggle('mittag',this)" style="background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:0.82rem;font-weight:600;cursor:pointer">✏️ Bearbeiten</button>
+      </div>
+      <div id="ab-content-mittag"></div>
     </div>
     <div class="card">
       <h2>🎴 Tischkarten – Bedeutung & Wochenraster</h2>
@@ -1728,7 +1723,7 @@ function initSupabase() {
 // CREATE POLICY "public_rw" ON kk_sync FOR ALL USING (true) WITH CHECK (true);
 
 const SYNC_KEYS = ['impfPlan','impfLabor','cafeInhalt','galCatDesc',
-                   'dpShifts','fzEvents','numData','pdfArchiv'];
+                   'dpShifts','fzEvents','numData','pdfArchiv','ablaufData'];
 
 let syncStatus = 'idle'; // idle | syncing | ok | error | offline
 let syncDebounceTimer = null;
@@ -2316,12 +2311,128 @@ function allerTab(id, btn) {
 }
 
 // ─── ARBEITSABLÄUFE ──────────────────────────────────────────────────────────
+const AB_DEFAULTS = {
+  frueh: [
+    { titel: 'Büfett anfüllen', text: 'Alle Stationen vollständig auffüllen und anrichten.' },
+    { titel: 'Glutenfreies Brot aufschneiden', text: 'Je 2 Scheiben in Zellophan einpacken und bereitstellen.' },
+    { titel: 'Buttermilch & laktosefreies Joghurt', text: 'Aus dem roten Buch (Kühlschrank) entnehmen und vor dem Service bereitstellen.' },
+    { titel: 'Service – nur warme Hauptgerichte', text: 'Keine Suppen, Salate, Desserts oder Getränke servieren. Nur warme Hauptspeisen an den Tisch.' },
+    { titel: 'Tische abräumen & neu aufdecken', text: 'Sobald alle Gäste an einem Tisch fertig sind, sofort wieder aufdecken.' },
+    { titel: 'Büfett nachfüllen', text: 'Laufend kontrollieren und nachfüllen.' }
+  ],
+  mittag: [
+    { titel: 'Nachmittagsarbeiten laut Liste', text: 'Alle auf der internen Nachmittags-Liste angeführten Arbeiten durchführen.' },
+    { titel: 'Büfett für Abend vorbereiten & auffüllen', text: '' },
+    { titel: 'Service – nur warme Hauptgerichte', text: 'Keine Suppen, Salate, Desserts oder Getränke servieren.' },
+    { titel: 'Tische abräumen & neu aufdecken', text: 'Sobald Tisch frei, sofort wieder aufdecken.' },
+    { titel: 'Teeküchen nachfüllen', text: 'Alle Teeküchen auf Station kontrollieren und auffüllen.' },
+    { titel: 'Geschirrspüler auslassen', text: 'Am Ende des Abenddienstes ausleeren und für den nächsten Dienst bereitstellen.' }
+  ]
+};
+
+let ablaufData = JSON.parse(localStorage.getItem('ablaufData') || 'null') || JSON.parse(JSON.stringify(AB_DEFAULTS));
+
+function abSave() {
+  localStorage.setItem('ablaufData', JSON.stringify(ablaufData));
+}
+
+function abRender(id) {
+  const el = document.getElementById('ab-content-' + id);
+  if (!el) return;
+  const steps = ablaufData[id] || [];
+  if (!steps.length) {
+    el.innerHTML = '<div class="hinweis info"><span class="icon">✏️</span><p>Noch keine Schritte. Auf „Bearbeiten" klicken um Abläufe einzutragen.</p></div>';
+    return;
+  }
+  el.innerHTML = steps.map((s, i) => `
+    <div class="ab-step">
+      <div class="ab-num">${i + 1}</div>
+      <div class="ab-text">
+        ${s.titel ? `<strong>${s.titel}</strong>` : ''}
+        ${s.text ? `<span style="display:block;margin-top:2px">${s.text}</span>` : ''}
+      </div>
+    </div>`).join('');
+}
+
+function abEditToggle(id, btn) {
+  const el = document.getElementById('ab-content-' + id);
+  if (!el) return;
+  const isEditing = el.getAttribute('data-editing') === '1';
+  if (isEditing) { abRender(id); el.removeAttribute('data-editing'); btn.textContent = '✏️ Bearbeiten'; return; }
+
+  el.setAttribute('data-editing', '1');
+  btn.textContent = '✕ Schließen';
+  const steps = ablaufData[id] || [];
+
+  function buildEditor() {
+    const rows = (ablaufData[id] || []).map((s, i) => `
+      <div id="ab-row-${id}-${i}" style="display:flex;gap:8px;align-items:flex-start;margin-bottom:10px;background:#f8f6f2;border-radius:8px;padding:10px">
+        <div style="background:var(--primary);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:700;flex-shrink:0;margin-top:4px">${i+1}</div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+          <input type="text" value="${s.titel.replace(/"/g,'&quot;')}" placeholder="Titel des Schritts"
+            oninput="ablaufData['${id}'][${i}].titel=this.value;abSave()"
+            style="border:1px solid var(--border);border-radius:6px;padding:6px 9px;font-size:0.9rem;font-weight:600;width:100%">
+          <textarea placeholder="Beschreibung (optional)" rows="2"
+            oninput="ablaufData['${id}'][${i}].text=this.value;abSave()"
+            style="border:1px solid var(--border);border-radius:6px;padding:6px 9px;font-size:0.85rem;resize:vertical;width:100%;font-family:inherit">${s.text}</textarea>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0">
+          ${i > 0 ? `<button onclick="abMoveStep('${id}',${i},-1)" title="Nach oben" style="background:#fff;border:1px solid var(--border);border-radius:4px;padding:3px 7px;cursor:pointer;font-size:0.8rem">▲</button>` : ''}
+          ${i < (ablaufData[id]||[]).length-1 ? `<button onclick="abMoveStep('${id}',${i},1)" title="Nach unten" style="background:#fff;border:1px solid var(--border);border-radius:4px;padding:3px 7px;cursor:pointer;font-size:0.8rem">▼</button>` : ''}
+          <button onclick="abDeleteStep('${id}',${i})" title="Löschen" style="background:#ffebee;border:1px solid #ef9a9a;border-radius:4px;padding:3px 7px;cursor:pointer;font-size:0.8rem;color:#c62828">✕</button>
+        </div>
+      </div>`).join('');
+
+    el.innerHTML = rows + `
+      <button onclick="abAddStep('${id}')"
+        style="width:100%;background:#e8f5e9;border:2px dashed #a5d6a7;border-radius:8px;padding:10px;color:#2e7d32;font-size:0.88rem;font-weight:600;cursor:pointer;margin-top:4px">
+        + Schritt hinzufügen
+      </button>`;
+  }
+  buildEditor();
+}
+
+function abAddStep(id) {
+  if (!ablaufData[id]) ablaufData[id] = [];
+  ablaufData[id].push({ titel: '', text: '' });
+  abSave();
+  // Rebuild editor
+  const btn = document.querySelector(`#ab-${id} button[onclick*="abEditToggle"]`);
+  if (btn) abEditToggle(id, btn); // close
+  if (btn) abEditToggle(id, btn); // reopen
+}
+
+function abDeleteStep(id, idx) {
+  if (!confirm('Schritt löschen?')) return;
+  ablaufData[id].splice(idx, 1);
+  abSave();
+  const btn = document.querySelector(`#ab-${id} button[onclick*="abEditToggle"]`);
+  if (btn) { abEditToggle(id, btn); abEditToggle(id, btn); }
+}
+
+function abMoveStep(id, idx, dir) {
+  const arr = ablaufData[id];
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= arr.length) return;
+  [arr[idx], arr[newIdx]] = [arr[newIdx], arr[idx]];
+  abSave();
+  const btn = document.querySelector(`#ab-${id} button[onclick*="abEditToggle"]`);
+  if (btn) { abEditToggle(id, btn); abEditToggle(id, btn); }
+}
+
 function abSetTab(id, btn) {
   document.querySelectorAll('.ab-pane').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.ab-tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('ab-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
+  abRender(id);
 }
+
+// Beim Laden rendern
+window.addEventListener('DOMContentLoaded', () => {
+  abRender('frueh');
+  abRender('mittag');
+});
 
 // ─── INTERNE NUMMERN ─────────────────────────────────────────────────────────
 const NUM_DEFAULT = [
