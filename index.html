@@ -1147,20 +1147,32 @@
       </div>
       <div style="border:2px solid var(--accent);border-top:none;border-radius:0 0 10px 10px;overflow:hidden">
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">📊 Tagesabschlüsse <span class="arrow">▼</span></button>
-          <div class="accordion-content"><div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div></div>
+          <div style="display:flex;align-items:center">
+            <button class="accordion-btn" style="flex:1" onclick="toggleAcc(this)">📊 Tagesabschlüsse <span class="arrow">▼</span></button>
+            <button onclick="kassaEditToggle('tagesabschlüsse',this)" style="background:var(--accent);color:#fff;border:none;padding:6px 12px;font-size:0.8rem;cursor:pointer;flex-shrink:0">✏️</button>
+          </div>
+          <div class="accordion-content"><div id="kassa-content-tagesabschlüsse"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">💰 Einnahmen <span class="arrow">▼</span></button>
-          <div class="accordion-content"><div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div></div>
+          <div style="display:flex;align-items:center">
+            <button class="accordion-btn" style="flex:1" onclick="toggleAcc(this)">💰 Einnahmen <span class="arrow">▼</span></button>
+            <button onclick="kassaEditToggle('einnahmen',this)" style="background:var(--accent);color:#fff;border:none;padding:6px 12px;font-size:0.8rem;cursor:pointer;flex-shrink:0">✏️</button>
+          </div>
+          <div class="accordion-content"><div id="kassa-content-einnahmen"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none;border-bottom:1px solid var(--border)">
-          <button class="accordion-btn" onclick="toggleAcc(this)">📤 Ausgaben <span class="arrow">▼</span></button>
-          <div class="accordion-content"><div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div></div>
+          <div style="display:flex;align-items:center">
+            <button class="accordion-btn" style="flex:1" onclick="toggleAcc(this)">📤 Ausgaben <span class="arrow">▼</span></button>
+            <button onclick="kassaEditToggle('ausgaben',this)" style="background:var(--accent);color:#fff;border:none;padding:6px 12px;font-size:0.8rem;cursor:pointer;flex-shrink:0">✏️</button>
+          </div>
+          <div class="accordion-content"><div id="kassa-content-ausgaben"></div></div>
         </div>
         <div class="accordion" style="border-radius:0;border:none">
-          <button class="accordion-btn" onclick="toggleAcc(this)">🗂️ Rechnungen <span class="arrow">▼</span></button>
-          <div class="accordion-content"><div class="hinweis info"><span class="icon">🚧</span><p><strong>In Bearbeitung.</strong> Inhalte folgen.</p></div></div>
+          <div style="display:flex;align-items:center">
+            <button class="accordion-btn" style="flex:1" onclick="toggleAcc(this)">🗂️ Rechnungen <span class="arrow">▼</span></button>
+            <button onclick="kassaEditToggle('rechnungen',this)" style="background:var(--accent);color:#fff;border:none;padding:6px 12px;font-size:0.8rem;cursor:pointer;flex-shrink:0">✏️</button>
+          </div>
+          <div class="accordion-content"><div id="kassa-content-rechnungen"></div></div>
         </div>
       </div>
     </div>
@@ -1722,8 +1734,8 @@ function initSupabase() {
 // ALTER TABLE kk_sync ENABLE ROW LEVEL SECURITY;
 // CREATE POLICY "public_rw" ON kk_sync FOR ALL USING (true) WITH CHECK (true);
 
-const SYNC_KEYS = ['impfPlan','impfLabor','cafeInhalt','galCatDesc',
-                   'dpShifts','fzEvents','numData','pdfArchiv','ablaufData'];
+const SYNC_KEYS = ['impfPlan','impfLabor','cafeInhalt','kassaInhalt','galCatDesc',
+                   'dpShifts','fzEvents','numEntries','pdfArchiv','ablaufData'];
 
 let syncStatus = 'idle'; // idle | syncing | ok | error | offline
 let syncDebounceTimer = null;
@@ -2432,7 +2444,58 @@ function abSetTab(id, btn) {
 window.addEventListener('DOMContentLoaded', () => {
   abRender('frueh');
   abRender('mittag');
+  ['tagesabschlüsse','einnahmen','ausgaben','rechnungen'].forEach(k => kassaShowContent(k));
 });
+
+// ─── KASSA INLINE-EDITING ─────────────────────────────────────────────────────
+const kassaInhalt = JSON.parse(localStorage.getItem('kassaInhalt') || '{}');
+
+function kassaSaveData() { localStorage.setItem('kassaInhalt', JSON.stringify(kassaInhalt)); }
+
+function kassaShowContent(id) {
+  const el = document.getElementById('kassa-content-' + id);
+  if (!el) return;
+  el.removeAttribute('data-editing');
+  const text = kassaInhalt[id] || '';
+  if (text) {
+    el.innerHTML = `<div style="white-space:pre-wrap;font-size:0.9rem;line-height:1.7;padding:4px 0">${text.replace(/</g,'&lt;')}</div>`;
+  } else {
+    el.innerHTML = `<div class="hinweis info"><span class="icon">✏️</span><p>Noch leer – auf ✏️ klicken zum Eintragen.</p></div>`;
+  }
+}
+
+function kassaEditToggle(id, btn) {
+  const el = document.getElementById('kassa-content-' + id);
+  if (!el) return;
+  if (el.getAttribute('data-editing') === '1') {
+    kassaShowContent(id); btn.textContent = '✏️'; return;
+  }
+  // Accordion öffnen
+  const acc = el.closest('.accordion-content');
+  if (acc && !acc.classList.contains('open')) {
+    acc.classList.add('open');
+    acc.previousElementSibling?.querySelector('.accordion-btn')?.classList.add('open');
+  }
+  el.setAttribute('data-editing', '1');
+  btn.textContent = '✕';
+  el.innerHTML = `
+    <textarea id="kassa-ta-${id}" style="width:100%;min-height:120px;border:1px solid var(--accent);border-radius:6px;padding:10px;font-size:0.9rem;font-family:inherit;resize:vertical">${kassaInhalt[id]||''}</textarea>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button onclick="kassaSave('${id}')" style="background:var(--primary);color:#fff;border:none;border-radius:6px;padding:7px 16px;font-size:0.85rem;cursor:pointer;font-weight:600">💾 Speichern</button>
+      <button onclick="kassaShowContent('${id}');document.querySelector('[onclick*=kassaEditToggle][onclick*=${id}]').textContent='✏️'" style="background:#eee;color:var(--text);border:none;border-radius:6px;padding:7px 14px;font-size:0.85rem;cursor:pointer">Abbrechen</button>
+    </div>`;
+  document.getElementById('kassa-ta-' + id)?.focus();
+}
+
+function kassaSave(id) {
+  const ta = document.getElementById('kassa-ta-' + id);
+  if (!ta) return;
+  kassaInhalt[id] = ta.value.trim();
+  kassaSaveData();
+  kassaShowContent(id);
+  // Reset button text
+  document.querySelectorAll(`button[onclick*="kassaEditToggle('${id}'"]`).forEach(b => b.textContent = '✏️');
+}
 
 // ─── INTERNE NUMMERN ─────────────────────────────────────────────────────────
 const NUM_DEFAULT = [
@@ -2493,13 +2556,47 @@ function numRender() {
     } else {
       valHtml = `<div class="num-val">${val}</div>`;
     }
-    return `<div class="num-card ${e.type || ''}">
+    return `<div class="num-card ${e.type || ''}" id="num-card-${e.id}">
       <button class="num-del" onclick="numDelete('${e.id}')">✕</button>
-      <h3>${e.title}</h3>
-      ${valHtml}
-      ${e.sub ? `<div class="num-sub">${e.sub}</div>` : ''}
+      <button onclick="numEditToggle('${e.id}')" title="Bearbeiten" style="position:absolute;top:10px;right:36px;background:none;border:none;cursor:pointer;font-size:0.9rem;color:var(--muted);opacity:0.5" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.5">✏️</button>
+      <div id="num-view-${e.id}">
+        <h3>${e.title}</h3>
+        ${valHtml}
+        ${e.sub ? `<div class="num-sub">${e.sub}</div>` : ''}
+      </div>
+      <div id="num-edit-${e.id}" style="display:none">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <input type="text" value="${e.title.replace(/"/g,'&quot;')}" placeholder="Bezeichnung"
+            oninput="numEntries.find(x=>x.id==='${e.id}').title=this.value"
+            style="border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:0.85rem;font-weight:600;width:100%">
+          <input type="text" value="${e.val.replace(/"/g,'&quot;')}" placeholder="Nummer / E-Mail / URL"
+            oninput="numEntries.find(x=>x.id==='${e.id}').val=this.value"
+            style="border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:0.85rem;width:100%">
+          <input type="text" value="${(e.sub||'').replace(/"/g,'&quot;')}" placeholder="Notiz (optional)"
+            oninput="numEntries.find(x=>x.id==='${e.id}').sub=this.value"
+            style="border:1px solid var(--border);border-radius:5px;padding:5px 8px;font-size:0.82rem;color:var(--muted);width:100%">
+          <div style="display:flex;gap:6px;margin-top:2px">
+            <button onclick="numEditSave('${e.id}')" style="background:var(--primary);color:#fff;border:none;border-radius:5px;padding:5px 12px;font-size:0.82rem;cursor:pointer;font-weight:600">💾 Speichern</button>
+            <button onclick="numEditToggle('${e.id}')" style="background:#eee;border:none;border-radius:5px;padding:5px 10px;font-size:0.82rem;cursor:pointer">Abbrechen</button>
+          </div>
+        </div>
+      </div>
     </div>`;
   }).join('');
+}
+
+function numEditToggle(id) {
+  const view = document.getElementById('num-view-' + id);
+  const edit = document.getElementById('num-edit-' + id);
+  if (!view || !edit) return;
+  const isEditing = edit.style.display !== 'none';
+  view.style.display = isEditing ? '' : 'none';
+  edit.style.display = isEditing ? 'none' : '';
+}
+
+function numEditSave(id) {
+  localStorage.setItem('numEntries', JSON.stringify(numEntries));
+  numRender();
 }
 
 // ─── FREIZEIT KALENDER ───────────────────────────────────────────────────────
