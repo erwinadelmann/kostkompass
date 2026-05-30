@@ -2844,7 +2844,7 @@ function cafeInitEditing() {
   });
 }
 
-// ─── FOTO-GALERIE (IndexedDB) ─────────────────────────────────────────────────
+// ─── FOTO-GALERIE (Supabase Storage) ─────────────────────────────────────────
 const GAL_CATS = [
   'Eingang',
   'Frühdienst','Mittagsdienst','Abenddienst',
@@ -2861,110 +2861,72 @@ const GAL_ICONS = {
   'Allergiker':'⚠️','Tischkarten & Standards':'🎴',
   'Kolleginnen':'👥','Info & Aushänge':'📌','Persönliche Unterlagen':'📁'
 };
-// Migration alter Kategorienamen
-const GAL_MIGRATE = {
-  'Café':'Café & Kassa','Kassa':'Café & Kassa',
-  'Buffet – Frühstück':'Frühdienst','Vorbereitung – Frühstück':'Frühdienst',
-  'Frühstücksdienst':'Frühdienst','Nacharbeiten – Frühstück':'Frühdienst',
-  'Buffet – Mittag':'Mittagsdienst','Vorbereitung – Mittag':'Mittagsdienst',
-  'Nacharbeiten – Mittag':'Mittagsdienst',
-  'Buffet – Abend':'Abenddienst','Vorbereitung – Abend':'Abenddienst',
-  'Abenddienst':'Abenddienst','Abschluss & Tagesende':'Abenddienst',
-  'Nachmittag – Mo':'Nachmittag-Aufgaben','Nachmittag – Di':'Nachmittag-Aufgaben',
-  'Nachmittag – Mi':'Nachmittag-Aufgaben','Nachmittag – Do':'Nachmittag-Aufgaben',
-  'Nachmittag – Fr':'Nachmittag-Aufgaben','Nachmittag – Sa/So':'Nachmittag-Aufgaben',
-  'Tischkarten-Farben':'Tischkarten & Standards','Standards & Vorlagen':'Tischkarten & Standards',
-  'Offene Punkte':'Eingang'
-};
+const GAL_BUCKET = 'kk-fotos';
+const GAL_STORAGE_URL = SUPABASE_URL + '/storage/v1/object/public/' + GAL_BUCKET + '/';
 let galActiveCat = 'Eingang';
 let galCatDesc = JSON.parse(localStorage.getItem('galCatDesc') || '{}');
 
 // IndexedDB setup
-let galDB = null;
-function galInitDB() {
-  return new Promise((res, rej) => {
-    if (galDB) { res(galDB); return; }
-    const req = indexedDB.open('fotoGalerie', 1);
-    req.onupgradeneeded = e => {
-      const db = e.target.result;
-      if (!db.objectStoreNames.contains('fotos')) {
-        const store = db.createObjectStore('fotos', { keyPath: 'id', autoIncrement: true });
-        store.createIndex('cat', 'cat', { unique: false });
-      }
-    };
-    req.onsuccess = e => { galDB = e.target.result; res(galDB); };
-    req.onerror = () => rej('DB-Fehler');
-  });
-}
+// Supabase Storage Hilfsfunktionen
+function galSB() { return initSupabase(); }
 
 async function galUpload(input) {
   const files = Array.from(input.files);
   if (!files.length) return;
-  const db = await galInitDB();
+  const sb = galSB();
+  if (!sb) { alert('Kein Netzwerk – bitte verbinden.'); return; }
+
+  const gridEl = document.getElementById('gal-grid');
+  if (gridEl) gridEl.innerHTML = '<div style="padding:20px;text-align:center">⏳ Lade hoch…</div>';
+
   for (const file of files) {
-    await new Promise(res => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        const tx = db.transaction('fotos', 'readwrite');
-        tx.objectStore('fotos').add({ cat: 'Eingang', dataURL: e.target.result, name: file.name, desc: '', ts: Date.now() });
-        tx.oncomplete = res;
-      };
-      reader.readAsDataURL(file);
-    });
+    const ext = file.name.split('.').pop();
+    const path = Date.now() + '_' + Math.random().toString(36).slice(2) + '.' + ext;
+    const { error: upErr } = await sb.storage.from(GAL_BUCKET).upload(path, file, { upsert: false });
+    if (upErr) { console.warn('Upload error:', upErr.message); continue; }
+    await sb.from('kk_photos').insert({ cat: 'Eingang', name: file.name, description: '', storage_path: path, ts: Date.now() });
   }
   input.value = '';
-  if (document.getElementById('gal-modal').style.display !== 'none') {
-    galRender();
-  } else {
-    galOpen();
-  }
+  galOpen();
 }
 
 async function galGetAll(cat) {
-  const db = await galInitDB();
-  return new Promise(res => {
-    const tx = db.transaction('fotos', 'readonly');
-    const idx = tx.objectStore('fotos').index('cat');
-    const req = idx.getAll(cat);
-    req.onsuccess = () => res(req.result);
-  });
+  const sb = galSB();
+  if (!sb) return [];
+  const { data } = await sb.from('kk_photos').select('*').eq('cat', cat).order('ts', { ascending: false });
+  return (data || []).map(r => ({ ...r, dataURL: GAL_STORAGE_URL + r.storage_path, desc: r.description }));
 }
 
 async function galMoveCat(id, newCat) {
-  const db = await galInitDB();
-  const tx = db.transaction('fotos', 'readwrite');
-  const store = tx.objectStore('fotos');
-  const getReq = store.get(id);
-  getReq.onsuccess = () => { const item = getReq.result; item.cat = newCat; store.put(item); };
-  tx.oncomplete = () => galRender();
+  const sb = galSB();
+  if (!sb) return;
+  await sb.from('kk_photos').update({ cat: newCat }).eq('id', id);
+  galRender();
 }
 
 async function galSaveDesc(id, desc) {
-  const db = await galInitDB();
-  const tx = db.transaction('fotos', 'readwrite');
-  const store = tx.objectStore('fotos');
-  const getReq = store.get(id);
-  getReq.onsuccess = () => { const item = getReq.result; item.desc = desc; store.put(item); };
+  const sb = galSB();
+  if (!sb) return;
+  await sb.from('kk_photos').update({ description: desc }).eq('id', id);
 }
 
 async function galDelete(id) {
   if (!confirm('Foto löschen?')) return;
-  const db = await galInitDB();
-  const tx = db.transaction('fotos', 'readwrite');
-  tx.objectStore('fotos').delete(id);
-  tx.oncomplete = () => galRender();
+  const sb = galSB();
+  if (!sb) return;
+  const { data } = await sb.from('kk_photos').select('storage_path').eq('id', id).single();
+  if (data?.storage_path) await sb.storage.from(GAL_BUCKET).remove([data.storage_path]);
+  await sb.from('kk_photos').delete().eq('id', id);
+  galRender();
 }
 
 async function galCountAll() {
-  const db = await galInitDB();
+  const sb = galSB();
   const counts = {};
-  for (const cat of GAL_CATS) {
-    await new Promise(res => {
-      const tx = db.transaction('fotos', 'readonly');
-      const req = tx.objectStore('fotos').index('cat').count(cat);
-      req.onsuccess = () => { counts[cat] = req.result; res(); };
-    });
-  }
+  GAL_CATS.forEach(c => counts[c] = 0);
+  if (!sb) return counts;
+  const { data } = await sb.from('kk_photos').select('cat');
+  (data || []).forEach(r => { if (counts[r.cat] !== undefined) counts[r.cat]++; else counts[r.cat] = 1; });
   return counts;
 }
 
@@ -2973,24 +2935,12 @@ function galSaveCatDesc(cat, val) {
   localStorage.setItem('galCatDesc', JSON.stringify(galCatDesc));
 }
 
-async function galMigrate() {
-  const db = await galInitDB();
-  const tx = db.transaction('fotos', 'readwrite');
-  const store = tx.objectStore('fotos');
-  const all = await new Promise(res => { const r = store.getAll(); r.onsuccess = () => res(r.result); });
-  for (const item of all) {
-    const newCat = GAL_MIGRATE[item.cat];
-    if (newCat) { item.cat = newCat; store.put(item); }
-  }
-  return new Promise(res => { tx.oncomplete = res; });
-}
-
 function galOpen() {
   const m = document.getElementById('gal-modal');
   m.style.display = 'flex';
   m.classList.add('open');
   document.body.style.overflow = 'hidden';
-  galMigrate().then(() => galRender());
+  galRender();
 }
 
 function galClose() {
