@@ -1633,9 +1633,7 @@
       </label>
       <button class="gal-close" onclick="galClose()">✕</button>
     </div>
-    <!-- Gruppen-Navigation -->
-    <div id="gal-groups"></div>
-    <!-- Kategorie-Buttons der aktiven Gruppe -->
+    <!-- Kategorie-Tabs -->
     <div id="gal-tabs"></div>
     <!-- Inhalt -->
     <div id="gal-grid"></div>
@@ -2676,36 +2674,36 @@ function cafeInitEditing() {
 }
 
 // ─── FOTO-GALERIE (IndexedDB) ─────────────────────────────────────────────────
-const GAL_GROUPS = [
-  { id:'eingang',   label:'📥 Eingang',    cats:['Eingang'] },
-  { id:'frueh',     label:'🌅 Frühdienst', cats:['Vorbereitung – Frühstück','Frühstücksdienst','Nacharbeiten – Frühstück'] },
-  { id:'mittag',    label:'☀️ Mittag',     cats:['Vorbereitung – Mittag','Mittagsdienst','Nacharbeiten – Mittag'] },
-  { id:'abend',     label:'🌆 Abend',      cats:['Vorbereitung – Abend','Abenddienst','Abschluss & Tagesende'] },
-  { id:'nachm',     label:'📅 Nachmittag', cats:['Nachmittag – Mo','Nachmittag – Di','Nachmittag – Mi','Nachmittag – Do','Nachmittag – Fr','Nachmittag – Sa/So'] },
-  { id:'bereiche',  label:'🏢 Bereiche',   cats:['Café','Kassa','Tee-Küchen','Buffet – Frühstück','Buffet – Mittag','Buffet – Abend'] },
-  { id:'sonstiges', label:'📌 Sonstiges',  cats:['Allergiker','Tischkarten-Farben','Kolleginnen','Standards & Vorlagen','Offene Punkte','Persönliche Unterlagen'] }
-];
-
 const GAL_CATS = [
   'Eingang',
-  'Vorbereitung – Frühstück','Frühstücksdienst','Nacharbeiten – Frühstück',
-  'Vorbereitung – Mittag','Mittagsdienst','Nacharbeiten – Mittag',
-  'Vorbereitung – Abend','Abenddienst','Abschluss & Tagesende',
-  'Nachmittag – Mo','Nachmittag – Di','Nachmittag – Mi','Nachmittag – Do','Nachmittag – Fr','Nachmittag – Sa/So',
-  'Café','Kassa','Tee-Küchen','Buffet – Frühstück','Buffet – Mittag','Buffet – Abend',
-  'Allergiker','Tischkarten-Farben',
-  'Kolleginnen','Standards & Vorlagen','Offene Punkte','Persönliche Unterlagen'
+  'Frühdienst','Mittagsdienst','Abenddienst',
+  'Nachmittag-Aufgaben',
+  'Café & Kassa','Tee-Küchen',
+  'Allergiker','Tischkarten & Standards',
+  'Kolleginnen','Persönliche Unterlagen'
 ];
 const GAL_ICONS = {
   'Eingang':'📥',
-  'Vorbereitung – Frühstück':'🌅','Frühstücksdienst':'🍳','Nacharbeiten – Frühstück':'🔄',
-  'Vorbereitung – Mittag':'☀️','Mittagsdienst':'🍽️','Nacharbeiten – Mittag':'🔄',
-  'Vorbereitung – Abend':'🌆','Abenddienst':'🌙','Abschluss & Tagesende':'🔒',
-  'Nachmittag – Mo':'Mo','Nachmittag – Di':'Di','Nachmittag – Mi':'Mi',
-  'Nachmittag – Do':'Do','Nachmittag – Fr':'Fr','Nachmittag – Sa/So':'Sa',
-  'Café':'☕','Kassa':'🧾','Tee-Küchen':'🍵','Buffet – Frühstück':'🌅','Buffet – Mittag':'🍽️','Buffet – Abend':'🌙',
-  'Allergiker':'⚠️','Tischkarten-Farben':'🎴',
-  'Kolleginnen':'👥','Standards & Vorlagen':'📋','Offene Punkte':'🚧','Persönliche Unterlagen':'📁'
+  'Frühdienst':'🌅','Mittagsdienst':'☀️','Abenddienst':'🌆',
+  'Nachmittag-Aufgaben':'📅',
+  'Café & Kassa':'☕','Tee-Küchen':'🍵',
+  'Allergiker':'⚠️','Tischkarten & Standards':'🎴',
+  'Kolleginnen':'👥','Persönliche Unterlagen':'📁'
+};
+// Migration alter Kategorienamen
+const GAL_MIGRATE = {
+  'Café':'Café & Kassa','Kassa':'Café & Kassa',
+  'Buffet – Frühstück':'Frühdienst','Vorbereitung – Frühstück':'Frühdienst',
+  'Frühstücksdienst':'Frühdienst','Nacharbeiten – Frühstück':'Frühdienst',
+  'Buffet – Mittag':'Mittagsdienst','Vorbereitung – Mittag':'Mittagsdienst',
+  'Nacharbeiten – Mittag':'Mittagsdienst',
+  'Buffet – Abend':'Abenddienst','Vorbereitung – Abend':'Abenddienst',
+  'Abenddienst':'Abenddienst','Abschluss & Tagesende':'Abenddienst',
+  'Nachmittag – Mo':'Nachmittag-Aufgaben','Nachmittag – Di':'Nachmittag-Aufgaben',
+  'Nachmittag – Mi':'Nachmittag-Aufgaben','Nachmittag – Do':'Nachmittag-Aufgaben',
+  'Nachmittag – Fr':'Nachmittag-Aufgaben','Nachmittag – Sa/So':'Nachmittag-Aufgaben',
+  'Tischkarten-Farben':'Tischkarten & Standards','Standards & Vorlagen':'Tischkarten & Standards',
+  'Offene Punkte':'Eingang'
 };
 let galActiveCat = 'Eingang';
 let galCatDesc = JSON.parse(localStorage.getItem('galCatDesc') || '{}');
@@ -2804,10 +2802,22 @@ function galSaveCatDesc(cat, val) {
   localStorage.setItem('galCatDesc', JSON.stringify(galCatDesc));
 }
 
+async function galMigrate() {
+  const db = await galInitDB();
+  const tx = db.transaction('fotos', 'readwrite');
+  const store = tx.objectStore('fotos');
+  const all = await new Promise(res => { const r = store.getAll(); r.onsuccess = () => res(r.result); });
+  for (const item of all) {
+    const newCat = GAL_MIGRATE[item.cat];
+    if (newCat) { item.cat = newCat; store.put(item); }
+  }
+  return new Promise(res => { tx.oncomplete = res; });
+}
+
 function galOpen() {
   document.getElementById('gal-modal').style.display = 'block';
   document.body.style.overflow = 'hidden';
-  galRender();
+  galMigrate().then(() => galRender());
 }
 
 function galClose() {
@@ -2818,27 +2828,13 @@ function galClose() {
 async function galRender() {
   const counts = await galCountAll();
   const tabsEl = document.getElementById('gal-tabs');
-  // Gruppen-Navigation rendern
-  const grpsEl = document.getElementById('gal-groups');
-  grpsEl.innerHTML = GAL_GROUPS.map(grp => {
-    const isActive = grp.cats.includes(galActiveCat);
-    const total = grp.cats.reduce((s,c) => s + (counts[c]||0), 0);
-    return `<button class="gal-grp-btn${isActive?' active':''}" onclick="galSetGroup('${grp.id}')">
-      ${grp.label}${total ? ` <span style="font-size:0.7rem;opacity:0.8">${total}</span>` : ''}
-    </button>`;
-  }).join('');
-
-  // Aktive Gruppe bestimmen
-  const activeGrp = GAL_GROUPS.find(g => g.cats.includes(galActiveCat)) || GAL_GROUPS[0];
-
-  // Kategorie-Tabs der aktiven Gruppe
-  tabsEl.innerHTML = activeGrp.cats.map(cat => {
+  // Flache Kategorie-Tabs – alle sichtbar
+  tabsEl.innerHTML = GAL_CATS.map(cat => {
     const n = counts[cat] || 0;
     const active = cat === galActiveCat;
     const icon = GAL_ICONS[cat] || '📁';
-    const shortName = cat.replace('Vorbereitung – ','Vorbr. ').replace('Nacharbeiten – ','Nach. ').replace('Nachmittag – ','');
     return `<button class="gal-cat-btn${active?' active':''}" onclick="galSetCat('${cat.replace(/'/g,"\\'")}')">
-      ${icon} ${shortName}${n ? `<span class="gal-badge">${n}</span>` : ''}
+      ${icon} ${cat}${n ? `<span class="gal-badge">${n}</span>` : ''}
     </button>`;
   }).join('');
 
@@ -2889,10 +2885,6 @@ function galSetCat(cat) {
   galRender();
 }
 
-function galSetGroup(grpId) {
-  const grp = GAL_GROUPS.find(g => g.id === grpId);
-  if (grp) { galActiveCat = grp.cats[0]; galRender(); }
-}
 
 // Lightbox
 function galLightbox(src, desc, name) {
