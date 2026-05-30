@@ -6,6 +6,24 @@
 <title>Kost-Kompass – Privatklinik St. Radegund</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="favicon.ico">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="KostKompass">
+<meta name="theme-color" content="#6b4c2a">
+<script>
+// PWA Manifest inline erstellen
+(function(){
+  const icons = [{src:'favicon.ico',sizes:'any',type:'image/x-icon'}];
+  const m = {name:'KostKompass – PK St. Radegund',short_name:'KostKompass',
+    start_url:'./',display:'standalone',background_color:'#f5f3ee',
+    theme_color:'#6b4c2a',icons};
+  const blob = new Blob([JSON.stringify(m)],{type:'application/manifest+json'});
+  const l = document.createElement('link');
+  l.rel='manifest'; l.href=URL.createObjectURL(blob);
+  document.head.appendChild(l);
+})();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
@@ -1375,6 +1393,7 @@
     <button class="fz-view-btn active" id="fzbtn-monat" onclick="fzSetView('monat')">Monat</button>
     <button class="fz-view-btn" id="fzbtn-woche" onclick="fzSetView('woche')">Woche</button>
     <button class="fz-view-btn" id="fzbtn-tag" onclick="fzSetView('tag')">Tag</button>
+    <button onclick="pdfExport('freizeit')" style="background:#e53935;color:#fff;border:none;border-radius:6px;padding:5px 13px;font-size:0.82rem;font-weight:600;cursor:pointer">🖨️ PDF</button>
     <button class="fz-view-btn" id="fzbtn-jahr" onclick="fzSetView('jahr')">Jahr</button>
   </div>
 
@@ -1429,6 +1448,7 @@
       Google Kalender
     </a>
     <button class="dp-view-btn" onclick="dpToggleAddForm()" style="border-color:var(--green);color:var(--green)">+ Dienst</button>
+    <button onclick="pdfExport('dienstplan')" style="background:#e53935;color:#fff;border:none;border-radius:6px;padding:5px 13px;font-size:0.82rem;font-weight:600;cursor:pointer">🖨️ PDF</button>
   </div>
 
   <div id="dp-add-form" style="display:none" class="dp-add-form">
@@ -1544,6 +1564,12 @@
     </div>
   </div>
 
+  <!-- PDF-Button Impfplan -->
+  <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+    <button onclick="pdfExport('impfplan')" style="background:#e53935;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:0.88rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px">🖨️ Drucken / als PDF speichern</button>
+    <button onclick="pdfImpfplanGenerieren()" style="background:#1565c0;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:0.88rem;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px">📄 Editierbares PDF erstellen</button>
+  </div>
+
   <!-- IMPFKARTEN -->
   <div id="impf-karten"></div>
 
@@ -1567,51 +1593,66 @@
 <!-- FOTO-GALERIE MODAL -->
 <style>
   @media(max-width:520px) { .hdr-txt { display:none; } header h1 { font-size:1rem; } header p { display:none; } }
-  #gal-modal { display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;overflow-y:auto; }
-  .gal-inner { background:var(--bg);max-width:1100px;margin:16px auto;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.4); }
-  .gal-header { background:linear-gradient(135deg,#6b4c2a,#a07040);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10; }
-  .gal-header strong { flex:1;font-size:1.05rem; }
-  .gal-upload-btn { background:rgba(255,255,255,0.2);border:1.5px solid rgba(255,255,255,0.5);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:0.85rem;font-weight:700;color:#fff;white-space:nowrap; }
-  .gal-upload-btn-cam { background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.3);border-radius:8px;padding:8px 12px;cursor:pointer;font-size:1rem;color:#fff; }
-  .gal-close { background:rgba(0,0,0,0.2);border:none;color:#fff;font-size:1.2rem;cursor:pointer;border-radius:8px;padding:6px 12px;font-weight:700; }
-  /* Gruppen-Nav */
-  #gal-groups { display:flex;gap:6px;padding:10px 14px 6px;background:#fff;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid #eee; }
-  #gal-groups::-webkit-scrollbar { display:none; }
-  .gal-grp-btn { border:none;cursor:pointer;border-radius:20px;padding:6px 14px;font-size:0.78rem;font-weight:700;white-space:nowrap;background:#f0ebe4;color:var(--primary);transition:all 0.15s; }
-  .gal-grp-btn.active { background:var(--primary);color:#fff; }
-  /* Kategorie-Tabs */
-  #gal-tabs { display:flex;flex-wrap:wrap;gap:4px;padding:8px 14px 10px;background:#f8f6f2;border-bottom:2px solid var(--border); }
-  .gal-cat-btn { border:none;cursor:pointer;border-radius:6px;padding:7px 12px;font-size:0.78rem;font-weight:600;background:#fff;color:var(--text);border:1px solid var(--border);transition:all 0.15s;white-space:nowrap; }
-  .gal-cat-btn.active { background:var(--primary);color:#fff;border-color:var(--primary); }
-  .gal-cat-btn .gal-badge { background:var(--accent);color:#fff;border-radius:8px;padding:1px 6px;font-size:0.65rem;margin-left:4px; }
-  .gal-cat-btn.active .gal-badge { background:rgba(255,255,255,0.35); }
-  /* Grid */
-  #gal-grid { padding:14px; }
-  .gal-photo-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px; }
-  .gal-photo-card { background:#fff;border-radius:10px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column; }
-  .gal-photo-card img { width:100%;height:140px;object-fit:cover;cursor:zoom-in; }
-  .gal-photo-info { padding:10px;flex:1;display:flex;flex-direction:column;gap:6px; }
-  .gal-photo-name { font-size:0.7rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
-  .gal-photo-desc { border:1px solid var(--border);border-radius:5px;padding:6px 8px;font-size:0.8rem;font-family:inherit;resize:none;height:56px;background:#fafaf8;width:100%; }
-  .gal-photo-select { border:1px solid var(--border);border-radius:5px;padding:5px 7px;font-size:0.78rem;background:var(--bg);width:100%; }
-  .gal-photo-del { background:none;border:1px solid #ef9a9a;color:var(--red);border-radius:5px;padding:5px;font-size:0.75rem;cursor:pointer;width:100%; }
-  /* Kategorie-Beschreibung */
-  .gal-cat-desc-box { background:#f8f6f2;border-radius:8px;padding:12px 14px;margin-bottom:14px;border:1px solid var(--border); }
-  .gal-cat-desc-box textarea { width:100%;border:1px solid var(--border);border-radius:6px;padding:8px;font-size:0.85rem;font-family:inherit;resize:vertical;min-height:56px;background:#fff; }
+  #gal-modal { display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px; }
+  #gal-modal.open { display:flex; }
+  .gal-inner { background:#f5f3ee;width:100%;max-width:1080px;max-height:92vh;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.35);display:flex;flex-direction:column; }
+  /* Header */
+  .gal-header { background:linear-gradient(135deg,#6b4c2a,#a07040);color:#fff;padding:13px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0; }
+  .gal-header strong { flex:1;font-size:1rem;letter-spacing:0.01em; }
+  .gal-upload-btn { background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.45);border-radius:8px;padding:7px 14px;cursor:pointer;font-size:0.82rem;font-weight:700;color:#fff;white-space:nowrap;transition:background 0.15s; }
+  .gal-upload-btn:hover { background:rgba(255,255,255,0.3); }
+  .gal-upload-btn-cam { background:rgba(255,255,255,0.12);border:1.5px solid rgba(255,255,255,0.3);border-radius:8px;padding:7px 11px;cursor:pointer;font-size:1rem;color:#fff;transition:background 0.15s; }
+  .gal-upload-btn-cam:hover { background:rgba(255,255,255,0.25); }
+  .gal-close { background:rgba(0,0,0,0.18);border:none;color:#fff;font-size:1.1rem;cursor:pointer;border-radius:8px;padding:6px 11px;font-weight:700;transition:background 0.15s; }
+  .gal-close:hover { background:rgba(0,0,0,0.35); }
+  /* Body = Sidebar + Main */
+  .gal-body { display:flex;flex:1;overflow:hidden; }
+  /* Sidebar */
+  .gal-sidebar { width:200px;flex-shrink:0;background:#fff;border-right:1px solid #e8e4de;overflow-y:auto;padding:10px 0; }
+  .gal-sidebar-group { padding:6px 14px 2px;font-size:0.65rem;font-weight:700;color:#a07040;text-transform:uppercase;letter-spacing:0.08em;margin-top:4px; }
+  .gal-sidebar-item { display:flex;align-items:center;gap:8px;padding:8px 14px;cursor:pointer;font-size:0.82rem;color:#444;transition:background 0.12s;border-left:3px solid transparent; }
+  .gal-sidebar-item:hover { background:#f5f0ea; }
+  .gal-sidebar-item.active { background:#f0ebe3;border-left-color:#6b4c2a;color:#6b4c2a;font-weight:700; }
+  .gal-sidebar-item .gal-icon { font-size:1rem;width:20px;text-align:center; }
+  .gal-sidebar-item .gal-name { flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+  .gal-sidebar-item .gal-n { background:#e8e4de;color:#888;border-radius:10px;padding:1px 7px;font-size:0.65rem;font-weight:700;min-width:18px;text-align:center; }
+  .gal-sidebar-item.active .gal-n { background:#6b4c2a;color:#fff; }
+  /* Main panel */
+  .gal-main { flex:1;overflow-y:auto;padding:16px; }
+  .gal-cat-header { display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid #e8e4de; }
+  .gal-cat-title { font-size:1.05rem;font-weight:700;color:#6b4c2a;flex:1; }
+  .gal-cat-desc-toggle { background:none;border:1px solid #ddd;border-radius:6px;padding:4px 10px;font-size:0.75rem;color:#888;cursor:pointer; }
+  .gal-cat-desc-box { background:#fff;border-radius:8px;padding:10px 12px;margin-bottom:12px;border:1px solid #e8e4de;display:none; }
+  .gal-cat-desc-box.open { display:block; }
+  .gal-cat-desc-box textarea { width:100%;border:1px solid #ddd;border-radius:6px;padding:7px 9px;font-size:0.83rem;font-family:inherit;resize:vertical;min-height:52px;background:#fafaf8; }
+  /* Photo grid */
+  .gal-photo-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px; }
+  .gal-photo-card { background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.1);display:flex;flex-direction:column;transition:box-shadow 0.15s; }
+  .gal-photo-card:hover { box-shadow:0 4px 12px rgba(0,0,0,0.15); }
+  .gal-photo-card img { width:100%;height:130px;object-fit:cover;cursor:zoom-in;display:block; }
+  .gal-photo-info { padding:9px;flex:1;display:flex;flex-direction:column;gap:5px; }
+  .gal-photo-name { font-size:0.68rem;color:#999;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+  .gal-photo-desc { border:1px solid #e8e4de;border-radius:5px;padding:5px 7px;font-size:0.77rem;font-family:inherit;resize:none;height:48px;background:#fafaf8;width:100%;transition:border-color 0.15s; }
+  .gal-photo-desc:focus { border-color:#a07040;outline:none; }
+  .gal-photo-select { border:1px solid #e8e4de;border-radius:5px;padding:4px 6px;font-size:0.74rem;background:#f5f3ee;width:100%; }
+  .gal-photo-del { background:none;border:1px solid #f5c6c6;color:#c62828;border-radius:5px;padding:4px;font-size:0.72rem;cursor:pointer;width:100%;transition:background 0.12s; }
+  .gal-photo-del:hover { background:#ffebee; }
+  .gal-empty { text-align:center;padding:48px 20px;color:#aaa; }
+  .gal-empty .gal-empty-icon { font-size:2.8rem;margin-bottom:10px; }
   /* MOBILE */
   @media(max-width:640px) {
-    #gal-modal { background:rgba(0,0,0,0.95); }
-    .gal-inner { margin:0;border-radius:0;min-height:100dvh;display:flex;flex-direction:column; }
-    .gal-header { padding:12px 14px; }
-    .gal-upload-btn { padding:8px 10px;font-size:0.8rem; }
-    #gal-grid { padding:10px;flex:1; }
+    #gal-modal { padding:0;align-items:flex-end; }
+    .gal-inner { max-height:95dvh;border-radius:16px 16px 0 0;max-width:100%; }
+    .gal-body { flex-direction:column; }
+    .gal-sidebar { width:100%;border-right:none;border-bottom:1px solid #e8e4de;padding:6px 0;display:flex;overflow-x:auto;overflow-y:hidden;scrollbar-width:none; }
+    .gal-sidebar::-webkit-scrollbar { display:none; }
+    .gal-sidebar-group { display:none; }
+    .gal-sidebar-item { flex-direction:column;gap:2px;padding:8px 12px;border-left:none;border-bottom:3px solid transparent;white-space:nowrap;min-width:fit-content;font-size:0.75rem; }
+    .gal-sidebar-item.active { border-bottom-color:#6b4c2a;border-left-color:transparent;background:#f0ebe3; }
+    .gal-sidebar-item .gal-name { font-size:0.72rem; }
+    .gal-main { padding:10px; }
     .gal-photo-grid { grid-template-columns:repeat(2,1fr);gap:8px; }
-    .gal-photo-card img { height:110px; }
-    .gal-photo-info { padding:7px; }
-    .gal-photo-desc { height:44px;font-size:0.75rem; }
-    #gal-tabs { padding:6px 10px 8px; }
-    .gal-cat-btn { padding:8px 11px;font-size:0.8rem; }
-    #gal-groups { padding:8px 10px 5px; }
+    .gal-photo-card img { height:105px; }
   }
 </style>
 
@@ -1619,24 +1660,23 @@
   <div class="gal-inner">
     <!-- Header -->
     <div class="gal-header">
-      <span style="font-size:1.3rem">📷</span>
+      <span style="font-size:1.2rem">📷</span>
       <strong>Foto-Galerie</strong>
-      <!-- Kamera (Handy: direkt fotografieren) -->
-      <label class="gal-upload-btn-cam" title="Kamera öffnen">
+      <label class="gal-upload-btn-cam" title="Foto direkt aufnehmen">
         📸
         <input type="file" accept="image/*" capture="environment" style="display:none" onchange="galUpload(this)">
       </label>
-      <!-- Aus Galerie / Dateien wählen -->
       <label class="gal-upload-btn">
-        + Foto
+        + Foto hinzufügen
         <input type="file" accept="image/*" multiple style="display:none" onchange="galUpload(this)">
       </label>
       <button class="gal-close" onclick="galClose()">✕</button>
     </div>
-    <!-- Kategorie-Tabs -->
-    <div id="gal-tabs"></div>
-    <!-- Inhalt -->
-    <div id="gal-grid"></div>
+    <!-- Body: Sidebar + Main -->
+    <div class="gal-body">
+      <div class="gal-sidebar" id="gal-sidebar"></div>
+      <div class="gal-main" id="gal-grid"></div>
+    </div>
   </div>
 </div>
 
@@ -1657,6 +1697,137 @@ function initSupabase() {
   if (!sb) sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   return sb;
 }
+
+// ─── GERÄTE-SYNC via Supabase ────────────────────────────────────────────────
+// Tabelle einmalig in Supabase anlegen (SQL Editor):
+// CREATE TABLE IF NOT EXISTS kk_sync (
+//   key TEXT PRIMARY KEY, value TEXT, updated_at BIGINT
+// );
+// ALTER TABLE kk_sync ENABLE ROW LEVEL SECURITY;
+// CREATE POLICY "public_rw" ON kk_sync FOR ALL USING (true) WITH CHECK (true);
+
+const SYNC_KEYS = ['impfPlan','impfLabor','cafeInhalt','galCatDesc',
+                   'dpShifts','fzEvents','numData','pdfArchiv'];
+
+let syncStatus = 'idle'; // idle | syncing | ok | error | offline
+let syncDebounceTimer = null;
+
+function syncSetStatus(s) {
+  syncStatus = s;
+  const el = document.getElementById('sync-indicator');
+  if (!el) return;
+  const cfg = {
+    idle:    { icon:'🔄', text:'Sync', color:'rgba(255,255,255,0.3)' },
+    syncing: { icon:'⏳', text:'Sync…', color:'rgba(255,200,0,0.4)' },
+    ok:      { icon:'✅', text:'Sync OK', color:'rgba(100,200,100,0.4)' },
+    error:   { icon:'⚠️', text:'Sync Fehler', color:'rgba(255,100,100,0.4)' },
+    offline: { icon:'📵', text:'Offline', color:'rgba(255,255,255,0.15)' }
+  };
+  const c = cfg[s] || cfg.idle;
+  el.textContent = c.icon + ' ' + c.text;
+  el.style.background = c.color;
+}
+
+async function syncPush(keysToPush) {
+  const client = initSupabase();
+  if (!client || !navigator.onLine) { syncSetStatus('offline'); return; }
+  syncSetStatus('syncing');
+  try {
+    const rows = (keysToPush || SYNC_KEYS).map(k => ({
+      key: k,
+      value: localStorage.getItem(k) || 'null',
+      updated_at: Date.now()
+    }));
+    const { error } = await client.from('kk_sync').upsert(rows, { onConflict: 'key' });
+    if (error) throw error;
+    syncSetStatus('ok');
+    setTimeout(() => syncSetStatus('idle'), 3000);
+  } catch(e) {
+    console.warn('Sync push error:', e.message);
+    syncSetStatus('error');
+  }
+}
+
+async function syncPull() {
+  const client = initSupabase();
+  if (!client || !navigator.onLine) { syncSetStatus('offline'); return; }
+  syncSetStatus('syncing');
+  try {
+    const { data, error } = await client.from('kk_sync').select('key,value,updated_at');
+    if (error) throw error;
+    let updated = 0;
+    (data || []).forEach(row => {
+      if (!SYNC_KEYS.includes(row.key)) return;
+      const localTs = parseInt(localStorage.getItem('_ts_' + row.key) || '0');
+      if (row.updated_at > localTs) {
+        localStorage.setItem(row.key, row.value);
+        localStorage.setItem('_ts_' + row.key, row.updated_at);
+        updated++;
+      }
+    });
+    syncSetStatus('ok');
+    setTimeout(() => syncSetStatus('idle'), 3000);
+    if (updated > 0) {
+      // App-Daten neu laden ohne Seitenreload
+      syncReloadInMemory();
+    }
+  } catch(e) {
+    console.warn('Sync pull error:', e.message);
+    syncSetStatus('error');
+  }
+}
+
+function syncReloadInMemory() {
+  // Daten aus localStorage in laufende Variablen übernehmen
+  try {
+    const ip = localStorage.getItem('impfPlan');
+    if (ip) { Object.assign(impfData, JSON.parse(ip)); impfRenderKarten(); impfRenderKalender(); }
+  } catch(e){}
+  try {
+    const il = localStorage.getItem('impfLabor');
+    if (il) Object.assign(impfLabor, JSON.parse(il));
+  } catch(e){}
+  try {
+    const ci = localStorage.getItem('cafeInhalt');
+    if (ci) Object.assign(cafeInhalt, JSON.parse(ci));
+  } catch(e){}
+}
+
+function syncSchedule(keys) {
+  clearTimeout(syncDebounceTimer);
+  syncDebounceTimer = setTimeout(() => syncPush(keys), 1500);
+}
+
+// Auto-Sync beim Laden + bei Verbindungswiederherstellung
+window.addEventListener('online', () => { syncPull(); });
+window.addEventListener('focus', () => { syncPull(); });
+
+// Sync-Indicator in Header einfügen (nach DOM-Load)
+window.addEventListener('DOMContentLoaded', () => {
+  const hdr = document.querySelector('header');
+  if (hdr) {
+    const btn = document.createElement('button');
+    btn.id = 'sync-indicator';
+    btn.title = 'Jetzt synchronisieren';
+    btn.onclick = () => { syncPull(); };
+    btn.style.cssText = 'background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.35);border-radius:7px;padding:6px 11px;color:#fff;font-size:0.75rem;cursor:pointer;white-space:nowrap;font-weight:600';
+    btn.textContent = '🔄 Sync';
+    hdr.appendChild(btn);
+  }
+  // Erster Pull beim Laden
+  setTimeout(() => syncPull(), 800);
+});
+
+// Patch: localStorage.setItem überwachen für Auto-Push
+const _origSetItem = localStorage.setItem.bind(localStorage);
+localStorage.setItem = function(key, value) {
+  _origSetItem(key, value);
+  if (SYNC_KEYS.includes(key)) {
+    _origSetItem('_ts_' + key, Date.now());
+    syncSchedule([key]);
+  }
+};
+// ─────────────────────────────────────────────────────────────────────────────
 
 // Header-Badge mit KW + Datum
 (function() {
@@ -2815,67 +2986,87 @@ async function galMigrate() {
 }
 
 function galOpen() {
-  document.getElementById('gal-modal').style.display = 'block';
+  const m = document.getElementById('gal-modal');
+  m.style.display = 'flex';
+  m.classList.add('open');
   document.body.style.overflow = 'hidden';
   galMigrate().then(() => galRender());
 }
 
 function galClose() {
-  document.getElementById('gal-modal').style.display = 'none';
+  const m = document.getElementById('gal-modal');
+  m.style.display = 'none';
+  m.classList.remove('open');
   document.body.style.overflow = '';
 }
 
+const GAL_SIDEBAR_GROUPS = [
+  { label: 'Eingang',    cats: ['Eingang'] },
+  { label: 'Tagesablauf', cats: ['Frühdienst','Mittagsdienst','Abenddienst','Nachmittag-Aufgaben'] },
+  { label: 'Bereiche',   cats: ['Café & Kassa','Tee-Küchen'] },
+  { label: 'Fachliches', cats: ['Allergiker','Tischkarten & Standards','Info & Aushänge'] },
+  { label: 'Persönlich', cats: ['Kolleginnen','Persönliche Unterlagen'] }
+];
+
 async function galRender() {
   const counts = await galCountAll();
-  const tabsEl = document.getElementById('gal-tabs');
-  // Flache Kategorie-Tabs – alle sichtbar
-  tabsEl.innerHTML = GAL_CATS.map(cat => {
-    const n = counts[cat] || 0;
-    const active = cat === galActiveCat;
-    const icon = GAL_ICONS[cat] || '📁';
-    return `<button class="gal-cat-btn${active?' active':''}" onclick="galSetCat('${cat.replace(/'/g,"\\'")}')">
-      ${icon} ${cat}${n ? `<span class="gal-badge">${n}</span>` : ''}
-    </button>`;
-  }).join('');
 
-  const fotos = await galGetAll(galActiveCat);
-  const gridEl = document.getElementById('gal-grid');
-  const catDescVal = galCatDesc[galActiveCat] || '';
-  const icon = GAL_ICONS[galActiveCat] || '📁';
-
-  // Kategorie-Beschreibung
-  let html = `<div class="gal-cat-desc-box">
-    <div style="font-size:0.78rem;font-weight:700;color:var(--primary);margin-bottom:6px">${icon} Beschreibung für „${galActiveCat}"</div>
-    <textarea onchange="galSaveCatDesc('${galActiveCat.replace(/'/g,"\\'")}',this.value)" placeholder="Notizen, Hinweise, Ablauf für diese Kategorie…">${catDescVal}</textarea>
-  </div>`;
-
-  if (!fotos.length) {
-    html += `<div style="text-align:center;padding:30px;color:var(--muted)">
-      <div style="font-size:2.5rem;margin-bottom:10px">${icon}</div>
-      <p>Noch keine Fotos in <strong>${galActiveCat}</strong>.</p>
-      ${galActiveCat === 'Eingang' ? '<p style="font-size:0.85rem;margin-top:6px">Fotos oben rechts im Header hochladen – sie landen hier zuerst.</p>' : ''}
-    </div>`;
-    gridEl.innerHTML = html;
-    return;
+  // Sidebar aufbauen
+  const sidebarEl = document.getElementById('gal-sidebar');
+  if (sidebarEl) {
+    sidebarEl.innerHTML = GAL_SIDEBAR_GROUPS.map(grp => {
+      const items = grp.cats.map(cat => {
+        const n = counts[cat] || 0;
+        const active = cat === galActiveCat;
+        return `<div class="gal-sidebar-item${active?' active':''}" onclick="galSetCat('${cat.replace(/'/g,"\\'")}')">
+          <span class="gal-icon">${GAL_ICONS[cat]||'📁'}</span>
+          <span class="gal-name">${cat}</span>
+          ${n ? `<span class="gal-n">${n}</span>` : ''}
+        </div>`;
+      }).join('');
+      return `<div class="gal-sidebar-group">${grp.label}</div>${items}`;
+    }).join('');
   }
 
+  // Hauptbereich
+  const fotos = await galGetAll(galActiveCat);
+  const gridEl = document.getElementById('gal-grid');
+  const icon = GAL_ICONS[galActiveCat] || '📁';
+  const catDescVal = galCatDesc[galActiveCat] || '';
   const otherCats = GAL_CATS.filter(c => c !== galActiveCat);
   const catOptions = otherCats.map(c => `<option value="${c}">${GAL_ICONS[c]||'📁'} ${c}</option>`).join('');
 
-  html += `<div class="gal-photo-grid">` +
-    fotos.map(f => `
-      <div class="gal-photo-card">
-        <img src="${f.dataURL}" class="gal-photo-card img" style="width:100%;height:140px;object-fit:cover;cursor:zoom-in" onclick="galLightbox(this.src,'${(f.desc||'').replace(/'/g,"\\'").replace(/\n/g,' ')}','${f.name}')" loading="lazy">
-        <div class="gal-photo-info">
-          <div class="gal-photo-name" title="${f.name}">📎 ${f.name}</div>
-          <textarea class="gal-photo-desc" onchange="galSaveDesc(${f.id},this.value)" placeholder="Beschreibung, Notiz…">${f.desc||''}</textarea>
-          <select class="gal-photo-select" onchange="galMoveCat(${f.id},this.value)">
-            <option value="${galActiveCat}" selected>📂 ${galActiveCat}</option>
-            ${catOptions}
-          </select>
-          <button class="gal-photo-del" onclick="galDelete(${f.id})">🗑️ Löschen</button>
-        </div>
-      </div>`).join('') + `</div>`;
+  let html = `<div class="gal-cat-header">
+    <span style="font-size:1.3rem">${icon}</span>
+    <span class="gal-cat-title">${galActiveCat}</span>
+    <button class="gal-cat-desc-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.textContent=this.nextElementSibling.classList.contains('open')?'▲ Notiz':'✏️ Notiz'">✏️ Notiz</button>
+  </div>
+  <div class="gal-cat-desc-box">
+    <textarea onchange="galSaveCatDesc('${galActiveCat.replace(/'/g,"\\'")}',this.value)" placeholder="Notizen, Ablauf, Hinweise für diese Kategorie…">${catDescVal}</textarea>
+  </div>`;
+
+  if (!fotos.length) {
+    html += `<div class="gal-empty">
+      <div class="gal-empty-icon">${icon}</div>
+      <p style="font-weight:600;color:#888">Noch keine Fotos in „${galActiveCat}"</p>
+      <p style="font-size:0.82rem;margin-top:6px;color:#bbb">${galActiveCat==='Eingang'?'Fotos oben rechts hochladen – sie landen hier zuerst.':'Fotos hochladen oder aus „Eingang" hierher verschieben.'}</p>
+    </div>`;
+  } else {
+    html += `<div class="gal-photo-grid">` +
+      fotos.map(f => `
+        <div class="gal-photo-card">
+          <img src="${f.dataURL}" loading="lazy" onclick="galLightbox(this.src,'${(f.desc||'').replace(/'/g,"\\'").replace(/\n/g,' ')}','${f.name}')">
+          <div class="gal-photo-info">
+            <div class="gal-photo-name">📎 ${f.name}</div>
+            <textarea class="gal-photo-desc" onchange="galSaveDesc(${f.id},this.value)" placeholder="Notiz…">${f.desc||''}</textarea>
+            <select class="gal-photo-select" onchange="galMoveCat(${f.id},this.value)">
+              <option value="${galActiveCat}" selected>📂 ${galActiveCat}</option>
+              ${catOptions}
+            </select>
+            <button class="gal-photo-del" onclick="galDelete(${f.id})">🗑️ Löschen</button>
+          </div>
+        </div>`).join('') + `</div>`;
+  }
 
   gridEl.innerHTML = html;
 }
@@ -2904,6 +3095,219 @@ showSection = function(id, btn) {
   if (id === 'cafe') cafeInitEditing();
 };
 
+// ─── PDF / DRUCK ─────────────────────────────────────────────────────────────
+
+function pdfExport(type) {
+  // Druckbereich vorbereiten und Browserdruck öffnen
+  const printWin = window.open('', '_blank', 'width=900,height=700');
+  const today = new Date().toLocaleDateString('de-AT', {day:'2-digit',month:'2-digit',year:'numeric'});
+
+  let title = '';
+  let bodyHtml = '';
+
+  if (type === 'freizeit') {
+    title = 'Freizeitkalender';
+    const cal = document.getElementById('fz-calendar');
+    const period = document.getElementById('fz-period-label')?.textContent || '';
+    bodyHtml = `<h1>🏖️ Freizeitkalender – ${period}</h1>${cal ? cal.innerHTML : ''}`;
+  } else if (type === 'dienstplan') {
+    title = 'Dienstplan';
+    const cal = document.getElementById('dp-calendar');
+    const period = document.getElementById('dp-period-label')?.textContent || '';
+    bodyHtml = `<h1>📅 Dienstplan – ${period}</h1>${cal ? cal.innerHTML : ''}`;
+  } else if (type === 'impfplan') {
+    title = 'Impfplan';
+    const karten = document.getElementById('impf-karten');
+    bodyHtml = `<h1>💉 Mein Impfplan</h1>${karten ? karten.innerHTML : ''}`;
+  }
+
+  printWin.document.write(`<!DOCTYPE html><html lang="de"><head>
+    <meta charset="UTF-8">
+    <title>${title} – Privatklinik St. Radegund</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: Arial, sans-serif; font-size: 11pt; color: #222; padding: 20px; }
+      h1 { font-size: 16pt; color: #6b4c2a; margin-bottom: 16px; border-bottom: 2px solid #6b4c2a; padding-bottom: 8px; }
+      .print-meta { font-size: 9pt; color: #888; margin-bottom: 14px; }
+      /* Kalender-Gitter */
+      .fz-month-grid, .dp-month-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+      .fz-dc, .dp-month-grid .dc { border: 1px solid #ddd; padding: 4px; min-height: 50px; font-size: 9pt; }
+      .fz-dc.today, .dp-month-grid .dc.today { border: 2px solid #6b4c2a; }
+      .dh { text-align: center; font-weight: bold; font-size: 8pt; background: #6b4c2a; color: #fff; padding: 4px; }
+      .fz-ev { font-size: 7.5pt; border-radius: 3px; padding: 1px 4px; margin-top: 2px; color: #fff; }
+      .fz-ev.wunsch { background: #fbbf24; color: #333; }
+      .fz-ev.genehmigt { background: #6b4c2a; }
+      .fz-ev.privat { background: #1565c0; }
+      .ds { font-size: 7.5pt; color: #2e7d32; font-weight: bold; margin-top: 2px; }
+      /* Impfplan */
+      .impf-karte { border: 1px solid #ddd; border-radius: 6px; padding: 10px 12px; margin-bottom: 10px; break-inside: avoid; }
+      .impf-karte strong { color: #6b4c2a; font-size: 12pt; }
+      .impf-felder { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 8px; }
+      .impf-feld label { font-size: 8pt; color: #888; display: block; margin-bottom: 3px; }
+      .impf-feld .val { border-bottom: 1px solid #999; min-height: 18px; font-size: 10pt; padding: 2px 0; }
+      /* Wochenplan */
+      .dp-week-grid { display: grid; grid-template-columns: 60px repeat(7,1fr); font-size: 8pt; border: 1px solid #ddd; }
+      .wh { background: #6b4c2a; color: #fff; padding: 4px; text-align: center; font-weight: bold; }
+      .wcell { border: 1px solid #eee; padding: 3px; min-height: 24px; }
+      .dp-week-shift { background: #2e7d32; color: #fff; border-radius: 3px; padding: 1px 3px; font-size: 7pt; }
+      /* Buttons ausblenden */
+      button, select, input, .dp-add-form, .fz-add-form, .dp-gcal-btn, .fz-gcal-note, .fz-alarm-banner, label[style*="cursor"] { display: none !important; }
+      @page { margin: 15mm; size: A4; }
+      @media print { body { padding: 0; } }
+    </style>
+  </head><body>
+    <div class="print-meta">Privatklinik St. Radegund · KostKompass · Erstellt: ${today}</div>
+    ${bodyHtml}
+  </body></html>`);
+  printWin.document.close();
+  setTimeout(() => { printWin.focus(); printWin.print(); }, 600);
+}
+
+// Editierbares PDF via jsPDF (Impfplan mit Formularfeldern)
+async function pdfImpfplanGenerieren() {
+  // jsPDF dynamisch laden falls noch nicht vorhanden
+  if (!window.jspdf) {
+    await new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+      s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  const today = new Date().toLocaleDateString('de-AT');
+  const brown = [107, 76, 42];
+  const lightBrown = [240, 235, 227];
+  const muted = [120, 120, 120];
+
+  // Header
+  doc.setFillColor(...brown);
+  doc.rect(0, 0, 210, 22, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(16); doc.setFont('helvetica','bold');
+  doc.text('Mein Impfplan', 14, 14);
+  doc.setFontSize(9); doc.setFont('helvetica','normal');
+  doc.text('Privatklinik St. Radegund  ·  Erstellt: ' + today, 14, 20);
+
+  let y = 30;
+
+  IMPF_GRUPPEN.forEach((g, idx) => {
+    const d = impfData[g.id] || {};
+    const cardH = 38;
+    if (y + cardH > 275) { doc.addPage(); y = 14; }
+
+    // Hintergrund
+    doc.setFillColor(...lightBrown);
+    doc.roundedRect(12, y, 186, cardH, 3, 3, 'F');
+
+    // Titel
+    doc.setTextColor(...brown);
+    doc.setFontSize(11); doc.setFont('helvetica','bold');
+    doc.text(g.icon + ' ' + g.titel, 16, y + 8);
+
+    // Info
+    doc.setTextColor(...muted);
+    doc.setFontSize(7.5); doc.setFont('helvetica','normal');
+    const infoLines = doc.splitTextToSize(g.info, 178);
+    doc.text(infoLines[0], 16, y + 14);
+
+    // Felder
+    const fieldY = y + 20;
+    const fields = [
+      { label: '💉 Erste Impfung', val: d.erste || '' },
+      { label: '🔁 Auffrischung möglich ab', val: d.auffrischung || '' },
+      { label: '✅ Vollständig immunisiert ab', val: d.vollstaendig || '' }
+    ];
+    fields.forEach((f, i) => {
+      const fx = 16 + i * 62;
+      doc.setTextColor(...muted);
+      doc.setFontSize(7); doc.setFont('helvetica','normal');
+      doc.text(f.label, fx, fieldY);
+      // Linie als Schreibfeld
+      doc.setDrawColor(180, 160, 140);
+      doc.line(fx, fieldY + 8, fx + 56, fieldY + 8);
+      // Eingetragener Wert
+      if (f.val) {
+        doc.setTextColor(...brown);
+        doc.setFontSize(9); doc.setFont('helvetica','bold');
+        doc.text(f.val, fx, fieldY + 7);
+      }
+    });
+
+    // Klinik-Badge
+    if (g.klinik) {
+      doc.setFillColor(46, 125, 50);
+      doc.roundedRect(162, y + 3, 32, 6, 1.5, 1.5, 'F');
+      doc.setTextColor(255,255,255);
+      doc.setFontSize(6.5); doc.setFont('helvetica','bold');
+      doc.text('🏥 In Klinik möglich', 164, y + 7.2);
+    }
+
+    y += cardH + 5;
+  });
+
+  // Labor-Bericht Sektion
+  doc.addPage();
+  doc.setFillColor(...brown);
+  doc.rect(0, 0, 210, 16, 'F');
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(13); doc.setFont('helvetica','bold');
+  doc.text('🔬 Labor-Bericht – Titer-Ergebnisse', 14, 11);
+  y = 24;
+
+  const laborFelder = [
+    { label: 'Hepatitis A – Anti-HAV (IgG)', key: 'hav', statusKey: 'hav_status', wertKey: 'hav_wert' },
+    { label: 'Hepatitis B – Anti-HBs (IU/L)', key: 'hbv', statusKey: 'hbv_status', wertKey: 'hbv_wert', hinweis: '>100 = gut · 10–100 = Auffrischung · <10 = impfen' },
+    { label: 'Masern / Mumps / Röteln – MMR-IgG', key: 'mmr', statusKey: 'mmr_status', wertKey: 'mmr_wert' },
+    { label: 'Varizellen – VZV-IgG', key: 'vzv', statusKey: 'vzv_status', wertKey: 'vzv_wert' },
+    { label: 'FSME-Antikörper', key: 'fsme', statusKey: 'fsme_status', wertKey: 'fsme_wert' }
+  ];
+
+  laborFelder.forEach(f => {
+    if (y > 265) { doc.addPage(); y = 14; }
+    doc.setFillColor(...lightBrown);
+    doc.roundedRect(12, y, 186, 22, 2, 2, 'F');
+    doc.setTextColor(...brown);
+    doc.setFontSize(10); doc.setFont('helvetica','bold');
+    doc.text(f.label, 16, y + 7);
+    if (f.hinweis) {
+      doc.setTextColor(...muted); doc.setFontSize(7); doc.setFont('helvetica','normal');
+      doc.text(f.hinweis, 16, y + 12);
+    }
+    // Status + Wert
+    const statusVal = impfLabor[f.statusKey] || '';
+    const wertVal = impfLabor[f.wertKey] || '';
+    doc.setDrawColor(160,140,120);
+    doc.line(16, y + 19, 90, y + 19);
+    doc.line(100, y + 19, 190, y + 19);
+    doc.setTextColor(...muted); doc.setFontSize(7); doc.setFont('helvetica','normal');
+    doc.text('Status:', 16, y + 17); doc.text('Wert / Datum:', 100, y + 17);
+    if (statusVal) { doc.setTextColor(...brown); doc.setFontSize(8.5); doc.setFont('helvetica','bold'); doc.text(statusVal, 35, y + 18.5); }
+    if (wertVal) { doc.setTextColor(...brown); doc.setFontSize(8.5); doc.setFont('helvetica','bold'); doc.text(wertVal, 125, y + 18.5); }
+    y += 27;
+  });
+
+  // Footer
+  const pageCount = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    doc.setTextColor(...muted); doc.setFontSize(7); doc.setFont('helvetica','normal');
+    doc.text(`Privatklinik St. Radegund · KostKompass · Seite ${i}/${pageCount}`, 14, 290);
+  }
+
+  // Archiv: lokale Kopie speichern
+  const dateStr = new Date().toISOString().slice(0,10);
+  const filename = `Impfplan_${dateStr}.pdf`;
+  doc.save(filename);
+
+  // Archiv-Eintrag in localStorage
+  const archiv = JSON.parse(localStorage.getItem('pdfArchiv') || '[]');
+  archiv.unshift({ name: filename, datum: dateStr, typ: 'impfplan', ts: Date.now() });
+  localStorage.setItem('pdfArchiv', JSON.stringify(archiv.slice(0,20)));
+
+  alert(`✅ "${filename}" wurde heruntergeladen.\n\nDu kannst es in jedem PDF-Programm (Adobe Acrobat, Preview) öffnen, ausfüllen und wieder speichern.`);
+}
 // ─────────────────────────────────────────────────────────────────────────────
 </script>
 </body>
