@@ -1958,7 +1958,7 @@ async function syncPull() {
 }
 
 function syncReloadInMemory() {
-  // Daten aus localStorage in laufende Variablen übernehmen
+  // Daten aus localStorage in laufende Variablen übernehmen + neu rendern
   try {
     const ip = localStorage.getItem('impfPlan');
     if (ip) { Object.assign(impfData, JSON.parse(ip)); impfRenderKarten(); impfRenderKalender(); }
@@ -1969,9 +1969,39 @@ function syncReloadInMemory() {
   } catch(e){}
   try {
     const ci = localStorage.getItem('cafeInhalt');
-    if (ci) Object.assign(cafeInhalt, JSON.parse(ci));
+    if (ci) { Object.assign(cafeInhalt, JSON.parse(ci)); if(typeof cafeRender==='function') cafeRender(); }
+  } catch(e){}
+  try {
+    const dp = localStorage.getItem('dpShifts');
+    if (dp) { dpShifts = JSON.parse(dp); if(typeof dpRender==='function') dpRender(); }
+  } catch(e){}
+  try {
+    const fz = localStorage.getItem('fzEvents');
+    if (fz) { fzEvents = JSON.parse(fz); if(typeof fzRender==='function') fzRender(); }
+  } catch(e){}
+  try {
+    const ab = localStorage.getItem('ablaufData');
+    if (ab) { Object.assign(ablaufData, JSON.parse(ab)); if(typeof abRender==='function') abRender(document.querySelector('.ab-tab-btn.active')?.dataset?.id || 'frueh'); }
+  } catch(e){}
+  try {
+    const nu = localStorage.getItem('numEntries');
+    if (nu) { numEntries = JSON.parse(nu); if(typeof numRender==='function') numRender(); }
   } catch(e){}
 }
+
+// ─── SUPABASE REALTIME – sofortige Synchronisation auf allen Geräten ──────────
+function syncStartRealtime() {
+  const client = initSupabase();
+  if (!client) return;
+  client
+    .channel('kk_sync_changes')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'kk_sync' }, () => {
+      syncPull();
+    })
+    .subscribe();
+}
+// Realtime starten sobald DOM bereit
+window.addEventListener('DOMContentLoaded', () => { setTimeout(syncStartRealtime, 1200); });
 
 function syncSchedule(keys) {
   clearTimeout(syncDebounceTimer);
