@@ -192,7 +192,15 @@
 
   /* ARBEITSABLÄUFE */
   .ab-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-  .ab-tab-btn { border: 2px solid var(--accent); background: #fff; color: var(--accent); border-radius: 8px 8px 0 0; padding: 8px 16px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+  .ab-tab-btn { border: 2px solid var(--accent); background: #fff; color: var(--accent); border-radius: 6px; padding: 7px 14px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+  .ab-tab-btn:hover { background: #f5ede0; }
+  .ab-tab-btn.active { background: var(--accent); color: #fff; }
+  /* Übersichten-Tabs (Zeile 2) – klar unterschiedlich von Kategorien */
+  .ov-tab-btn { border: 2px solid #1565c0; background: #fff; color: #1565c0; border-radius: 6px; padding: 7px 14px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+  .ov-tab-btn:hover { background: #e3f2fd; }
+  .ov-tab-btn.active { background: #1565c0; color: #fff; }
+  /* Tab-Reihen-Label */
+  .tab-row-label { font-size: 0.62rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; white-space: nowrap; width: 108px; flex-shrink: 0; padding-top: 2px; }
   .ab-tab-btn.active { background: var(--accent); color: #fff; }
   .ab-pane { display: none; }
   .ab-pane.active { display: block; }
@@ -246,6 +254,27 @@
   .fz-week-col { background: #fff; border-radius: 6px; padding: 8px 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); min-height: 100px; }
   .fz-week-col .fz-wh { font-size: 0.75rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; text-align: center; }
   .fz-day-view { background: #fff; border-radius: 10px; padding: 16px; box-shadow: var(--shadow); }
+
+  /* KREUZMATRIX */
+  .mx-chip { border:2px solid #ddd; background:#fff; border-radius:20px; padding:5px 11px; font-size:0.8rem; font-weight:600; cursor:pointer; transition:all 0.15s; color:#555; }
+  .mx-chip[data-col="gl"].active  { background:#fff8e1; border-color:#8b6914; color:#8b6914; }
+  .mx-chip[data-col="lak"].active { background:#e3f2fd; border-color:#1565c0; color:#1565c0; }
+  .mx-chip[data-col="fruk"].active{ background:#e8f5e9; border-color:#2e7d32; color:#2e7d32; }
+  .mx-chip[data-col="hist"].active{ background:#ffebee; border-color:#c62828; color:#c62828; }
+  .mx-chip[data-col="lvk"].active { background:#f3e5f5; border-color:#6a1b9a; color:#6a1b9a; }
+  .mx-cat { border:1px solid #ccc; background:#fff; border-radius:12px; padding:4px 10px; font-size:0.78rem; cursor:pointer; transition:all 0.12s; }
+  .mx-cat.active { background:#1565c0; color:#fff; border-color:#1565c0; }
+  #mx-tbody tr.mx-danger { border-left:4px solid #c62828; }
+  #mx-tbody tr.mx-warn   { border-left:4px solid #f57f17; }
+  #mx-tbody tr.mx-ok     { border-left:4px solid #2e7d32; }
+  #mx-tbody tr.mx-group  { background:#f0ebe4; }
+  #mx-tbody tr.mx-group td { padding:5px 12px; font-weight:700; font-size:0.72rem; color:#6b4c2a; letter-spacing:0.04em; text-transform:uppercase; }
+  #mx-tbody td.mx-ok   { background:#f1f8e9; text-align:center; font-size:1rem; padding:6px 8px; }
+  #mx-tbody td.mx-warn { background:#fff8e1; text-align:center; font-size:1rem; padding:6px 8px; }
+  #mx-tbody td.mx-bad  { background:#ffebee; text-align:center; font-size:1rem; padding:6px 8px; }
+  #mx-tbody td.mx-bad.mx-active-col  { background:#ffcdd2; font-size:1.1rem; font-weight:700; }
+  #mx-tbody td.mx-warn.mx-active-col { background:#ffe082; }
+  #mx-tbody td.mx-name { padding:7px 12px; font-size:0.85rem; }
 
   /* ERGÄNZUNGS-BADGE */
   .erganzt { display: inline-flex; align-items: center; gap: 3px; background: #fff3cd; border: 1px solid #f59e0b; border-radius: 4px; padding: 1px 6px; font-size: 0.72rem; color: #92400e; font-weight: 600; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
@@ -685,30 +714,33 @@
 
 <!-- ALLERGIEN -->
 <section id="allergien" class="section">
-  <!-- Zeile 1: Diätkategorien -->
-  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap">
-    <span style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;white-space:nowrap;margin-right:2px">Diätkategorien</span>
-    <div class="ab-tabs" style="margin-bottom:0">
-      <button class="ab-tab-btn" id="abtab-gl" onclick="allerTab('gl',this)">🌾 Zöliakie</button>
-      <button class="ab-tab-btn" id="abtab-lak" onclick="allerTab('lak',this)">🥛 Laktose</button>
-      <button class="ab-tab-btn" id="abtab-fruk" onclick="allerTab('fruk',this)">🍎 Fruktose</button>
-      <button class="ab-tab-btn" id="abtab-hist" onclick="allerTab('hist',this)">⚠️ Histamin</button>
-      <button class="ab-tab-btn" id="abtab-lvk2" onclick="allerTab('lvk2',this)">🥗 LVK</button>
+  <div style="margin-bottom:14px">
+    <!-- Zeile 1: Diätkategorien -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+      <span class="tab-row-label">Diät&shy;kategorien</span>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;flex:1">
+        <button class="ab-tab-btn" id="abtab-gl"   onclick="allerTab('gl',this,'cat')">🌾 Zöliakie</button>
+        <button class="ab-tab-btn" id="abtab-lak"  onclick="allerTab('lak',this,'cat')">🥛 Laktose</button>
+        <button class="ab-tab-btn" id="abtab-fruk" onclick="allerTab('fruk',this,'cat')">🍎 Fruktose</button>
+        <button class="ab-tab-btn" id="abtab-hist" onclick="allerTab('hist',this,'cat')">⚠️ Histamin</button>
+        <button class="ab-tab-btn" id="abtab-lvk2" onclick="allerTab('lvk2',this,'cat')">🥗 LVK</button>
+      </div>
     </div>
-  </div>
-  <!-- Zeile 2: Übersichten & Tabellen -->
-  <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap">
-    <span style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;white-space:nowrap;margin-right:2px">Übersichten</span>
-    <div class="ab-tabs" style="margin-bottom:0;flex:1;min-width:0">
-      <button class="ab-tab-btn active" id="abtab-overview" onclick="allerTab('overview',this)">⚡ Kurzübersicht</button>
-      <button class="ab-tab-btn" id="abtab-milch" onclick="allerTab('milch',this)">🧀 Milch</button>
-      <button class="ab-tab-btn" id="abtab-getreide" onclick="allerTab('getreide',this)">🥖 Getreide</button>
-      <button class="ab-tab-btn" id="abtab-fleisch" onclick="allerTab('fleisch',this)">🥩 Fleisch & Fisch</button>
-      <button class="ab-tab-btn" id="abtab-gemuese" onclick="allerTab('gemuese',this)">🥦 Gemüse</button>
-      <button class="ab-tab-btn" id="abtab-obst" onclick="allerTab('obst',this)">🍎 Obst</button>
-      <button class="ab-tab-btn" id="abtab-suesses" onclick="allerTab('suesses',this)">🥄 Süßes</button>
+    <!-- Zeile 2: Übersichten -->
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="tab-row-label">Übersichten</span>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;flex:1">
+        <button class="ov-tab-btn active" id="abtab-overview"  onclick="allerTab('overview',this,'ov')">⚡ Kurzübersicht</button>
+        <button class="ov-tab-btn" id="abtab-matrix"   onclick="allerTab('matrix',this,'ov')">🔀 Kreuzmatrix</button>
+        <button class="ov-tab-btn" id="abtab-milch"    onclick="allerTab('milch',this,'ov')">🧀 Milch</button>
+        <button class="ov-tab-btn" id="abtab-getreide" onclick="allerTab('getreide',this,'ov')">🥖 Getreide</button>
+        <button class="ov-tab-btn" id="abtab-fleisch"  onclick="allerTab('fleisch',this,'ov')">🥩 Fleisch & Fisch</button>
+        <button class="ov-tab-btn" id="abtab-gemuese"  onclick="allerTab('gemuese',this,'ov')">🥦 Gemüse</button>
+        <button class="ov-tab-btn" id="abtab-obst"     onclick="allerTab('obst',this,'ov')">🍎 Obst</button>
+        <button class="ov-tab-btn" id="abtab-suesses"  onclick="allerTab('suesses',this,'ov')">🥄 Süßes</button>
+      </div>
+      <button onclick="pdfExport('allergien')" style="background:#e53935;color:#fff;border:none;border-radius:6px;padding:7px 13px;font-size:0.82rem;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">🖨️ PDF</button>
     </div>
-    <button onclick="pdfExport('allergien')" style="background:#e53935;color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:0.82rem;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">🖨️ PDF</button>
   </div>
 
   <!-- KURZÜBERSICHT -->
@@ -1134,6 +1166,70 @@
   </div>
   </div>
 
+
+  <!-- KREUZMATRIX -->
+  <div id="ab-matrix" class="ab-pane">
+  <div class="card" style="padding:0;overflow:hidden;border-left:none;">
+    <div style="background:linear-gradient(135deg,#1565c0,#1e88e5);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div><h2 style="color:#fff;margin:0;font-size:1.1rem;">🔀 Diät-Kreuzmatrix</h2>
+        <p style="color:rgba(255,255,255,0.8);font-size:0.78rem;margin:3px 0 0">~100 Lebensmittel × 5 Unverträglichkeiten · Patienten-Filter</p></div>
+      <div id="mx-badge" style="display:none;background:rgba(255,255,255,0.25);border-radius:20px;padding:4px 12px;font-size:0.75rem;font-weight:700;color:#fff">PATIENTENMODUS</div>
+    </div>
+    <div style="background:#fff;border-bottom:2px solid #e3f2fd;padding:12px 16px;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start">
+      <div>
+        <div style="font-size:0.62rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Patient hat</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">
+          <button class="mx-chip" data-col="gl"   onclick="mxToggle(this)">🌾 Gluten</button>
+          <button class="mx-chip" data-col="lak"  onclick="mxToggle(this)">🥛 Laktose</button>
+          <button class="mx-chip" data-col="fruk" onclick="mxToggle(this)">🍎 Fruktose</button>
+          <button class="mx-chip" data-col="hist" onclick="mxToggle(this)">⚠️ Histamin</button>
+          <button class="mx-chip" data-col="lvk"  onclick="mxToggle(this)">🥗 LVK</button>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:0.62rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Kategorie</div>
+        <div style="display:flex;flex-wrap:wrap;gap:4px">
+          <button class="mx-cat active" data-cat="all"     onclick="mxCat(this)">Alle</button>
+          <button class="mx-cat" data-cat="Milch"    onclick="mxCat(this)">🧀</button>
+          <button class="mx-cat" data-cat="Getreide" onclick="mxCat(this)">🥖</button>
+          <button class="mx-cat" data-cat="Fleisch"  onclick="mxCat(this)">🥩</button>
+          <button class="mx-cat" data-cat="Gemüse"   onclick="mxCat(this)">🥦</button>
+          <button class="mx-cat" data-cat="Obst"     onclick="mxCat(this)">🍎</button>
+          <button class="mx-cat" data-cat="Süßes"    onclick="mxCat(this)">🥄</button>
+        </div>
+      </div>
+      <div style="flex:1;min-width:150px">
+        <div style="font-size:0.62rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Suche</div>
+        <input type="text" id="mx-search" placeholder="Lebensmittel…" oninput="mxSearch(this.value)" style="width:100%;padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:0.85rem;outline:none">
+      </div>
+      <div>
+        <div style="font-size:0.62rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px">Legende</div>
+        <div style="display:flex;gap:8px;font-size:0.75rem;align-items:center">
+          <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#e8f5e9;border:1px solid #a5d6a7;vertical-align:middle;margin-right:3px"></span>gut</span>
+          <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#fff8e1;border:1px solid #f9a825;vertical-align:middle;margin-right:3px"></span>Vorsicht</span>
+          <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#ffebee;border:1px solid #ef9a9a;vertical-align:middle;margin-right:3px"></span>meiden</span>
+        </div>
+      </div>
+    </div>
+    <div style="background:#f8f8f8;padding:5px 16px;border-bottom:1px solid #eee;font-size:0.75rem;color:#888;display:flex;gap:16px">
+      <span id="mx-stats"></span><span id="mx-pat-stats"></span>
+    </div>
+    <div style="overflow-x:auto">
+      <table id="mx-table" style="width:100%;border-collapse:collapse;font-size:0.87rem;min-width:500px">
+        <thead><tr>
+          <th style="background:#1565c0;color:#fff;padding:9px 12px;text-align:left;min-width:170px;font-size:0.8rem;position:sticky;top:0">Lebensmittel</th>
+          <th id="mx-th-gl"   style="background:#1565c0;color:#fff;padding:9px 8px;text-align:center;font-size:0.8rem;white-space:nowrap;position:sticky;top:0">🌾 Gluten</th>
+          <th id="mx-th-lak"  style="background:#1565c0;color:#fff;padding:9px 8px;text-align:center;font-size:0.8rem;white-space:nowrap;position:sticky;top:0">🥛 Laktose</th>
+          <th id="mx-th-fruk" style="background:#1565c0;color:#fff;padding:9px 8px;text-align:center;font-size:0.8rem;white-space:nowrap;position:sticky;top:0">🍎 Fruktose</th>
+          <th id="mx-th-hist" style="background:#1565c0;color:#fff;padding:9px 8px;text-align:center;font-size:0.8rem;white-space:nowrap;position:sticky;top:0">⚠️ Histamin</th>
+          <th id="mx-th-lvk"  style="background:#1565c0;color:#fff;padding:9px 8px;text-align:center;font-size:0.8rem;white-space:nowrap;position:sticky;top:0">🥗 LVK</th>
+        </tr></thead>
+        <tbody id="mx-tbody"></tbody>
+      </table>
+      <div id="mx-empty" style="text-align:center;padding:32px;color:#aaa;display:none">Keine Treffer.</div>
+    </div>
+  </div>
+  </div>
 
   <!-- MILCHPRODUKTE-TABELLE -->
   <div id="ab-milch" class="ab-pane">
@@ -2162,6 +2258,204 @@
 </footer>
 
 <script>
+// ─── DIÄT-KREUZMATRIX ─────────────────────────────────────────────────────────
+(function(){
+  const OK=0,WA=1,BA=2;
+  const SYM=['✅','⚠️','❌'], CLS=['mx-ok','mx-warn','mx-bad'];
+  const MX_GROUPS=[
+    {g:'🧀 Milchprodukte',cat:'Milch',rows:[
+      {n:'Milch (Vollmilch)',gl:OK,lak:BA,fruk:OK,hist:OK,lvk:OK},
+      {n:'Laktosefreie Milch',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Sahne / Schlagobers',gl:OK,lak:WA,fruk:OK,hist:OK,lvk:OK},
+      {n:'Butter',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Naturjoghurt',gl:OK,lak:WA,fruk:OK,hist:WA,lvk:OK},
+      {n:'Kefir',gl:OK,lak:WA,fruk:OK,hist:BA,lvk:OK},
+      {n:'Buttermilch',gl:OK,lak:WA,fruk:OK,hist:WA,lvk:OK},
+      {n:'Topfen / Quark',gl:OK,lak:WA,fruk:OK,hist:OK,lvk:OK},
+      {n:'Hüttenkäse',gl:OK,lak:WA,fruk:OK,hist:OK,lvk:OK},
+      {n:'Frischkäse',gl:OK,lak:WA,fruk:OK,hist:OK,lvk:OK},
+      {n:'Mozzarella (frisch)',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Gouda / Edamer',gl:OK,lak:OK,fruk:OK,hist:WA,lvk:OK},
+      {n:'Camembert / Brie',gl:OK,lak:OK,fruk:OK,hist:BA,lvk:OK},
+      {n:'Emmentaler',gl:OK,lak:OK,fruk:OK,hist:BA,lvk:OK},
+      {n:'Parmesan',gl:OK,lak:OK,fruk:OK,hist:BA,lvk:OK},
+      {n:'Bergkäse (gereift)',gl:OK,lak:OK,fruk:OK,hist:BA,lvk:OK},
+      {n:'Schmelzkäse',gl:OK,lak:WA,fruk:OK,hist:WA,lvk:OK},
+    ]},
+    {g:'🥖 Getreide & Backwaren',cat:'Getreide',rows:[
+      {n:'Weizen (alle Sorten)',gl:BA,lak:OK,fruk:WA,hist:OK,lvk:WA},
+      {n:'Dinkel',gl:BA,lak:OK,fruk:WA,hist:OK,lvk:WA},
+      {n:'Roggen',gl:BA,lak:OK,fruk:BA,hist:OK,lvk:WA},
+      {n:'Gerste',gl:BA,lak:OK,fruk:BA,hist:OK,lvk:WA},
+      {n:'Hafer (nicht GF-zert.)',gl:WA,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Reis',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Mais / Polenta',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Hirse / Quinoa / Buchweizen',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Weißbrot / Semmel',gl:BA,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Vollkornbrot (Roggen)',gl:BA,lak:OK,fruk:BA,hist:OK,lvk:WA},
+      {n:'Normale Nudeln',gl:BA,lak:OK,fruk:WA,hist:OK,lvk:OK},
+      {n:'Glutenfreies Brot / GF-Nudeln',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Paniertes / Frittiertes',gl:BA,lak:WA,fruk:WA,hist:WA,lvk:BA},
+    ]},
+    {g:'🥩 Fleisch, Wurst & Fisch',cat:'Fleisch',rows:[
+      {n:'Geflügel (frisch)',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Rindfleisch (frisch, mager)',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:WA},
+      {n:'Schweinefleisch (frisch)',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:WA},
+      {n:'Hackfleisch (frisch)',gl:OK,lak:OK,fruk:OK,hist:WA,lvk:WA},
+      {n:'Gekochter Schinken',gl:WA,lak:OK,fruk:OK,hist:WA,lvk:OK},
+      {n:'Geräucherter Schinken/Speck',gl:WA,lak:OK,fruk:OK,hist:BA,lvk:WA},
+      {n:'Salami / Pepperoni',gl:WA,lak:OK,fruk:OK,hist:BA,lvk:BA},
+      {n:'Weißfisch (frisch)',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Lachs (frisch)',gl:OK,lak:OK,fruk:OK,hist:WA,lvk:OK},
+      {n:'Lachs (geräuchert)',gl:OK,lak:OK,fruk:OK,hist:BA,lvk:WA},
+      {n:'Thunfisch (Dose)',gl:OK,lak:OK,fruk:OK,hist:BA,lvk:WA},
+      {n:'Hering (eingelegt/Matjes)',gl:OK,lak:OK,fruk:OK,hist:BA,lvk:WA},
+      {n:'Sardinen (Dose)',gl:OK,lak:OK,fruk:OK,hist:BA,lvk:WA},
+    ]},
+    {g:'🥦 Gemüse & Hülsenfrüchte',cat:'Gemüse',rows:[
+      {n:'Kartoffeln',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Karotten',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Zucchini',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Gurke',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Kürbis',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Tomaten',gl:OK,lak:OK,fruk:WA,hist:BA,lvk:OK},
+      {n:'Spinat',gl:OK,lak:OK,fruk:OK,hist:BA,lvk:WA},
+      {n:'Avocado',gl:OK,lak:OK,fruk:OK,hist:BA,lvk:OK},
+      {n:'Aubergine',gl:OK,lak:OK,fruk:OK,hist:BA,lvk:OK},
+      {n:'Paprika',gl:OK,lak:OK,fruk:OK,hist:WA,lvk:WA},
+      {n:'Sauerkraut',gl:OK,lak:OK,fruk:OK,hist:BA,lvk:WA},
+      {n:'Zwiebeln',gl:OK,lak:OK,fruk:BA,hist:OK,lvk:WA},
+      {n:'Knoblauch',gl:OK,lak:OK,fruk:BA,hist:OK,lvk:WA},
+      {n:'Kohl / Weißkohl',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:BA},
+      {n:'Blumenkohl / Brokkoli',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:WA},
+      {n:'Hülsenfrüchte (Linsen, Bohnen)',gl:OK,lak:OK,fruk:WA,hist:OK,lvk:BA},
+    ]},
+    {g:'🍎 Obst',cat:'Obst',rows:[
+      {n:'Heidelbeeren',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Himbeeren',gl:OK,lak:OK,fruk:OK,hist:WA,lvk:OK},
+      {n:'Banane (reif)',gl:OK,lak:OK,fruk:WA,hist:OK,lvk:OK},
+      {n:'Kiwi',gl:OK,lak:OK,fruk:WA,hist:WA,lvk:OK},
+      {n:'Apfel',gl:OK,lak:OK,fruk:BA,hist:WA,lvk:WA},
+      {n:'Birne',gl:OK,lak:OK,fruk:BA,hist:WA,lvk:WA},
+      {n:'Mango',gl:OK,lak:OK,fruk:BA,hist:OK,lvk:OK},
+      {n:'Kirsche',gl:OK,lak:OK,fruk:BA,hist:OK,lvk:WA},
+      {n:'Wassermelone',gl:OK,lak:OK,fruk:BA,hist:OK,lvk:OK},
+      {n:'Erdbeeren',gl:OK,lak:OK,fruk:WA,hist:BA,lvk:OK},
+      {n:'Zitrusfrüchte',gl:OK,lak:OK,fruk:WA,hist:BA,lvk:OK},
+      {n:'Ananas',gl:OK,lak:OK,fruk:WA,hist:BA,lvk:OK},
+      {n:'Trockenfrüchte',gl:OK,lak:OK,fruk:BA,hist:WA,lvk:WA},
+      {n:'Fruchtsäfte',gl:OK,lak:OK,fruk:BA,hist:WA,lvk:OK},
+    ]},
+    {g:'🥄 Süßes, Saucen & Gewürze',cat:'Süßes',rows:[
+      {n:'Haushaltszucker',gl:OK,lak:OK,fruk:WA,hist:OK,lvk:OK},
+      {n:'Traubenzucker / Glukose',gl:OK,lak:OK,fruk:OK,hist:OK,lvk:OK},
+      {n:'Honig',gl:OK,lak:OK,fruk:BA,hist:OK,lvk:OK},
+      {n:'Agavensirup',gl:OK,lak:OK,fruk:BA,hist:OK,lvk:OK},
+      {n:'Sorbit (E420)',gl:OK,lak:OK,fruk:BA,hist:OK,lvk:OK},
+      {n:'Sojasauce (normal)',gl:BA,lak:OK,fruk:OK,hist:BA,lvk:OK},
+      {n:'Essig (alle Sorten)',gl:OK,lak:OK,fruk:OK,hist:BA,lvk:OK},
+      {n:'Ketchup',gl:WA,lak:OK,fruk:WA,hist:BA,lvk:WA},
+      {n:'Mayonnaise',gl:OK,lak:OK,fruk:OK,hist:WA,lvk:BA},
+      {n:'Senf',gl:OK,lak:OK,fruk:OK,hist:WA,lvk:OK},
+      {n:'Worcestershiresauce',gl:BA,lak:OK,fruk:OK,hist:BA,lvk:OK},
+      {n:'Schokolade (dunkel)',gl:OK,lak:WA,fruk:OK,hist:BA,lvk:WA},
+      {n:'Marmelade / Konfitüre',gl:OK,lak:OK,fruk:BA,hist:WA,lvk:OK},
+      {n:'Gewürzmischungen',gl:WA,lak:OK,fruk:OK,hist:WA,lvk:OK},
+    ]},
+  ];
+  const MX_COLS=['gl','lak','fruk','hist','lvk'];
+  let mxActive=new Set(), mxCatFilter='all', mxSearchStr='';
+
+  function mxBuild(){
+    const tbody=document.getElementById('mx-tbody');
+    if(!tbody)return;
+    tbody.innerHTML='';
+    MX_GROUPS.forEach(grp=>{
+      const hr=document.createElement('tr');
+      hr.className='mx-group'; hr.dataset.cat=grp.cat;
+      hr.innerHTML=`<td colspan="6">${grp.g}</td>`;
+      tbody.appendChild(hr);
+      grp.rows.forEach(row=>{
+        const tr=document.createElement('tr');
+        tr.dataset.cat=grp.cat;
+        tr.dataset.name=row.n.toLowerCase();
+        if(mxActive.size>0){
+          let mx=0; mxActive.forEach(c=>{if(row[c]>mx)mx=row[c];});
+          tr.classList.add(mx===BA?'mx-danger':mx===WA?'mx-warn':'mx-ok');
+        }
+        let cells=`<td class="mx-name">${row.n}</td>`;
+        MX_COLS.forEach(c=>{
+          const v=row[c], ac=mxActive.has(c)?` mx-active-col`:'';
+          cells+=`<td class="${CLS[v]}${ac}">${SYM[v]}</td>`;
+        });
+        tr.innerHTML=cells; tbody.appendChild(tr);
+      });
+    });
+    mxApply();
+  }
+
+  function mxApply(){
+    const rows=document.querySelectorAll('#mx-tbody tr:not(.mx-group)');
+    let vis=0;
+    rows.forEach(tr=>{
+      const catOk=mxCatFilter==='all'||tr.dataset.cat===mxCatFilter;
+      const srchOk=!mxSearchStr||tr.dataset.name.includes(mxSearchStr);
+      if(catOk&&srchOk){tr.classList.remove('mx-hidden');vis++;}
+      else tr.classList.add('mx-hidden');
+    });
+    document.querySelectorAll('#mx-tbody tr.mx-group').forEach(hr=>{
+      const any=Array.from(document.querySelectorAll(`#mx-tbody tr[data-cat="${hr.dataset.cat}"]:not(.mx-group)`)).some(r=>!r.classList.contains('mx-hidden'));
+      hr.classList.toggle('mx-hidden',!any);
+    });
+    document.querySelectorAll('.mx-hidden').forEach(el=>el.style.display='none');
+    document.querySelectorAll('#mx-tbody tr:not(.mx-hidden)').forEach(el=>el.style.display='');
+    const empty=document.getElementById('mx-empty');
+    if(empty)empty.style.display=vis===0?'block':'none';
+    const total=MX_GROUPS.reduce((s,g)=>s+g.rows.length,0);
+    const stats=document.getElementById('mx-stats');
+    if(stats)stats.innerHTML=`<strong>${vis}</strong> von ${total} Lebensmitteln`;
+    const pat=document.getElementById('mx-pat-stats');
+    const badge=document.getElementById('mx-badge');
+    if(mxActive.size>0){
+      let bad=0,warn=0;
+      document.querySelectorAll('#mx-tbody tr.mx-danger:not(.mx-hidden)').forEach(()=>bad++);
+      document.querySelectorAll('#mx-tbody tr.mx-warn:not(.mx-hidden)').forEach(()=>warn++);
+      if(pat)pat.innerHTML=`<span style="color:#c62828;font-weight:700">❌ ${bad} meiden</span> &nbsp;·&nbsp; <span style="color:#f57f17;font-weight:700">⚠️ ${warn} Vorsicht</span>`;
+      if(badge)badge.style.display='block';
+    } else {
+      if(pat)pat.textContent=''; if(badge)badge.style.display='none';
+    }
+    // Spalten-Header hervorheben
+    MX_COLS.forEach(c=>{
+      const th=document.getElementById('mx-th-'+c);
+      if(th)th.style.background=mxActive.has(c)?'#0d47a1':'#1565c0';
+    });
+  }
+
+  window.mxToggle=function(btn){
+    const c=btn.dataset.col;
+    btn.classList.toggle('active');
+    mxActive.has(c)?mxActive.delete(c):mxActive.add(c);
+    mxBuild();
+  };
+  window.mxCat=function(btn){
+    document.querySelectorAll('.mx-cat').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active'); mxCatFilter=btn.dataset.cat; mxApply();
+  };
+  window.mxSearch=function(v){
+    mxSearchStr=v.toLowerCase().trim(); mxApply();
+  };
+
+  // Beim ersten Öffnen des Matrix-Tabs bauen
+  const origAllerTab=window.allerTab;
+  window.allerTab=function(id,btn,row){
+    origAllerTab(id,btn,row);
+    if(id==='matrix'){
+      setTimeout(()=>{if(!document.getElementById('mx-tbody').children.length)mxBuild();},50);
+    }
+  };
+})();
+
 // ─── SUPABASE CONFIG ──────────────────────────────────────────────────────────
 // Trage hier deine Werte ein (Supabase → Settings → API)
 const SUPABASE_URL  = 'https://oauinbjtszjjxclqgcnw.supabase.co';
@@ -2817,9 +3111,16 @@ function dpRender() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ─── ALLERGIEN SUB-TABS ───────────────────────────────────────────────────────
-function allerTab(id, btn) {
+function allerTab(id, btn, row) {
   document.querySelectorAll('#allergien .ab-pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('#allergien .ab-tab-btn').forEach(b => b.classList.remove('active'));
+  // Nur die eigene Reihe deaktivieren
+  if (row === 'cat') {
+    document.querySelectorAll('#allergien .ab-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#allergien .ov-tab-btn').forEach(b => b.classList.remove('active'));
+  } else {
+    document.querySelectorAll('#allergien .ov-tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#allergien .ab-tab-btn').forEach(b => b.classList.remove('active'));
+  }
   const pane = document.getElementById('ab-' + id);
   if (pane) pane.classList.add('active');
   if (btn) btn.classList.add('active');
