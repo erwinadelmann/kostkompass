@@ -692,6 +692,7 @@
       <button class="ab-tab-btn" id="abtab-lak" onclick="allerTab('lak',this)">🥛 Laktose</button>
       <button class="ab-tab-btn" id="abtab-fruk" onclick="allerTab('fruk',this)">🍎 Fruktose</button>
       <button class="ab-tab-btn" id="abtab-hist" onclick="allerTab('hist',this)">⚠️ Histamin</button>
+      <button class="ab-tab-btn" id="abtab-milch" onclick="allerTab('milch',this)">🧀 Milchprodukte</button>
       <button class="ab-tab-btn" id="abtab-lvk2" onclick="allerTab('lvk2',this)">🥗 LVK</button>
     </div>
     <button onclick="pdfExport('allergien')" style="background:#e53935;color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:0.82rem;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">🖨️ Alle als PDF</button>
@@ -1120,6 +1121,82 @@
   </div>
   </div>
 
+
+  <!-- MILCHPRODUKTE-TABELLE -->
+  <div id="ab-milch" class="ab-pane">
+  <div class="card" style="padding:0;overflow:hidden;border-left:none;">
+    <div style="background:linear-gradient(135deg,#6b4c2a 0%,#a07040 100%);padding:14px 20px;">
+      <h2 style="color:#fff;margin:0;font-size:1.1rem;">🧀 Milchprodukte – Verträglichkeit im Überblick</h2>
+      <p style="color:rgba(255,255,255,0.8);font-size:0.8rem;margin:3px 0 0">Evidenzbasiert · Laktose / Fruktose / Histamin</p>
+    </div>
+    <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.9rem;">
+      <thead>
+        <tr style="background:#f0ebe4;">
+          <th style="padding:9px 12px;text-align:left;color:#6b4c2a;border-bottom:2px solid #ddd;min-width:170px;">Lebensmittel</th>
+          <th style="padding:9px 12px;text-align:center;color:#1565c0;border-bottom:2px solid #ddd;white-space:nowrap;">🥛 Laktose</th>
+          <th style="padding:9px 12px;text-align:center;color:#2e7d32;border-bottom:2px solid #ddd;white-space:nowrap;">🍎 Fruktose</th>
+          <th style="padding:9px 12px;text-align:center;color:#c62828;border-bottom:2px solid #ddd;white-space:nowrap;">⚠️ Histamin</th>
+        </tr>
+      </thead>
+      <tbody id="milch-tbody">
+        <!-- Frische Milchprodukte -->
+        <tr style="background:#f5f0ea;"><td colspan="4" style="padding:6px 12px;font-weight:700;font-size:0.78rem;color:#6b4c2a;letter-spacing:0.04em;">FLÜSSIGE MILCHPRODUKTE</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Milch (Vollmilch)</td><td style="text-align:center;padding:8px;background:#ffebee;"><span title="~4,7g Laktose/100ml">❌</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Laktosefreie Milch</td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Sahne / Schlagobers</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="~2,8–3,2g/100ml, kleine Mengen oft ok">⚠️</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Butter</td><td style="text-align:center;padding:8px;background:#f1f8e9;"><span title="~0,5g/100g, meist gut verträglich">✅</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td></tr>
+        <!-- Fermentierte -->
+        <tr style="background:#f5f0ea;"><td colspan="4" style="padding:6px 12px;font-weight:700;font-size:0.78rem;color:#6b4c2a;letter-spacing:0.04em;">FERMENTIERTE PRODUKTE</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Naturjoghurt</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="~3,5–4g/100g Laktose">⚠️</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="Fermentiert → moderate Histaminbildung">⚠️</span></td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Kefir</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="~3g/100ml, Fermentation baut ~20–30% ab">⚠️</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#ffebee;"><span title="Starke Fermentation → häufig problematisch">❌</span></td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Buttermilch</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="~3,5–4g/100ml">⚠️</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Sauerrahm</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="~3g/100g">⚠️</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="Fermentiert">⚠️</span></td></tr>
+        <!-- Frischkäse -->
+        <tr style="background:#f5f0ea;"><td colspan="4" style="padding:6px 12px;font-weight:700;font-size:0.78rem;color:#6b4c2a;letter-spacing:0.04em;">FRISCHKÄSE (wenig gereift)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Topfen / Quark</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="~3–4g/100g">⚠️</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#f1f8e9;"><span title="Frisch, kaum Reifung → histaminarm">✅</span></td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Hüttenkäse</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="~2–3g/100g">⚠️</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Frischkäse (Doppelrahm)</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="~2–3g/100g">⚠️</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Mozzarella (frisch)</td><td style="text-align:center;padding:8px;background:#f1f8e9;"><span title="~0,5g/100g – von den meisten Betroffenen toleriert">✅</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Schaf-/Ziegenkäse (frisch)</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="Enthält Laktose, ähnlich wie Kuhmilch-Frischkäse">⚠️</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td></tr>
+        <!-- Schnittkäse -->
+        <tr style="background:#f5f0ea;"><td colspan="4" style="padding:6px 12px;font-weight:700;font-size:0.78rem;color:#6b4c2a;letter-spacing:0.04em;">SCHNITT- UND WEICHKÄSE</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Gouda, Edamer</td><td style="text-align:center;padding:8px;background:#f1f8e9;"><span title="~0,1–0,5g/100g">✅</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="Semi-gereift → moderate Mengen">⚠️</span></td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Camembert, Brie</td><td style="text-align:center;padding:8px;background:#f1f8e9;"><span title="<0,5g/100g">✅</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#ffebee;"><span title="Schimmelreifung → erhöhte biogene Amine">❌</span></td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Schmelzkäse</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="Variiert je nach Hersteller – Milchpulver möglich">⚠️</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#fff8e1;"><span title="Zusatzstoffe prüfen">⚠️</span></td></tr>
+        <!-- Hartkäse -->
+        <tr style="background:#f5f0ea;"><td colspan="4" style="padding:6px 12px;font-weight:700;font-size:0.78rem;color:#6b4c2a;letter-spacing:0.04em;">HARTKÄSE (lang gereift)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Emmentaler</td><td style="text-align:center;padding:8px;background:#f1f8e9;"><span title="<0,1g/100g – praktisch laktosefrei">✅</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#ffebee;"><span title="Hoher Tyramin- und Histamingehalt durch lange Reifung">❌</span></td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Parmesan</td><td style="text-align:center;padding:8px;background:#f1f8e9;"><span title="<0,1g/100g">✅</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#ffebee;"><span title="Sehr histaminreich – einer der höchsten Werte">❌</span></td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:8px 12px;">Bergkäse (gereift)</td><td style="text-align:center;padding:8px;background:#f1f8e9;"><span title="<0,1g/100g">✅</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#ffebee;"><span title="Lang gereift → sehr histaminreich">❌</span></td></tr>
+        <tr><td style="padding:8px 12px;">Schaf-/Ziegenkäse (gereift)</td><td style="text-align:center;padding:8px;background:#f1f8e9;"><span title="<0,5g/100g">✅</span></td><td style="text-align:center;padding:8px;background:#f1f8e9;">✅</td><td style="text-align:center;padding:8px;background:#ffebee;"><span title="Gereift → histaminreich">❌</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <!-- Grundregel-Banner -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:2px solid #ddd;">
+      <div style="padding:12px 16px;background:#e3f2fd;border-right:1px solid #ddd;">
+        <div style="font-weight:700;color:#1565c0;margin-bottom:6px;font-size:0.88rem;">🥛 Laktose-Faustregel</div>
+        <div style="font-size:0.82rem;line-height:1.7;color:#333;">
+          Je <strong>länger gereift</strong> → weniger Laktose ✅<br>
+          Je <strong>frischer</strong> → mehr Laktose ⚠️<br>
+          <strong>Hartkäse</strong> meist problemlos
+        </div>
+      </div>
+      <div style="padding:12px 16px;background:#ffebee;">
+        <div style="font-weight:700;color:#c62828;margin-bottom:6px;font-size:0.88rem;">⚠️ Histamin-Faustregel</div>
+        <div style="font-size:0.82rem;line-height:1.7;color:#333;">
+          Je <strong>länger gereift</strong> → mehr biogene Amine ❌<br>
+          Je <strong>frischer</strong> → weniger Histamin ✅<br>
+          <strong>Frischkäse</strong> meist problemlos
+        </div>
+      </div>
+    </div>
+    <div style="padding:10px 16px;background:#f0ebe4;border-top:1px solid #ddd;">
+      <p style="margin:0;font-size:0.78rem;color:#666;font-style:italic;">⚠️ Hinweis: Emmentaler und Parmesan enthalten primär <strong>Tyramin</strong> (verwandtes biogenes Amin), das ähnliche Reaktionen auslösen kann. · Fruktose: Milchprodukte enthalten <strong>keine Fruktose</strong> – immer ✅.</p>
+    </div>
+  </div>
+  </div>
 
   <div id="ab-lvk2" class="ab-pane">
   <div class="card">
@@ -3519,13 +3596,14 @@ function pdfExport(type) {
   } else if (type === 'allergien') {
     title = 'Allergie & Diät – Übersicht';
     // Alle Panes sammeln (auch versteckte)
-    const panes = ['ab-overview','ab-gl','ab-lak','ab-fruk','ab-hist','ab-lvk2'];
+    const panes = ['ab-overview','ab-gl','ab-lak','ab-fruk','ab-hist','ab-milch','ab-lvk2'];
     const labels = {
       'ab-overview': '⚡ Kurzübersicht',
       'ab-gl':       '🌾 Zöliakie / Glutenfrei',
       'ab-lak':      '🥛 Laktose',
       'ab-fruk':     '🍎 Fruktose',
       'ab-hist':     '⚠️ Histamin',
+      'ab-milch':    '🧀 Milchprodukte',
       'ab-lvk2':     '🥗 LVK – Leichte Vollkost'
     };
     bodyHtml = `<h1>🍽️ Allergie & Diät – Vollständige Übersicht</h1>`;
