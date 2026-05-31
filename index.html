@@ -586,17 +586,17 @@
         <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Laktose</div>
         <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Milchzucker – laktosefreie Produkte</div>
       </div>
-      <div style="background:#f3e5f5;border-radius:8px;padding:12px;border:1px solid #ce93d8;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[3])">
+      <div style="background:#f3e5f5;border-radius:8px;padding:12px;border:1px solid #ce93d8;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
         <div style="font-size:1.4rem">🍎</div>
         <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Fruktose</div>
         <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Fruchtzucker, kein Kompott</div>
       </div>
-      <div style="background:#fce4ec;border-radius:8px;padding:12px;border:1px solid #f48fb1;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[4])">
+      <div style="background:#fce4ec;border-radius:8px;padding:12px;border:1px solid #f48fb1;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
         <div style="font-size:1.4rem">⚠️</div>
         <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Histamin</div>
         <div style="font-size:0.75rem;color:#666;margin-top:2px">Nichts gereift, nichts aus der Dose</div>
       </div>
-      <div style="background:#e8eaf6;border-radius:8px;padding:12px;border:1px solid #9fa8da;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[5])">
+      <div style="background:#e8eaf6;border-radius:8px;padding:12px;border:1px solid #9fa8da;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
         <div style="font-size:1.4rem">🥗</div>
         <div style="font-weight:700;font-size:0.9rem;margin-top:4px">LVK – Leichte Vollkost</div>
         <div style="font-size:0.75rem;color:#666;margin-top:2px">Leicht verdaulich, kein Fettiges</div>
@@ -718,7 +718,7 @@
     <!-- Zeile 1: Diätkategorien -->
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
       <span class="tab-row-label">Diät&shy;kategorien</span>
-      <div style="display:flex;gap:5px;flex-wrap:wrap;flex:1">
+      <div style="display:flex;gap:5px;flex-wrap:wrap">
         <button class="ab-tab-btn" id="abtab-gl"   onclick="allerTab('gl',this,'cat')">🌾 Zöliakie</button>
         <button class="ab-tab-btn" id="abtab-lak"  onclick="allerTab('lak',this,'cat')">🥛 Laktose</button>
         <button class="ab-tab-btn" id="abtab-fruk" onclick="allerTab('fruk',this,'cat')">🍎 Fruktose</button>
@@ -726,12 +726,18 @@
         <button class="ab-tab-btn" id="abtab-lvk2" onclick="allerTab('lvk2',this,'cat')">🥗 LVK</button>
       </div>
     </div>
-    <!-- Zeile 2: Übersichten -->
-    <div style="display:flex;align-items:center;gap:8px">
+    <!-- Zeile 2: Kurzübersicht + Kreuzmatrix -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
       <span class="tab-row-label">Übersichten</span>
+      <div style="display:flex;gap:5px">
+        <button class="ov-tab-btn active" id="abtab-overview" onclick="allerTab('overview',this,'ov')">⚡ Kurzübersicht</button>
+        <button class="ov-tab-btn" id="abtab-matrix" onclick="allerTab('matrix',this,'ov')">🔀 Kreuzmatrix</button>
+      </div>
+    </div>
+    <!-- Zeile 3: Lebensmitteltabellen -->
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="tab-row-label">Lebensmittel&shy;tabellen</span>
       <div style="display:flex;gap:5px;flex-wrap:wrap;flex:1">
-        <button class="ov-tab-btn active" id="abtab-overview"  onclick="allerTab('overview',this,'ov')">⚡ Kurzübersicht</button>
-        <button class="ov-tab-btn" id="abtab-matrix"   onclick="allerTab('matrix',this,'ov')">🔀 Kreuzmatrix</button>
         <button class="ov-tab-btn" id="abtab-milch"    onclick="allerTab('milch',this,'ov')">🧀 Milch</button>
         <button class="ov-tab-btn" id="abtab-getreide" onclick="allerTab('getreide',this,'ov')">🥖 Getreide</button>
         <button class="ov-tab-btn" id="abtab-fleisch"  onclick="allerTab('fleisch',this,'ov')">🥩 Fleisch & Fisch</button>
