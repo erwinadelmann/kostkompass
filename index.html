@@ -284,10 +284,12 @@
   .dp-view-btn.active { background: var(--accent); color: #fff; }
   .dp-nav-btn {
     border: none; background: var(--accent); color: #fff;
-    border-radius: 6px; padding: 5px 11px; font-size: 1rem; cursor: pointer;
-    transition: background 0.15s;
+    border-radius: 8px; padding: 8px 18px; font-size: 1.3rem; font-weight: 700;
+    cursor: pointer; transition: background 0.15s; line-height: 1;
+    min-width: 44px; min-height: 44px;
   }
   .dp-nav-btn:hover { background: var(--primary); }
+  .dp-nav-btn:active { transform: scale(0.95); }
   .dp-period-label {
     font-size: 0.95rem; font-weight: 700; color: var(--primary); min-width: 160px; text-align: center;
   }
@@ -2310,6 +2312,30 @@ function dpNav(dir) {
   else dpCursor = new Date(dpCursor.getFullYear() + dir, dpCursor.getMonth(), 1);
   dpRender();
 }
+
+// ─── Swipe-Gesten für Dienstplan-Kalender ────────────────────────────────────
+(function() {
+  let touchStartX = 0, touchStartY = 0;
+  document.addEventListener('touchstart', e => {
+    if (!e.target.closest('#dp-calendar')) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    if (!e.target.closest('#dp-calendar')) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      dpNav(dx < 0 ? 1 : -1);
+    }
+  }, { passive: true });
+  // Tastatur: Pfeiltasten links/rechts wenn Dienstplan aktiv
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('dienstplan')?.classList.contains('active')) return;
+    if (e.key === 'ArrowLeft') dpNav(-1);
+    if (e.key === 'ArrowRight') dpNav(1);
+  });
+})();
 
 function dpGoToDay(dateStr) {
   dpDayCursor = dateStr;
