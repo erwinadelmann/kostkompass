@@ -4021,8 +4021,8 @@ const REINIGUNG_TAGNAME = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag'
 function reinigungRenderTag(dow, tagEl, listeEl) {
   if (!tagEl || !listeEl) return;
   tagEl.textContent = REINIGUNG_TAGNAME[dow];
-  const extra = REINIGUNG_EXTRA[dow] || [];
-  const alle = [...REINIGUNG_TAEGLICH, ...extra];
+  const extraTasks = REINIGUNG_EXTRA[dow] || [];
+  const alle = [...REINIGUNG_TAEGLICH, ...extraTasks];
   const taeglich = alle.slice(0, REINIGUNG_TAEGLICH.length);
   const extra = alle.slice(REINIGUNG_TAEGLICH.length);
   let html = '';
