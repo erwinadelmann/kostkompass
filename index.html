@@ -573,6 +573,43 @@
   </div>
 
 
+  <!-- DIÄTKATEGORIEN + KURZÜBERSICHT -->
+  <div class="card" style="padding:12px 14px">
+    <div style="display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto">
+      <div style="flex:1;min-width:80px;background:#fff3e0;border-radius:7px;padding:7px 8px;border:1px solid #ffcc80;cursor:pointer;text-align:center" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
+        <div style="font-size:1.1rem">🌾</div>
+        <div style="font-weight:700;font-size:0.78rem;margin-top:3px;line-height:1.2">Zöliakie</div>
+      </div>
+      <div style="flex:1;min-width:80px;background:#e3f2fd;border-radius:7px;padding:7px 8px;border:1px solid #90caf9;cursor:pointer;text-align:center" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
+        <div style="font-size:1.1rem">🥛</div>
+        <div style="font-weight:700;font-size:0.78rem;margin-top:3px;line-height:1.2">Laktose</div>
+      </div>
+      <div style="flex:1;min-width:80px;background:#f3e5f5;border-radius:7px;padding:7px 8px;border:1px solid #ce93d8;cursor:pointer;text-align:center" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
+        <div style="font-size:1.1rem">🍎</div>
+        <div style="font-weight:700;font-size:0.78rem;margin-top:3px;line-height:1.2">Fruktose</div>
+      </div>
+      <div style="flex:1;min-width:80px;background:#fce4ec;border-radius:7px;padding:7px 8px;border:1px solid #f48fb1;cursor:pointer;text-align:center" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
+        <div style="font-size:1.1rem">⚠️</div>
+        <div style="font-weight:700;font-size:0.78rem;margin-top:3px;line-height:1.2">Histamin</div>
+      </div>
+      <div style="flex:1;min-width:80px;background:#e8eaf6;border-radius:7px;padding:7px 8px;border:1px solid #9fa8da;cursor:pointer;text-align:center" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
+        <div style="font-size:1.1rem">🥗</div>
+        <div style="font-weight:700;font-size:0.78rem;margin-top:3px;line-height:1.2">LVK</div>
+      </div>
+      <div style="flex:1;min-width:80px;background:#e8f5e9;border-radius:7px;padding:7px 8px;border:1px solid #a5d6a7;cursor:pointer;text-align:center" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
+        <div style="font-size:1.1rem">⚡</div>
+        <div style="font-weight:700;font-size:0.78rem;margin-top:3px;line-height:1.2">Kurzübersicht</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REINIGUNG HEUTE -->
+  <div class="card" style="border-left:4px solid #6d4c41">
+    <h2 style="margin-bottom:10px">🧹 Reinigung heute – <span id="reinigung-heute-tag"></span></h2>
+    <div id="reinigung-heute-liste"></div>
+    <div style="margin-top:10px;font-size:0.8rem;color:#999">→ <span style="cursor:pointer;text-decoration:underline" onclick="showSection('reinigung', document.querySelectorAll('nav button')[4])">Vollständiger Reinigungsplan</span></div>
+  </div>
+
   <!-- NOTIZEN: Heute wichtig -->
   <div class="card" style="border-left:4px solid #e53935">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
@@ -3256,6 +3293,7 @@ window.addEventListener('DOMContentLoaded', () => {
   abRender('mittag');
   ['tagesabschlüsse','einnahmen','ausgaben','rechnungen'].forEach(k => kassaShowContent(k));
   snInit();
+  reinigungHeuteRender();
 });
 
 // ─── KASSA INLINE-EDITING ─────────────────────────────────────────────────────
@@ -3955,6 +3993,44 @@ function snInit() {
   SN_IDS.forEach(id => snShowContent(id));
 }
 
+// ─── REINIGUNG HEUTE ──────────────────────────────────────────────────────────
+const REINIGUNG_TAEGLICH = [
+  'Buffetrahmen abstauben & wischen',
+  'Buffetaufsteller abwischen & desinfizieren',
+  'Sideboard putzen & desinfizieren',
+  'Salatvitrine putzen, desinfizieren & Wand',
+  'Servietten/Tee nachfüllen',
+  'Bänke/Sessel abkehren',
+  'Sozialraum Tische wischen/Menagen (14:15)',
+];
+const REINIGUNG_EXTRA = {
+  1: ['Getränkelager reinigen/ordnen','Getränke/Gläser Sozialraum auffüllen/kontrollieren','Wäschekammer wischen & Wäsche wegräumen'],
+  2: ['Heißwasserautomat 2 St. & Speisesaal entkalken (ungerade Woche)','Heißwasserautomat & Geschirrspüler Teebar 3 St. entkalken (gerade Woche)'],
+  3: ['Menagen auffüllen/wischen & Kärchenhalter wischen'],
+  4: ['Sessel und Tischbeine nass wischen'],
+  5: ['Menagen auffüllen/wischen & Kärchenhalter wischen','Menükarten Neuanreise schreiben','Besteckladen reinigen/desinfizieren','Türen reinigen','Buffetkästen reinigen & desinfizieren'],
+  6: ['Absperrständer putzen'],
+  0: ['Aushelfen in der Cafeteria'],
+};
+const REINIGUNG_TAGNAME = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+
+function reinigungHeuteRender() {
+  const tagEl = document.getElementById('reinigung-heute-tag');
+  const listeEl = document.getElementById('reinigung-heute-liste');
+  if (!tagEl || !listeEl) return;
+  const dow = new Date().getDay(); // 0=So, 1=Mo...
+  tagEl.textContent = REINIGUNG_TAGNAME[dow];
+  const extra = REINIGUNG_EXTRA[dow] || [];
+  const alle = [...REINIGUNG_TAEGLICH, ...extra];
+  listeEl.innerHTML = alle.map((t, i) => {
+    const isExtra = i >= REINIGUNG_TAEGLICH.length;
+    return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #f0f0f0;font-size:0.88rem">
+      <span style="font-size:1rem">${isExtra ? '📌' : '✅'}</span>
+      <span style="${isExtra ? 'font-weight:600;color:#4e342e' : ''}">${t}</span>
+    </div>`;
+  }).join('');
+}
+
 // ─── FOTO-GALERIE (Supabase Storage) ─────────────────────────────────────────
 const GAL_CATS = [
   'Eingang',
@@ -4154,7 +4230,7 @@ const _origShowSection2 = showSection;
 showSection = function(id, btn) {
   _origShowSection2(id, btn);
   if (id === 'cafe') cafeInitEditing();
-  if (id === 'start') snInit();
+  if (id === 'start') { snInit(); reinigungHeuteRender(); }
 };
 
 // ─── PDF / DRUCK ─────────────────────────────────────────────────────────────
