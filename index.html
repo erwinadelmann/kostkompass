@@ -573,35 +573,31 @@
   </div>
 
 
-  <div class="card">
-    <h2>📌 Diätkategorien im Überblick</h2>
-    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap:10px; margin-top:10px;">
-      <div style="background:#fff3e0;border-radius:8px;padding:12px;border:1px solid #ffcc80;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
-        <div style="font-size:1.4rem">🌾</div>
-        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Zöliakie / Glutenfrei</div>
-        <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Weizen, Dinkel, Gerste, Roggen…</div>
-      </div>
-      <div style="background:#e3f2fd;border-radius:8px;padding:12px;border:1px solid #90caf9;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[2])">
-        <div style="font-size:1.4rem">🥛</div>
-        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Laktose</div>
-        <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Milchzucker – laktosefreie Produkte</div>
-      </div>
-      <div style="background:#f3e5f5;border-radius:8px;padding:12px;border:1px solid #ce93d8;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
-        <div style="font-size:1.4rem">🍎</div>
-        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Fruktose</div>
-        <div style="font-size:0.75rem;color:#666;margin-top:2px">Kein Fruchtzucker, kein Kompott</div>
-      </div>
-      <div style="background:#fce4ec;border-radius:8px;padding:12px;border:1px solid #f48fb1;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
-        <div style="font-size:1.4rem">⚠️</div>
-        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">Histamin</div>
-        <div style="font-size:0.75rem;color:#666;margin-top:2px">Nichts gereift, nichts aus der Dose</div>
-      </div>
-      <div style="background:#e8eaf6;border-radius:8px;padding:12px;border:1px solid #9fa8da;cursor:pointer" onclick="showSection('allergien', document.querySelectorAll('nav button')[1])">
-        <div style="font-size:1.4rem">🥗</div>
-        <div style="font-weight:700;font-size:0.9rem;margin-top:4px">LVK – Leichte Vollkost</div>
-        <div style="font-size:0.75rem;color:#666;margin-top:2px">Leicht verdaulich, kein Fettiges</div>
-      </div>
+  <!-- NOTIZEN: Heute wichtig -->
+  <div class="card" style="border-left:4px solid #e53935">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h2 style="margin:0">🔴 Heute wichtig</h2>
+      <button id="sn-edit-btn-heute" onclick="snEditToggle('heute',this)" style="background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:0.8rem;cursor:pointer">✏️</button>
     </div>
+    <div id="sn-content-heute"></div>
+  </div>
+
+  <!-- NOTIZEN: Abläufe -->
+  <div class="card" style="border-left:4px solid #1976d2">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h2 style="margin:0">📋 Abläufe</h2>
+      <button id="sn-edit-btn-ablaeufe" onclick="snEditToggle('ablaeufe',this)" style="background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:0.8rem;cursor:pointer">✏️</button>
+    </div>
+    <div id="sn-content-ablaeufe"></div>
+  </div>
+
+  <!-- NOTIZEN: Meine Routinen -->
+  <div class="card" style="border-left:4px solid #388e3c">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h2 style="margin:0">⭐ Meine Routinen</h2>
+      <button id="sn-edit-btn-routinen" onclick="snEditToggle('routinen',this)" style="background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:0.8rem;cursor:pointer">✏️</button>
+    </div>
+    <div id="sn-content-routinen"></div>
   </div>
 
 </section>
@@ -2484,7 +2480,7 @@ function initSupabase() {
 // CREATE POLICY "public_rw" ON kk_sync FOR ALL USING (true) WITH CHECK (true);
 
 const SYNC_KEYS = ['impfPlan','impfLabor','cafeInhalt','kassaInhalt','galCatDesc',
-                   'dpShifts','fzEvents','numEntries','pdfArchiv','ablaufData'];
+                   'dpShifts','fzEvents','numEntries','pdfArchiv','ablaufData','startNotizen'];
 
 let syncStatus = 'idle'; // idle | syncing | ok | error | offline
 let syncDebounceTimer = null;
@@ -2583,6 +2579,10 @@ function syncReloadInMemory() {
   try {
     const nu = localStorage.getItem('numEntries');
     if (nu) { numEntries = JSON.parse(nu); if(typeof numRender==='function') numRender(); }
+  } catch(e){}
+  try {
+    const sn = localStorage.getItem('startNotizen');
+    if (sn) { Object.assign(snData, JSON.parse(sn)); if(typeof snInit==='function') snInit(); }
   } catch(e){}
 }
 
@@ -3255,6 +3255,7 @@ window.addEventListener('DOMContentLoaded', () => {
   abRender('frueh');
   abRender('mittag');
   ['tagesabschlüsse','einnahmen','ausgaben','rechnungen'].forEach(k => kassaShowContent(k));
+  snInit();
 });
 
 // ─── KASSA INLINE-EDITING ─────────────────────────────────────────────────────
@@ -3890,6 +3891,70 @@ function cafeInitEditing() {
   });
 }
 
+// ─── START-NOTIZEN (Heute wichtig / Abläufe / Routinen) ──────────────────────
+const snData = JSON.parse(localStorage.getItem('startNotizen') || '{}');
+const SN_IDS = ['heute','ablaeufe','routinen'];
+const SN_PLACEHOLDER = {
+  heute:    'z.B. „Patient Zi. 7 reist heute ab", „Kein Fisch heute", „Neue Patientin ab Mittag – Zöliakie"',
+  ablaeufe: 'z.B. Schritt-für-Schritt-Abläufe die du dir merken willst: Frühstück aufbauen, Allergiker-Tisch, Abenddienst…',
+  routinen: 'z.B. Routinen die du dir aneignen willst: Einstellplan morgens prüfen, Handschuhe wechseln bei Diätkost…'
+};
+
+function snSave(id) {
+  const ta = document.getElementById('sn-ta-' + id);
+  if (!ta) return;
+  snData[id] = ta.value;
+  localStorage.setItem('startNotizen', JSON.stringify(snData));
+  syncPush(['startNotizen']);
+  snShowContent(id);
+  const btn = document.getElementById('sn-edit-btn-' + id);
+  if (btn) btn.textContent = '✏️';
+}
+
+function snEditCancel(id) {
+  snShowContent(id);
+  const btn = document.getElementById('sn-edit-btn-' + id);
+  if (btn) btn.textContent = '✏️';
+}
+
+function snEditToggle(id, btn) {
+  const content = document.getElementById('sn-content-' + id);
+  if (!content) return;
+  const isEditing = content.getAttribute('data-editing') === '1';
+  if (!isEditing) {
+    const current = snData[id] || '';
+    content.innerHTML = `
+      <textarea id="sn-ta-${id}" placeholder="${SN_PLACEHOLDER[id] || ''}" style="width:100%;min-height:140px;border:1px solid var(--accent);border-radius:6px;padding:10px;font-size:0.9rem;font-family:inherit;resize:vertical;box-sizing:border-box">${current}</textarea>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button onclick="snSave('${id}')" style="background:var(--primary);color:#fff;border:none;border-radius:6px;padding:7px 16px;font-size:0.85rem;cursor:pointer;font-weight:600">💾 Speichern</button>
+        <button onclick="snEditCancel('${id}')" style="background:#eee;color:var(--text);border:none;border-radius:6px;padding:7px 14px;font-size:0.85rem;cursor:pointer">Abbrechen</button>
+      </div>`;
+    content.setAttribute('data-editing', '1');
+    btn.textContent = '✕';
+    document.getElementById('sn-ta-' + id)?.focus();
+  } else {
+    snEditCancel(id);
+    btn.textContent = '✏️';
+  }
+}
+
+function snShowContent(id) {
+  const content = document.getElementById('sn-content-' + id);
+  if (!content) return;
+  const text = snData[id] || '';
+  content.setAttribute('data-editing', '0');
+  if (text.trim()) {
+    content.innerHTML = `<div style="white-space:pre-wrap;font-size:0.93rem;line-height:1.7;padding:4px 0">${text.replace(/</g,'&lt;')}</div>`;
+  } else {
+    const hint = { heute:'Noch nichts eingetragen. Tippe auf ✏️ um Notizen für heute zu hinterlegen.', ablaeufe:'Noch keine Abläufe. Tippe auf ✏️ um Abläufe einzutragen.', routinen:'Noch keine Routinen. Tippe auf ✏️ um Routinen einzutragen.' };
+    content.innerHTML = `<div style="color:#999;font-size:0.87rem;padding:8px 0;font-style:italic">${hint[id] || 'Noch leer. ✏️ zum Bearbeiten.'}</div>`;
+  }
+}
+
+function snInit() {
+  SN_IDS.forEach(id => snShowContent(id));
+}
+
 // ─── FOTO-GALERIE (Supabase Storage) ─────────────────────────────────────────
 const GAL_CATS = [
   'Eingang',
@@ -4084,11 +4149,12 @@ function galLightbox(src, desc, name) {
   document.body.appendChild(lb);
 }
 
-// Café-Edit beim Tab-Wechsel initialisieren
+// Café-Edit und Start-Notizen beim Tab-Wechsel initialisieren
 const _origShowSection2 = showSection;
 showSection = function(id, btn) {
   _origShowSection2(id, btn);
   if (id === 'cafe') cafeInitEditing();
+  if (id === 'start') snInit();
 };
 
 // ─── PDF / DRUCK ─────────────────────────────────────────────────────────────
