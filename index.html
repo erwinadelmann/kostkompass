@@ -603,6 +603,15 @@
     </div>
   </div>
 
+  <!-- NOTIZEN: Heute wichtig -->
+  <div class="card" style="border-left:4px solid #e53935">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <h2 style="margin:0">🔴 Heute wichtig</h2>
+      <button id="sn-edit-btn-heute" onclick="snEditToggle('heute',this)" style="background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:0.8rem;cursor:pointer">✏️</button>
+    </div>
+    <div id="sn-content-heute"></div>
+  </div>
+
   <!-- REINIGUNG HEUTE + MORGEN -->
   <div class="card" style="border-left:4px solid #6d4c41">
     <h2 style="margin-bottom:10px">🧹 Reinigung heute – <span id="reinigung-heute-tag"></span></h2>
@@ -612,15 +621,6 @@
       <div id="reinigung-morgen-liste" style="margin-top:8px"></div>
     </details>
     <div style="margin-top:10px;font-size:0.8rem;color:#999">→ <span style="cursor:pointer;text-decoration:underline" onclick="showSection('reinigung', document.querySelectorAll('nav button')[4])">Vollständiger Reinigungsplan</span></div>
-  </div>
-
-  <!-- NOTIZEN: Heute wichtig -->
-  <div class="card" style="border-left:4px solid #e53935">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-      <h2 style="margin:0">🔴 Heute wichtig</h2>
-      <button id="sn-edit-btn-heute" onclick="snEditToggle('heute',this)" style="background:var(--accent);color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:0.8rem;cursor:pointer">✏️</button>
-    </div>
-    <div id="sn-content-heute"></div>
   </div>
 
   <!-- NOTIZEN: Abläufe -->
