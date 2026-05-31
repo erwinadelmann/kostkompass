@@ -685,13 +685,16 @@
 
 <!-- ALLERGIEN -->
 <section id="allergien" class="section">
-  <div class="ab-tabs" style="margin-bottom:14px">
-    <button class="ab-tab-btn active" id="abtab-overview" onclick="allerTab('overview',this)">⚡ Kurzübersicht</button>
-    <button class="ab-tab-btn" id="abtab-gl" onclick="allerTab('gl',this)">🌾 Zöliakie</button>
-    <button class="ab-tab-btn" id="abtab-lak" onclick="allerTab('lak',this)">🥛 Laktose</button>
-    <button class="ab-tab-btn" id="abtab-fruk" onclick="allerTab('fruk',this)">🍎 Fruktose</button>
-    <button class="ab-tab-btn" id="abtab-hist" onclick="allerTab('hist',this)">⚠️ Histamin</button>
-    <button class="ab-tab-btn" id="abtab-lvk2" onclick="allerTab('lvk2',this)">🥗 LVK</button>
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+    <div class="ab-tabs" style="margin-bottom:0;flex:1;min-width:0">
+      <button class="ab-tab-btn active" id="abtab-overview" onclick="allerTab('overview',this)">⚡ Kurzübersicht</button>
+      <button class="ab-tab-btn" id="abtab-gl" onclick="allerTab('gl',this)">🌾 Zöliakie</button>
+      <button class="ab-tab-btn" id="abtab-lak" onclick="allerTab('lak',this)">🥛 Laktose</button>
+      <button class="ab-tab-btn" id="abtab-fruk" onclick="allerTab('fruk',this)">🍎 Fruktose</button>
+      <button class="ab-tab-btn" id="abtab-hist" onclick="allerTab('hist',this)">⚠️ Histamin</button>
+      <button class="ab-tab-btn" id="abtab-lvk2" onclick="allerTab('lvk2',this)">🥗 LVK</button>
+    </div>
+    <button onclick="pdfExport('allergien')" style="background:#e53935;color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:0.82rem;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">🖨️ Alle als PDF</button>
   </div>
 
   <!-- KURZÜBERSICHT -->
@@ -3513,6 +3516,23 @@ function pdfExport(type) {
     title = 'Impfplan';
     const karten = document.getElementById('impf-karten');
     bodyHtml = `<h1>💉 Mein Impfplan</h1>${karten ? karten.innerHTML : ''}`;
+  } else if (type === 'allergien') {
+    title = 'Allergie & Diät – Übersicht';
+    // Alle Panes sammeln (auch versteckte)
+    const panes = ['ab-overview','ab-gl','ab-lak','ab-fruk','ab-hist','ab-lvk2'];
+    const labels = {
+      'ab-overview': '⚡ Kurzübersicht',
+      'ab-gl':       '🌾 Zöliakie / Glutenfrei',
+      'ab-lak':      '🥛 Laktose',
+      'ab-fruk':     '🍎 Fruktose',
+      'ab-hist':     '⚠️ Histamin',
+      'ab-lvk2':     '🥗 LVK – Leichte Vollkost'
+    };
+    bodyHtml = `<h1>🍽️ Allergie & Diät – Vollständige Übersicht</h1>`;
+    panes.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) bodyHtml += `<div class="pdf-section"><h2>${labels[id]}</h2><div class="pdf-content">${el.innerHTML}</div></div>`;
+    });
   }
 
   printWin.document.write(`<!DOCTYPE html><html lang="de"><head>
@@ -3546,6 +3566,30 @@ function pdfExport(type) {
       .dp-week-shift { background: #2e7d32; color: #fff; border-radius: 3px; padding: 1px 3px; font-size: 7pt; }
       /* Buttons ausblenden */
       button, select, input, .dp-add-form, .fz-add-form, .dp-gcal-btn, .fz-gcal-note, .fz-alarm-banner, label[style*="cursor"] { display: none !important; }
+      /* Allergie PDF */
+      .pdf-section { margin-bottom: 24px; break-inside: avoid; }
+      .pdf-section h2 { font-size: 13pt; color: #6b4c2a; border-bottom: 1.5px solid #a07040; padding-bottom: 5px; margin-bottom: 10px; margin-top: 18px; }
+      .pdf-content { font-size: 10pt; }
+      .ev-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+      .ev-col { border-radius: 6px; padding: 10px 12px; }
+      .ev-col.ja { background: #f0fff0; border: 1px solid #a5d6a7; }
+      .ev-col.nein { background: #fff5f5; border: 1px solid #ef9a9a; }
+      .ev-col h4 { font-size: 10pt; font-weight: bold; margin-bottom: 6px; }
+      .ev-col.ja h4 { color: #2e7d32; }
+      .ev-col.nein h4 { color: #c62828; }
+      .ev-col ul { list-style: none; padding: 0; }
+      .ev-col ul li { font-size: 9pt; padding: 2px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
+      .ev-col ul li::before { content: '· '; }
+      .hinweis { border-radius: 6px; padding: 8px 10px; margin: 8px 0; font-size: 9pt; border: 1px solid #ddd; }
+      .hinweis.danger { background: #fff5f5; border-color: #ef9a9a; }
+      .hinweis.warn { background: #fffde7; border-color: #f9a825; }
+      .hinweis.info { background: #e3f2fd; border-color: #90caf9; }
+      .hinweis.tip { background: #f0fff0; border-color: #a5d6a7; }
+      .card { border: 1px solid #ddd; border-radius: 6px; padding: 10px; margin-bottom: 10px; }
+      .card h2, .card h3 { color: #6b4c2a; }
+      table { width: 100%; border-collapse: collapse; font-size: 9pt; }
+      th { background: #6b4c2a; color: #fff; padding: 5px 8px; text-align: left; }
+      td { padding: 5px 8px; border-bottom: 1px solid #eee; }
       @page { margin: 15mm; size: A4; }
       @media print { body { padding: 0; } }
     </style>
