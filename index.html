@@ -603,10 +603,14 @@
     </div>
   </div>
 
-  <!-- REINIGUNG HEUTE -->
+  <!-- REINIGUNG HEUTE + MORGEN -->
   <div class="card" style="border-left:4px solid #6d4c41">
     <h2 style="margin-bottom:10px">🧹 Reinigung heute – <span id="reinigung-heute-tag"></span></h2>
     <div id="reinigung-heute-liste"></div>
+    <details style="margin-top:12px">
+      <summary style="cursor:pointer;font-weight:700;font-size:0.9rem;color:#6d4c41;user-select:none">📅 Morgen – <span id="reinigung-morgen-tag"></span></summary>
+      <div id="reinigung-morgen-liste" style="margin-top:8px"></div>
+    </details>
     <div style="margin-top:10px;font-size:0.8rem;color:#999">→ <span style="cursor:pointer;text-decoration:underline" onclick="showSection('reinigung', document.querySelectorAll('nav button')[4])">Vollständiger Reinigungsplan</span></div>
   </div>
 
@@ -4014,11 +4018,8 @@ const REINIGUNG_EXTRA = {
 };
 const REINIGUNG_TAGNAME = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
 
-function reinigungHeuteRender() {
-  const tagEl = document.getElementById('reinigung-heute-tag');
-  const listeEl = document.getElementById('reinigung-heute-liste');
+function reinigungRenderTag(dow, tagEl, listeEl) {
   if (!tagEl || !listeEl) return;
-  const dow = new Date().getDay(); // 0=So, 1=Mo...
   tagEl.textContent = REINIGUNG_TAGNAME[dow];
   const extra = REINIGUNG_EXTRA[dow] || [];
   const alle = [...REINIGUNG_TAEGLICH, ...extra];
@@ -4029,6 +4030,13 @@ function reinigungHeuteRender() {
       <span style="${isExtra ? 'font-weight:600;color:#4e342e' : ''}">${t}</span>
     </div>`;
   }).join('');
+}
+
+function reinigungHeuteRender() {
+  const today = new Date().getDay();
+  const tomorrow = (today + 1) % 7;
+  reinigungRenderTag(today,   document.getElementById('reinigung-heute-tag'),  document.getElementById('reinigung-heute-liste'));
+  reinigungRenderTag(tomorrow, document.getElementById('reinigung-morgen-tag'), document.getElementById('reinigung-morgen-liste'));
 }
 
 // ─── FOTO-GALERIE (Supabase Storage) ─────────────────────────────────────────
