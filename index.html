@@ -685,17 +685,30 @@
 
 <!-- ALLERGIEN -->
 <section id="allergien" class="section">
-  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:14px">
-    <div class="ab-tabs" style="margin-bottom:0;flex:1;min-width:0">
-      <button class="ab-tab-btn active" id="abtab-overview" onclick="allerTab('overview',this)">⚡ Kurzübersicht</button>
+  <!-- Zeile 1: Diätkategorien -->
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;flex-wrap:wrap">
+    <span style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;white-space:nowrap;margin-right:2px">Diätkategorien</span>
+    <div class="ab-tabs" style="margin-bottom:0">
       <button class="ab-tab-btn" id="abtab-gl" onclick="allerTab('gl',this)">🌾 Zöliakie</button>
       <button class="ab-tab-btn" id="abtab-lak" onclick="allerTab('lak',this)">🥛 Laktose</button>
       <button class="ab-tab-btn" id="abtab-fruk" onclick="allerTab('fruk',this)">🍎 Fruktose</button>
       <button class="ab-tab-btn" id="abtab-hist" onclick="allerTab('hist',this)">⚠️ Histamin</button>
-      <button class="ab-tab-btn" id="abtab-milch" onclick="allerTab('milch',this)">🧀 Milchprodukte</button>
       <button class="ab-tab-btn" id="abtab-lvk2" onclick="allerTab('lvk2',this)">🥗 LVK</button>
     </div>
-    <button onclick="pdfExport('allergien')" style="background:#e53935;color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:0.82rem;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">🖨️ Alle als PDF</button>
+  </div>
+  <!-- Zeile 2: Übersichten & Tabellen -->
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap">
+    <span style="font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;white-space:nowrap;margin-right:2px">Übersichten</span>
+    <div class="ab-tabs" style="margin-bottom:0;flex:1;min-width:0">
+      <button class="ab-tab-btn active" id="abtab-overview" onclick="allerTab('overview',this)">⚡ Kurzübersicht</button>
+      <button class="ab-tab-btn" id="abtab-milch" onclick="allerTab('milch',this)">🧀 Milch</button>
+      <button class="ab-tab-btn" id="abtab-getreide" onclick="allerTab('getreide',this)">🥖 Getreide</button>
+      <button class="ab-tab-btn" id="abtab-fleisch" onclick="allerTab('fleisch',this)">🥩 Fleisch & Fisch</button>
+      <button class="ab-tab-btn" id="abtab-gemuese" onclick="allerTab('gemuese',this)">🥦 Gemüse</button>
+      <button class="ab-tab-btn" id="abtab-obst" onclick="allerTab('obst',this)">🍎 Obst</button>
+      <button class="ab-tab-btn" id="abtab-suesses" onclick="allerTab('suesses',this)">🥄 Süßes</button>
+    </div>
+    <button onclick="pdfExport('allergien')" style="background:#e53935;color:#fff;border:none;border-radius:6px;padding:7px 14px;font-size:0.82rem;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0">🖨️ PDF</button>
   </div>
 
   <!-- KURZÜBERSICHT -->
@@ -1197,6 +1210,208 @@
     </div>
   </div>
   </div>
+
+  <!-- GETREIDE -->
+  <div id="ab-getreide" class="ab-pane">
+  <div class="card" style="padding:0;overflow:hidden;border-left:none;">
+    <div style="background:linear-gradient(135deg,#6b4c2a 0%,#a07040 100%);padding:14px 20px;">
+      <h2 style="color:#fff;margin:0;font-size:1.1rem;">🥖 Getreide, Brot & Teigwaren</h2>
+      <p style="color:rgba(255,255,255,0.8);font-size:0.8rem;margin:3px 0 0">Wichtig: Weizen, Roggen und Gerste enthalten auch Fructane – relevant bei Fruktosemalabsorption!</p>
+    </div>
+    <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.88rem;">
+      <thead><tr style="background:#f0ebe4;">
+        <th style="padding:8px 12px;text-align:left;color:#6b4c2a;border-bottom:2px solid #ddd;min-width:160px;">Lebensmittel</th>
+        <th style="padding:8px 10px;text-align:center;color:#8b4513;border-bottom:2px solid #ddd;white-space:nowrap;">🌾 Gluten</th>
+        <th style="padding:8px 10px;text-align:center;color:#1565c0;border-bottom:2px solid #ddd;white-space:nowrap;">🥛 Laktose</th>
+        <th style="padding:8px 10px;text-align:center;color:#2e7d32;border-bottom:2px solid #ddd;white-space:nowrap;">🍎 Fruktose</th>
+        <th style="padding:8px 10px;text-align:center;color:#c62828;border-bottom:2px solid #ddd;white-space:nowrap;">⚠️ Histamin</th>
+        <th style="padding:8px 10px;text-align:center;color:#6a1b9a;border-bottom:2px solid #ddd;white-space:nowrap;">🥗 LVK</th>
+      </tr></thead>
+      <tbody>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">GLUTENHALTIGE GETREIDESORTEN</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Weizen (alle Sorten)</td><td style="text-align:center;background:#ffebee;">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Enthält Fructane">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Dinkel</td><td style="text-align:center;background:#ffebee;">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Fructane">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Roggen</td><td style="text-align:center;background:#ffebee;">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Hoher Fructangehalt">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Gerste</td><td style="text-align:center;background:#ffebee;">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Fructane">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Hafer (nicht GF-zertifiziert)</td><td style="text-align:center;background:#fff8e1;" title="Kreuzverunreinigung möglich">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">GLUTENFREIE ALTERNATIVEN</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Reis</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Mais / Polenta</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Hirse, Quinoa, Buchweizen</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Kartoffelstärke / Maisstärke</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">BACKWAREN & TEIGWAREN</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Weißbrot, Semmel</td><td style="text-align:center;background:#ffebee;">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Vollkornbrot (Roggen)</td><td style="text-align:center;background:#ffebee;">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Normale Nudeln</td><td style="text-align:center;background:#ffebee;">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Glutenfreies Brot / GF-Nudeln</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr><td style="padding:7px 12px;">Paniertes / Frittiertes</td><td style="text-align:center;background:#ffebee;">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#ffebee;">❌</td></tr>
+      </tbody>
+    </table></div>
+    <div style="padding:10px 16px;background:#fff8e1;border-top:2px solid #ddd;">
+      <p style="margin:0;font-size:0.78rem;color:#666;">⚠️ <strong>Fructane:</strong> Weizen, Roggen und Gerste enthalten Fructane (Fructose-Ketten), die bei Fruktosemalabsorption genauso problematisch sind wie freie Fruktose – oft übersehen!</p>
+    </div>
+  </div></div>
+
+  <!-- FLEISCH & FISCH -->
+  <div id="ab-fleisch" class="ab-pane">
+  <div class="card" style="padding:0;overflow:hidden;border-left:none;">
+    <div style="background:linear-gradient(135deg,#6b4c2a 0%,#a07040 100%);padding:14px 20px;">
+      <h2 style="color:#fff;margin:0;font-size:1.1rem;">🥩 Fleisch, Wurst & Fisch</h2>
+      <p style="color:rgba(255,255,255,0.8);font-size:0.8rem;margin:3px 0 0">Histamin steigt durch Reifung, Räucherung und Konservierung – frisch ist immer besser</p>
+    </div>
+    <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.88rem;">
+      <thead><tr style="background:#f0ebe4;">
+        <th style="padding:8px 12px;text-align:left;color:#6b4c2a;border-bottom:2px solid #ddd;min-width:160px;">Lebensmittel</th>
+        <th style="padding:8px 10px;text-align:center;color:#8b4513;border-bottom:2px solid #ddd;">🌾 Gluten</th>
+        <th style="padding:8px 10px;text-align:center;color:#1565c0;border-bottom:2px solid #ddd;">🥛 Laktose</th>
+        <th style="padding:8px 10px;text-align:center;color:#2e7d32;border-bottom:2px solid #ddd;">🍎 Fruktose</th>
+        <th style="padding:8px 10px;text-align:center;color:#c62828;border-bottom:2px solid #ddd;">⚠️ Histamin</th>
+        <th style="padding:8px 10px;text-align:center;color:#6a1b9a;border-bottom:2px solid #ddd;">🥗 LVK</th>
+      </tr></thead>
+      <tbody>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">FRISCHES FLEISCH</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Geflügel (frisch)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Rindfleisch (frisch, mager)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Schweinefleisch (frisch)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Fettgehalt beachten">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Hackfleisch / Faschiertes (frisch)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Schnell verderblich – frisch verwenden">⚠️</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">WURST & VERARBEITETES FLEISCH</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Gekochter Schinken</td><td style="text-align:center;background:#fff8e1;" title="Zusatzstoffe prüfen">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Geräucherter Schinken / Speck</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Räucherung erhöht Histamin stark">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Salami, Pepperoni</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Fermentiert, sehr histaminreich">❌</td><td style="text-align:center;background:#ffebee;">❌</td></tr>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">FISCH & MEERESFRÜCHTE</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Weißfisch (frisch: Forelle, Zander)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Lachs (frisch)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Moderat – frisch ok">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Lachs (geräuchert)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Räucherung + Reifung erhöhen Histamin stark">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Thunfisch (Dose)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Einer der histaminreichsten Fische">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Hering (eingelegt / Matjes)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr><td style="padding:7px 12px;">Sardinen (Dose)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+      </tbody>
+    </table></div>
+    <div style="padding:10px 16px;background:#ffebee;border-top:2px solid #ddd;">
+      <p style="margin:0;font-size:0.78rem;color:#666;">⚠️ <strong>Grundregel Histamin:</strong> Frisch = sicher · Aus der Dose / Geräuchert / Fermentiert = immer problematisch. Histamin wird durch Erhitzen NICHT zerstört.</p>
+    </div>
+  </div></div>
+
+  <!-- GEMÜSE -->
+  <div id="ab-gemuese" class="ab-pane">
+  <div class="card" style="padding:0;overflow:hidden;border-left:none;">
+    <div style="background:linear-gradient(135deg,#6b4c2a 0%,#a07040 100%);padding:14px 20px;">
+      <h2 style="color:#fff;margin:0;font-size:1.1rem;">🥦 Gemüse & Hülsenfrüchte</h2>
+      <p style="color:rgba(255,255,255,0.8);font-size:0.8rem;margin:3px 0 0">Histaminliberatoren setzen körpereigenes Histamin frei – auch ohne eigenen Histamingehalt problematisch</p>
+    </div>
+    <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.88rem;">
+      <thead><tr style="background:#f0ebe4;">
+        <th style="padding:8px 12px;text-align:left;color:#6b4c2a;border-bottom:2px solid #ddd;min-width:160px;">Lebensmittel</th>
+        <th style="padding:8px 10px;text-align:center;color:#8b4513;border-bottom:2px solid #ddd;">🌾 Gluten</th>
+        <th style="padding:8px 10px;text-align:center;color:#1565c0;border-bottom:2px solid #ddd;">🥛 Laktose</th>
+        <th style="padding:8px 10px;text-align:center;color:#2e7d32;border-bottom:2px solid #ddd;">🍎 Fruktose</th>
+        <th style="padding:8px 10px;text-align:center;color:#c62828;border-bottom:2px solid #ddd;">⚠️ Histamin</th>
+        <th style="padding:8px 10px;text-align:center;color:#6a1b9a;border-bottom:2px solid #ddd;">🥗 LVK</th>
+      </tr></thead>
+      <tbody>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">GUT VERTRÄGLICHES GEMÜSE</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Kartoffeln</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Karotten / Möhren</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Zucchini</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Gurke</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Kürbis</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">HISTAMINLIBERATOREN (setzen körpereigenes Histamin frei)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Tomaten</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#ffebee;" title="Liberator + direkt histaminhaltig">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Spinat</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Direkter Histamingehalt + Liberator">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Avocado</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Liberator">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Aubergine</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Direkt histaminreich">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Paprika</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Liberator">⚠️</td><td style="text-align:center;background:#fff8e1;" title="Haut schwer verdaulich">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Sauerkraut</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Fermentiert – sehr hoher Histamingehalt">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">FRUCTAN-QUELLEN & BLÄHENDE</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Zwiebeln</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Hoher Fructangehalt">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Knoblauch</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Fructane">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Kohl / Weißkohl</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;">❌</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Blumenkohl, Brokkoli</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Hülsenfrüchte (Linsen, Bohnen)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;">❌</td></tr>
+        <tr><td style="padding:7px 12px;">Erbsen</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+      </tbody>
+    </table></div>
+  </div></div>
+
+  <!-- OBST -->
+  <div id="ab-obst" class="ab-pane">
+  <div class="card" style="padding:0;overflow:hidden;border-left:none;">
+    <div style="background:linear-gradient(135deg,#6b4c2a 0%,#a07040 100%);padding:14px 20px;">
+      <h2 style="color:#fff;margin:0;font-size:1.1rem;">🍎 Obst & Trockenfrüchte</h2>
+      <p style="color:rgba(255,255,255,0.8);font-size:0.8rem;margin:3px 0 0">Fruktose + Sorbit kombiniert = besonders schwer verträglich · Zitrusfrüchte + Erdbeeren = Histaminliberatoren</p>
+    </div>
+    <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.88rem;">
+      <thead><tr style="background:#f0ebe4;">
+        <th style="padding:8px 12px;text-align:left;color:#6b4c2a;border-bottom:2px solid #ddd;min-width:160px;">Lebensmittel</th>
+        <th style="padding:8px 10px;text-align:center;color:#8b4513;border-bottom:2px solid #ddd;">🌾 Gluten</th>
+        <th style="padding:8px 10px;text-align:center;color:#1565c0;border-bottom:2px solid #ddd;">🥛 Laktose</th>
+        <th style="padding:8px 10px;text-align:center;color:#2e7d32;border-bottom:2px solid #ddd;">🍎 Fruktose</th>
+        <th style="padding:8px 10px;text-align:center;color:#c62828;border-bottom:2px solid #ddd;">⚠️ Histamin</th>
+        <th style="padding:8px 10px;text-align:center;color:#6a1b9a;border-bottom:2px solid #ddd;">🥗 LVK</th>
+      </tr></thead>
+      <tbody>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">GUT VERTRÄGLICH (niedrige Fruktose)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Heidelbeeren</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Himbeeren</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Schwacher Liberator">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Banane (reif)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Reife Banane hat mehr Saccharose – moderat">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Kiwi</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Moderate Fruktose, Glucose ausgleichend">⚠️</td><td style="text-align:center;background:#fff8e1;" title="Liberator">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">FRUKTOSEREICHE SORTEN</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Apfel</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Hoch + Sorbit">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Birne</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Sehr hoch + Sorbit">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Mango</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Hoher Fruktosegehalt">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Kirsche</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Fruktose + Sorbit">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Wassermelone</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Hoher Fruktosegehalt">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">HISTAMINLIBERATOREN</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Erdbeeren</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#ffebee;" title="Starker Liberator">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Zitrusfrüchte (Orange, Zitrone)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#ffebee;" title="Liberator + direkter Histamingehalt">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Ananas</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#ffebee;" title="Liberator">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Trockenfrüchte (Datteln, Rosinen)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Fruktose konzentriert + Sorbit">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr><td style="padding:7px 12px;">Fruchtsäfte (alle)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Fruktose konzentriert">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+      </tbody>
+    </table></div>
+  </div></div>
+
+  <!-- SÜSSES & SAUCEN -->
+  <div id="ab-suesses" class="ab-pane">
+  <div class="card" style="padding:0;overflow:hidden;border-left:none;">
+    <div style="background:linear-gradient(135deg,#6b4c2a 0%,#a07040 100%);padding:14px 20px;">
+      <h2 style="color:#fff;margin:0;font-size:1.1rem;">🥄 Süßungsmittel, Saucen & Gewürze</h2>
+      <p style="color:rgba(255,255,255,0.8);font-size:0.8rem;margin:3px 0 0">Häufig unterschätzte Quellen – besonders Sojasauce, Essig und Agavensirup</p>
+    </div>
+    <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.88rem;">
+      <thead><tr style="background:#f0ebe4;">
+        <th style="padding:8px 12px;text-align:left;color:#6b4c2a;border-bottom:2px solid #ddd;min-width:160px;">Lebensmittel</th>
+        <th style="padding:8px 10px;text-align:center;color:#8b4513;border-bottom:2px solid #ddd;">🌾 Gluten</th>
+        <th style="padding:8px 10px;text-align:center;color:#1565c0;border-bottom:2px solid #ddd;">🥛 Laktose</th>
+        <th style="padding:8px 10px;text-align:center;color:#2e7d32;border-bottom:2px solid #ddd;">🍎 Fruktose</th>
+        <th style="padding:8px 10px;text-align:center;color:#c62828;border-bottom:2px solid #ddd;">⚠️ Histamin</th>
+        <th style="padding:8px 10px;text-align:center;color:#6a1b9a;border-bottom:2px solid #ddd;">🥗 LVK</th>
+      </tr></thead>
+      <tbody>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">SÜSSUNGSMITTEL</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Haushaltszucker (Saccharose)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Spaltet zu 50% Fruktose – kleine Mengen ok">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Traubenzucker / Glukose</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;" title="Verbessert sogar die Fruktoseaufnahme">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Honig</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Sehr fruktoselastig, ~40% Fruktose">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Agavensirup</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="70–90% Fruktose – schlimmste Fruktosefalle!">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Sorbit (E420)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Hemmt Fruktoseaufnahme – schlimmer als Fruktose selbst">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">SAUCEN & WÜRZMITTEL</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Sojasauce (normal)</td><td style="text-align:center;background:#ffebee;" title="Enthält Weizen – immer prüfen">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Fermentiert – sehr histaminreich">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Tamari (GF-Sojasauce)</td><td style="text-align:center;background:#f1f8e9;" title="Glutenfrei – aber Etikett prüfen">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Fermentiert – histaminreich">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Essig (alle Sorten)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Fermentiationsprodukt – immer histaminreich">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Ketchup</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Oft mit Fruktosesirup">⚠️</td><td style="text-align:center;background:#ffebee;" title="Tomate + Essig = doppelte Belastung">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Mayonnaise</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Enthält Essig">⚠️</td><td style="text-align:center;background:#ffebee;" title="Sehr fettreich">❌</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Senf</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Essig enthalten">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Worcestershiresauce</td><td style="text-align:center;background:#ffebee;" title="Enthält Weizen und Soja">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Fermentiert, Essig, Sardellen">❌</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr style="background:#f5f0ea;"><td colspan="6" style="padding:5px 12px;font-weight:700;font-size:0.75rem;color:#6b4c2a;letter-spacing:0.04em;">SÜSSES & SCHOKOLADE</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Schokolade (dunkel)</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Kakao ist Liberator + direkt histaminhaltig">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:7px 12px;">Marmelade / Konfitüre</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#ffebee;" title="Konzentrierte Fruktose aus Früchten">❌</td><td style="text-align:center;background:#fff8e1;">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+        <tr><td style="padding:7px 12px;">Gewürzmischungen</td><td style="text-align:center;background:#fff8e1;" title="Oft Stärke als Trägerstoff – Etikett prüfen!">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#f1f8e9;">✅</td><td style="text-align:center;background:#fff8e1;" title="Paprika, Chili können Liberatoren sein">⚠️</td><td style="text-align:center;background:#f1f8e9;">✅</td></tr>
+      </tbody>
+    </table></div>
+    <div style="padding:10px 16px;background:#fff8e1;border-top:2px solid #ddd;">
+      <p style="margin:0;font-size:0.78rem;color:#666;">💡 <strong>Traubenzucker-Tipp:</strong> Bei Fruktoseintoleranz kann Glukose (Traubenzucker) die Fruktoseaufnahme im Darm verbessern – gemeinsam mit einer fruktosehaltigen Speise verabreicht. Abklärung mit Diätologin.</p>
+    </div>
+  </div></div>
 
   <div id="ab-lvk2" class="ab-pane">
   <div class="card">
@@ -3596,15 +3811,20 @@ function pdfExport(type) {
   } else if (type === 'allergien') {
     title = 'Allergie & Diät – Übersicht';
     // Alle Panes sammeln (auch versteckte)
-    const panes = ['ab-overview','ab-gl','ab-lak','ab-fruk','ab-hist','ab-milch','ab-lvk2'];
+    const panes = ['ab-overview','ab-gl','ab-lak','ab-fruk','ab-hist','ab-lvk2','ab-milch','ab-getreide','ab-fleisch','ab-gemuese','ab-obst','ab-suesses'];
     const labels = {
-      'ab-overview': '⚡ Kurzübersicht',
-      'ab-gl':       '🌾 Zöliakie / Glutenfrei',
-      'ab-lak':      '🥛 Laktose',
-      'ab-fruk':     '🍎 Fruktose',
-      'ab-hist':     '⚠️ Histamin',
-      'ab-milch':    '🧀 Milchprodukte',
-      'ab-lvk2':     '🥗 LVK – Leichte Vollkost'
+      'ab-overview':  '⚡ Kurzübersicht',
+      'ab-gl':        '🌾 Zöliakie / Glutenfrei',
+      'ab-lak':       '🥛 Laktose',
+      'ab-fruk':      '🍎 Fruktose',
+      'ab-hist':      '⚠️ Histamin',
+      'ab-lvk2':      '🥗 LVK – Leichte Vollkost',
+      'ab-milch':     '🧀 Milchprodukte',
+      'ab-getreide':  '🥖 Getreide & Backwaren',
+      'ab-fleisch':   '🥩 Fleisch & Fisch',
+      'ab-gemuese':   '🥦 Gemüse & Hülsenfrüchte',
+      'ab-obst':      '🍎 Obst',
+      'ab-suesses':   '🥄 Süßes, Saucen & Gewürze'
     };
     bodyHtml = `<h1>🍽️ Allergie & Diät – Vollständige Übersicht</h1>`;
     panes.forEach(id => {
